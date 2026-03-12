@@ -7,7 +7,7 @@
   <meta name="description" content="Singapore's HDB specialist with 10+ years experience. 200+ transactions across 26 towns. Expert guidance on buying, selling & upgrading HDB flats.">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
     :root {
       --cream:        #FAF8F3;
       --cream-dark:   #F2EDE4;
@@ -27,9 +27,9 @@
       --white:        #FFFFFF;
       --green-sold:   #16A34A;
     }
-
+ 
     html { scroll-behavior: smooth; }
-
+ 
     body {
       font-family: 'Georgia', 'Times New Roman', serif;
       background: var(--cream);
@@ -37,7 +37,7 @@
       overflow-x: hidden;
       line-height: 1.6;
     }
-
+ 
     /* ─── UTILITIES ─── */
     .sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
     .section-label {
@@ -51,7 +51,7 @@
     .section-label-blue { color: var(--blue); }
     .italic-accent { font-style: italic; color: var(--orange); }
     .italic-accent-blue { font-style: italic; color: var(--blue); }
-
+ 
     /* ─── NAV ─── */
     nav {
       position: sticky;
@@ -104,7 +104,7 @@
       transition: background 0.2s;
     }
     .btn-cta:hover { background: var(--orange-bright); }
-
+ 
     /* ─── HERO ─── */
     #home {
       display: grid;
@@ -205,7 +205,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center top;
+      object-position: 50% 65%;
       display: block;
     }
     .hero-img-overlay {
@@ -256,7 +256,7 @@
       color: var(--green-sold);
       letter-spacing: 0.06em;
     }
-
+ 
     /* ─── TICKER ─── */
     .ticker-wrap {
       background: var(--dark);
@@ -282,11 +282,11 @@
       0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
-
+ 
     /* ─── SECTION WRAPPER ─── */
     .section { padding: 96px 64px; }
     .section-narrow { max-width: 1200px; margin: 0 auto; }
-
+ 
     /* ─── ABOUT ─── */
     #about { background: var(--cream); }
     .about-grid {
@@ -373,7 +373,7 @@
       color: var(--muted);
       line-height: 1.5;
     }
-
+ 
     /* ─── COVERAGE ─── */
     #expertise { background: var(--cream-dark); }
     .coverage-header { text-align: center; margin-bottom: 48px; }
@@ -468,7 +468,7 @@
       border-color: var(--blue);
       color: #fff;
     }
-
+ 
     /* ─── TRACK RECORD ─── */
     #cases { background: var(--cream); }
     .track-header { text-align: center; margin-bottom: 48px; }
@@ -587,7 +587,7 @@
       font-weight: 800;
       color: var(--orange);
     }
-
+ 
     /* ─── REVIEWS ─── */
     #reviews {
       background: var(--dark);
@@ -660,7 +660,7 @@
       font-size: 12px;
       color: rgba(255,255,255,0.5);
     }
-
+ 
     /* ─── NEWS ─── */
     #news { background: var(--cream); }
     .news-header { text-align: center; margin-bottom: 48px; }
@@ -735,7 +735,7 @@
       color: var(--muted);
       line-height: 1.6;
     }
-
+ 
     /* ─── CONTACT ─── */
     #contact { background: var(--cream-dark); }
     .contact-grid {
@@ -830,7 +830,7 @@
       transition: background 0.2s;
     }
     .btn-submit:hover { background: var(--orange-bright); }
-
+ 
     /* ─── FOOTER ─── */
     footer {
       background: var(--dark);
@@ -904,7 +904,7 @@
       font-size: 13px;
       color: rgba(255,255,255,0.4);
     }
-
+ 
     /* ─── DESIGN POLISH ─── */
     /* Photo warmth overlay on listing/news card images */
     .listing-img { overflow: hidden; }
@@ -924,12 +924,12 @@
       z-index: 1;
     }
     .news-tag { z-index: 2; }
-
+ 
     /* Section divider: subtle top border for depth */
     #about { border-top: 1px solid var(--border); }
     #cases  { border-top: 1px solid rgba(0,0,0,0.06); }
     #news   { border-top: 1px solid var(--border); }
-
+ 
     /* About section — image subtle shadow */
     .about-img-wrap::before {
       content: '';
@@ -939,16 +939,34 @@
       border-radius: 24px;
       z-index: -1;
     }
-
-    /* Coverage region cards — hover lift */
+ 
+    /* Coverage region cards — hover lift + town explorer transitions */
     .region-card {
-      transition: box-shadow 0.2s, transform 0.2s;
+      transition: box-shadow 0.2s, transform 0.2s, opacity 0.18s;
+    }
+    .region-card.card-updating {
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+    }
+    .region-card.town-focused:not(.featured) {
+      border-color: var(--blue);
+      border-width: 2px;
+    }
+    .region-card.featured.town-focused {
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.4), 0 8px 32px rgba(234,88,12,0.25);
+    }
+    .towns-hint {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 10px;
+      letter-spacing: 0.04em;
     }
     .region-card:not(.featured):hover {
       box-shadow: 0 8px 24px rgba(0,0,0,0.09);
       transform: translateY(-2px);
     }
-
+ 
     /* Review card hover */
     .review-card {
       transition: border-color 0.2s, transform 0.2s;
@@ -957,13 +975,13 @@
       border-color: rgba(249,115,22,0.35);
       transform: translateY(-2px);
     }
-
+ 
     /* Improved contact method hover */
     .contact-method:hover {
       border-color: var(--orange);
       background: var(--orange-pale);
     }
-
+ 
     /* ─── WHATSAPP FLOAT ─── */
     .wa-float {
       position: fixed;
@@ -1012,14 +1030,14 @@
       0%, 100% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.3); opacity: 0.7; }
     }
-
+ 
     /* Hide mobile-only elements on desktop by default */
     .hamburger { display: none; }
     .mobile-drawer { display: none; }
-
+ 
     /* ─── MOBILE RESPONSIVE ─── */
     @media (max-width: 768px) {
-
+ 
       /* Nav */
       nav {
         padding: 0 20px;
@@ -1027,7 +1045,7 @@
       }
       .nav-links { display: none; }
       .btn-cta { padding: 8px 16px; font-size: 12px; }
-
+ 
       /* Hero */
       #home {
         grid-template-columns: 1fr;
@@ -1048,13 +1066,13 @@
         min-width: 160px;
       }
       .tx-price { font-size: 18px; }
-
+ 
       /* Ticker */
       .ticker-track span { font-size: 11px; margin-right: 28px; }
-
+ 
       /* Sections */
       .section { padding: 64px 24px; }
-
+ 
       /* About */
       .about-grid {
         grid-template-columns: 1fr;
@@ -1067,28 +1085,28 @@
       }
       .about-h2 { font-size: 36px; }
       .traits-grid { grid-template-columns: 1fr; }
-
+ 
       /* Coverage */
       .regions-grid { grid-template-columns: 1fr; }
       .region-card.featured { grid-column: 1; }
       .regions-row2 { grid-template-columns: 1fr; }
       .coverage-h2 { font-size: 34px; }
-
+ 
       /* Track record */
       .listings-grid { grid-template-columns: 1fr; }
       .track-h2 { font-size: 34px; }
-
+ 
       /* News */
       .news-grid { grid-template-columns: 1fr; }
       .news-h2 { font-size: 34px; }
-
+ 
       /* Contact */
       .contact-grid {
         grid-template-columns: 1fr;
         gap: 40px;
       }
       .contact-h2 { font-size: 32px; }
-
+ 
       /* Footer */
       .footer-top { grid-template-columns: 1fr; gap: 32px; }
       footer { padding: 48px 24px 28px; }
@@ -1097,13 +1115,13 @@
         gap: 8px;
         text-align: center;
       }
-
+ 
       /* WhatsApp float */
       .wa-float { padding: 12px 16px 12px 12px; font-size: 13px; }
       .wa-float span { display: none; }
       .wa-float { border-radius: 50%; width: 56px; height: 56px; padding: 0; justify-content: center; }
       .wa-icon { width: 36px; height: 36px; font-size: 20px; background: transparent; }
-
+ 
       /* Hamburger button */
       .hamburger {
         display: flex;
@@ -1132,7 +1150,7 @@
       .hamburger.open .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
       .hamburger.open .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
       .hamburger.open .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
+ 
       /* Mobile drawer */
       .mobile-drawer {
         display: none;
@@ -1177,7 +1195,7 @@
   </style>
 </head>
 <body>
-
+ 
 <!-- ─── NAV ─── -->
 <nav>
   <a href="#home" class="nav-logo">Ammon <span>Lim</span></a>
@@ -1195,7 +1213,7 @@
     <span class="bar"></span>
   </button>
 </nav>
-
+ 
 <!-- ─── MOBILE DRAWER ─── -->
 <div class="mobile-drawer" id="mobile-drawer">
   <a href="#about" class="drawer-link">About</a>
@@ -1205,7 +1223,7 @@
   <a href="#news" class="drawer-link">News</a>
   <a href="#contact" class="drawer-cta drawer-link">Get In Touch</a>
 </div>
-
+ 
 <!-- ─── HERO ─── -->
 <section id="home">
   <div class="hero-left">
@@ -1242,7 +1260,7 @@
     </div>
   </div>
 </section>
-
+ 
 <!-- ─── TICKER ─── -->
 <div class="ticker-wrap">
   <div class="ticker-track">
@@ -1281,7 +1299,7 @@
     <span>★</span>
   </div>
 </div>
-
+ 
 <!-- ─── ABOUT ─── -->
 <section id="about" class="section">
   <div class="section-narrow">
@@ -1293,7 +1311,7 @@
           <span class="sans">Started in Sengkang 🏠</span>
         </div>
         <div class="satisfaction-card">
-          <div class="num">98%</div>
+          <div class="num">100%</div>
           <div class="lbl sans">Client Satisfaction</div>
         </div>
       </div>
@@ -1302,7 +1320,7 @@
           <div class="section-label">About Ammon</div>
           <h2 class="about-h2">A Local Who <em class="italic-accent">Truly</em><br>Knows HDB Living</h2>
         </div>
-        <p class="about-p">Born and raised in Sengkang, I understand what it means to find a home — not just a flat. With over 10 years in HDB real estate, I've helped more than 200 families buy, sell, and upgrade across all 26 towns in Singapore. My approach is simple: honest advice, local expertise, and a genuine commitment to your best outcome.</p>
+        <p class="about-p">Having helped hundreds of people in their home journeys, I understand what it means to find a home — not just a flat. I have helped countless families buy, sell, and upgrade across all 26 towns in Singapore. My approach is simple: honest advice, local expertise and a genuine commitment to your best outcome.</p>
         <div class="traits-grid">
           <div class="trait-card">
             <div class="trait-icon">🤝</div>
@@ -1312,7 +1330,7 @@
           <div class="trait-card">
             <div class="trait-icon">📍</div>
             <div class="trait-title sans">Local Knowledge</div>
-            <div class="trait-desc">From Sengkang roots to island-wide reach — every town, intimately.</div>
+            <div class="trait-desc">From humble beginnings in a HDB to island-wide reach — every town, intimately.</div>
           </div>
           <div class="trait-card">
             <div class="trait-icon">⚡</div>
@@ -1329,7 +1347,7 @@
     </div>
   </div>
 </section>
-
+ 
 <!-- ─── COVERAGE ─── -->
 <section id="expertise" class="section">
   <div class="section-narrow">
@@ -1338,62 +1356,58 @@
       <h2 class="coverage-h2">Island-Wide <em class="italic-accent">HDB</em> Expertise</h2>
     </div>
     <div class="regions-grid">
-      <div class="region-card featured">
+      <div class="region-card featured" id="card-ne">
         <div class="region-label">North-East Region · Deep Specialist</div>
         <div class="region-name">Sengkang &amp;<br>Punggol</div>
         <div class="region-desc">Where it all began. Deep familiarity with Waterway estates, BTO launches, and resale dynamics in the North-East.</div>
         <div class="specialist-badge">Deep Specialist</div>
       </div>
-      <div class="region-card">
+      <div class="region-card" id="card-central">
         <div class="region-label">Central Region</div>
         <div class="region-name">Bishan, Toa Payoh<br>&amp; Ang Mo Kio</div>
         <div class="region-desc">Mature estates with strong demand and premium valuations.</div>
       </div>
-      <div class="region-card">
+      <div class="region-card" id="card-east">
         <div class="region-label">East Region</div>
         <div class="region-name">Tampines &amp;<br>Pasir Ris</div>
         <div class="region-desc">Family-friendly with excellent amenities and transport links.</div>
       </div>
     </div>
     <div class="regions-row2">
-      <div class="region-card">
+      <div class="region-card" id="card-north">
         <div class="region-label">North Region</div>
         <div class="region-name">Woodlands &amp; Yishun</div>
         <div class="region-desc">Affordable with strong upgrading potential and new MRT lines.</div>
       </div>
-      <div class="region-card">
+      <div class="region-card" id="card-west">
         <div class="region-label">West Region</div>
         <div class="region-name">Jurong &amp; Clementi</div>
         <div class="region-desc">Growing corridor with JLD transformation driving values up.</div>
       </div>
     </div>
     <div class="towns-wrap">
-      <span class="town-chip active">Sengkang</span>
-      <span class="town-chip active">Punggol</span>
-      <span class="town-chip">Ang Mo Kio</span>
-      <span class="town-chip">Bedok</span>
-      <span class="town-chip">Bishan</span>
-      <span class="town-chip">Bukit Batok</span>
-      <span class="town-chip">Bukit Merah</span>
-      <span class="town-chip">Clementi</span>
-      <span class="town-chip">Geylang</span>
-      <span class="town-chip">Hougang</span>
-      <span class="town-chip">Jurong East</span>
-      <span class="town-chip">Jurong West</span>
-      <span class="town-chip">Kallang</span>
-      <span class="town-chip">Marine Parade</span>
-      <span class="town-chip">Pasir Ris</span>
-      <span class="town-chip">Queenstown</span>
-      <span class="town-chip">Sembawang</span>
-      <span class="town-chip">Serangoon</span>
-      <span class="town-chip">Tampines</span>
-      <span class="town-chip">Toa Payoh</span>
-      <span class="town-chip">Woodlands</span>
-      <span class="town-chip">Yishun</span>
+      <span class="town-chip" data-town="sengkang-punggol">Sengkang &amp; Punggol</span>
+      <span class="town-chip" data-town="bishan-amk-toaPayoh">Bishan, AMK &amp; Toa Payoh</span>
+      <span class="town-chip" data-town="tampines-bedok">Tampines &amp; Bedok</span>
+      <span class="town-chip" data-town="jurong-east-west">Jurong East &amp; West</span>
+      <span class="town-chip" data-town="pasirRis-sembawang-yishun">Pasir Ris, Sembawang &amp; Yishun</span>
+      <span class="town-chip" data-town="bukit-panjang">Bukit Panjang</span>
+      <span class="town-chip" data-town="choa-chu-kang">Choa Chu Kang</span>
+      <span class="town-chip" data-town="woodlands">Woodlands</span>
+      <span class="town-chip" data-town="hougang">Hougang</span>
+      <span class="town-chip" data-town="serangoon">Serangoon</span>
+      <span class="town-chip" data-town="bukit-batok">Bukit Batok</span>
+      <span class="town-chip" data-town="bukit-merah">Bukit Merah</span>
+      <span class="town-chip" data-town="clementi">Clementi</span>
+      <span class="town-chip" data-town="geylang">Geylang</span>
+      <span class="town-chip" data-town="kallang">Kallang</span>
+      <span class="town-chip" data-town="marine-parade">Marine Parade</span>
+      <span class="town-chip" data-town="queenstown">Queenstown</span>
     </div>
+    <p class="towns-hint sans">Tap a town to explore — tap again to reset</p>
   </div>
 </section>
-
+ 
 <!-- ─── TRACK RECORD ─── -->
 <section id="cases" class="section" style="background: var(--cream-dark);">
   <div class="section-narrow">
@@ -1431,7 +1445,7 @@
       </div>
       <div class="listing-card">
         <div class="listing-img">
-          <img src="https://images.unsplash.com/photo-1494380963178-7e05eb8fe22c?auto=format&fit=crop&w=600&q=80" alt="Toa Payoh HDB estate aerial" class="listing-img-bg">
+          <img src="https://images.unsplash.com/photo-1531132769230-994bffcb7937?auto=format&fit=crop&w=600&q=80" alt="Toa Payoh HDB estate" class="listing-img-bg">
           <span class="badge-for-sale">For Rent</span>
           <span class="badge-sold">✓ Rented</span>
         </div>
@@ -1457,7 +1471,7 @@
       </div>
       <div class="listing-card">
         <div class="listing-img">
-          <img src="https://images.unsplash.com/photo-1558241480-0c99dfae074d?auto=format&fit=crop&w=600&q=80" alt="Sengkang HDB estate" class="listing-img-bg">
+          <img src="https://images.unsplash.com/photo-1600184400490-45644626b302?auto=format&fit=crop&w=600&q=80" alt="Sengkang MRT HDB estate" class="listing-img-bg">
           <span class="badge-for-sale">For Sale</span>
           <span class="badge-sold">✓ Sold</span>
         </div>
@@ -1484,7 +1498,7 @@
     </div>
   </div>
 </section>
-
+ 
 <!-- ─── REVIEWS ─── -->
 <section id="reviews" class="section">
   <div class="section-narrow">
@@ -1552,7 +1566,7 @@
     </div>
   </div>
 </section>
-
+ 
 <!-- ─── NEWS ─── -->
 <section id="news" class="section">
   <div class="section-narrow">
@@ -1564,7 +1578,7 @@
     <div class="news-grid">
       <div class="news-card">
         <div class="news-img-wrap">
-          <img src="https://images.unsplash.com/photo-1610730297006-ed0e847c34f9?auto=format&fit=crop&w=900&q=80" alt="Singapore business district skyline" class="news-img">
+          <img src="https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=900&q=80" alt="Aerial Singapore Marina Bay skyline" class="news-img">
           <span class="news-tag">Market Insight</span>
         </div>
         <div class="news-body">
@@ -1575,7 +1589,7 @@
       </div>
       <div class="news-card">
         <div class="news-img-wrap">
-          <img src="https://images.unsplash.com/photo-1706512199237-06867557fb85?auto=format&fit=crop&w=600&q=80" alt="Singapore skyline evening Marina Bay" class="news-img">
+          <img src="https://images.unsplash.com/photo-1591204541154-737508ee76f6?auto=format&fit=crop&w=600&q=80" alt="Singapore HDB flat facade" class="news-img">
           <span class="news-tag" style="background: var(--blue);">HDB Policy</span>
         </div>
         <div class="news-body">
@@ -1586,7 +1600,7 @@
       </div>
       <div class="news-card">
         <div class="news-img-wrap">
-          <img src="https://images.unsplash.com/photo-1546410985-67dafaa7d790?auto=format&fit=crop&w=600&q=80" alt="Singapore HDB concrete building" class="news-img">
+          <img src="https://images.unsplash.com/photo-1605596408809-a33b7eb1c063?auto=format&fit=crop&w=600&q=80" alt="Singapore HDB towers" class="news-img">
           <span class="news-tag">Buyer's Guide</span>
         </div>
         <div class="news-body">
@@ -1598,7 +1612,7 @@
     </div>
   </div>
 </section>
-
+ 
 <!-- ─── CONTACT ─── -->
 <section id="contact" class="section">
   <div class="section-narrow">
@@ -1651,7 +1665,7 @@
     </div>
   </div>
 </section>
-
+ 
 <!-- ─── FOOTER ─── -->
 <footer>
   <div class="footer-top">
@@ -1699,7 +1713,7 @@
     <div class="footer-legal">Licensed by CEA · Singapore Estate Agency Pte Ltd · L3009643J</div>
   </div>
 </footer>
-
+ 
 <!-- ─── WHATSAPP FLOAT BUTTON ─── -->
 <a href="https://wa.me/6580989441" class="wa-float" target="_blank" rel="noopener">
   <div class="wa-pulse"></div>
@@ -1710,30 +1724,30 @@
   </div>
   <span>WhatsApp Ammon</span>
 </a>
-
+ 
 <script>
   // Hamburger menu
   const hamburgerBtn = document.getElementById('hamburger-btn');
   const mobileDrawer = document.getElementById('mobile-drawer');
   const navCta = document.getElementById('nav-cta');
-
+ 
   function closeDrawer() {
     hamburgerBtn.classList.remove('open');
     mobileDrawer.classList.remove('open');
     document.body.style.overflow = '';
   }
-
+ 
   hamburgerBtn.addEventListener('click', () => {
     const isOpen = mobileDrawer.classList.toggle('open');
     hamburgerBtn.classList.toggle('open', isOpen);
     document.body.style.overflow = isOpen ? 'hidden' : '';
   });
-
+ 
   // Close drawer when a link is tapped
   document.querySelectorAll('.drawer-link').forEach(link => {
     link.addEventListener('click', closeDrawer);
   });
-
+ 
   // Show/hide hamburger vs CTA based on screen width
   function updateNav() {
     const isMobile = window.innerWidth <= 768;
@@ -1743,7 +1757,7 @@
   }
   updateNav();
   window.addEventListener('resize', updateNav);
-
+ 
   // Smooth scroll for nav links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
@@ -1752,14 +1766,199 @@
       if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
-
-  // Town chip toggle
+ 
+  // ── Town Explorer ──────────────────────────────────────────────
+  const townData = {
+    'sengkang-punggol': {
+      card: 'ne',
+      label: 'North-East · Deep Specialist',
+      name: 'Sengkang &amp; Punggol',
+      desc: 'Where it all began — intimate knowledge of Waterway estates, Punggol Digital District, BTO launch cycles, and what drives resale premiums in the North-East.',
+      badge: 'Deep Specialist'
+    },
+    'bishan-amk-toaPayoh': {
+      card: 'central',
+      label: 'Central Region',
+      name: 'Bishan, AMK &amp; Toa Payoh',
+      desc: 'Mature heartland estates with some of Singapore\'s strongest resale demand. Proven track record from Toa Payoh\'s iconic towers to Bishan\'s family enclaves.'
+    },
+    'tampines-bedok': {
+      card: 'east',
+      label: 'East Region',
+      name: 'Tampines &amp; Bedok',
+      desc: 'Singapore\'s vibrant east — family-friendly and in constant demand. Tampines\' new town vitality meets Bedok\'s established resale powerhouse.'
+    },
+    'pasirRis-sembawang-yishun': {
+      card: 'north',
+      label: 'North Region',
+      name: 'Pasir Ris, Sembawang &amp; Yishun',
+      desc: 'Coastal living meets northern amenities. Great value, growing infrastructure and Sembawang\'s sea-breeze estates make this a rising region to watch.'
+    },
+    'jurong-east-west': {
+      card: 'west',
+      label: 'West · JLD Corridor',
+      name: 'Jurong East &amp; West',
+      desc: 'The Jurong Lake District transformation is redefining Singapore\'s western hub. One of the best long-term bets for upgraders and investors alike.'
+    },
+    'bukit-panjang': {
+      card: 'west',
+      label: 'North-West Region',
+      name: 'Bukit Panjang',
+      desc: 'Quiet, green and well-connected via the DTL. Popular with families seeking space and value, with steady price appreciation driven by MRT accessibility.'
+    },
+    'choa-chu-kang': {
+      card: 'north',
+      label: 'North-West Region',
+      name: 'Choa Chu Kang',
+      desc: 'Generous flat sizes at competitive prices. CCK\'s town centre and the upcoming Tengah development make it a hotspot for first-timers and upgraders.'
+    },
+    'woodlands': {
+      card: 'north',
+      label: 'North Region',
+      name: 'Woodlands',
+      desc: 'Singapore\'s northern gateway with strong cross-border connectivity. New MRT lines and the Woodlands Regional Centre keep demand consistently high.'
+    },
+    'hougang': {
+      card: 'ne',
+      label: 'North-East Region',
+      name: 'Hougang',
+      desc: 'Affordable with a loyal resident community. A steady resale market and strong amenity base make Hougang a perennial favourite for HDB buyers.'
+    },
+    'serangoon': {
+      card: 'central',
+      label: 'Central-North Region',
+      name: 'Serangoon',
+      desc: 'Positioned between central and north-east — NEX mall, top schools and NE Line access make it one of Singapore\'s most liveable HDB towns.'
+    },
+    'bukit-batok': {
+      card: 'west',
+      label: 'West Region',
+      name: 'Bukit Batok',
+      desc: 'Serene greenery meets practical living. With the Tengah estate developing nearby, Bukit Batok offers solid value for growing families.'
+    },
+    'bukit-merah': {
+      card: 'central',
+      label: 'Central-South Region',
+      name: 'Bukit Merah',
+      desc: 'One of the most central HDB towns with strong upgrading flow. Alexandra arc, CBD proximity and a robust resale market make it highly sought-after.'
+    },
+    'clementi': {
+      card: 'west',
+      label: 'West Region',
+      name: 'Clementi',
+      desc: 'Premium western address — top schools, NUS proximity and two MRT lines make Clementi one of the most in-demand mature HDB estates in Singapore.'
+    },
+    'geylang': {
+      card: 'east',
+      label: 'Central-East Region',
+      name: 'Geylang',
+      desc: 'Undervalued and often overlooked — Geylang offers some of the best-priced flats near the city centre, with strong rental and resale upside.'
+    },
+    'kallang': {
+      card: 'central',
+      label: 'Central Region',
+      name: 'Kallang',
+      desc: 'Sports hub, riverside living and proximity to Marina Bay. Kallang flats are prized for their lifestyle edge and consistent long-term appreciation.'
+    },
+    'marine-parade': {
+      card: 'east',
+      label: 'East Region',
+      name: 'Marine Parade',
+      desc: 'Seafront living with a charming community vibe. Katong culture, East Coast Park access and the Marine Parade MRT station keep demand strong.'
+    },
+    'queenstown': {
+      card: 'central',
+      label: 'Central Region',
+      name: 'Queenstown',
+      desc: 'Singapore\'s first satellite town, now one of its most coveted. Central location, heritage charm and mature flat sizes drive premium valuations.'
+    }
+  };
+ 
+  const defaultCards = {
+    'ne': {
+      label: 'North-East Region · Deep Specialist',
+      name: 'Sengkang &amp;<br>Punggol',
+      desc: 'Where it all began. Deep familiarity with Waterway estates, BTO launches, and resale dynamics in the North-East.',
+      badge: 'Deep Specialist'
+    },
+    'central': {
+      label: 'Central Region',
+      name: 'Bishan, Toa Payoh<br>&amp; Ang Mo Kio',
+      desc: 'Mature estates with strong demand and premium valuations.'
+    },
+    'east': {
+      label: 'East Region',
+      name: 'Tampines &amp;<br>Pasir Ris',
+      desc: 'Family-friendly with excellent amenities and transport links.'
+    },
+    'north': {
+      label: 'North Region',
+      name: 'Woodlands &amp; Yishun',
+      desc: 'Affordable with strong upgrading potential and new MRT lines.'
+    },
+    'west': {
+      label: 'West Region',
+      name: 'Jurong &amp; Clementi',
+      desc: 'Growing corridor with JLD transformation driving values up.'
+    }
+  };
+ 
+  function renderCardContent(cardEl, data) {
+    const badge = data.badge ? `<div class="specialist-badge">${data.badge}</div>` : '';
+    cardEl.innerHTML = `
+      <div class="region-label">${data.label}</div>
+      <div class="region-name">${data.name}</div>
+      <div class="region-desc">${data.desc}</div>
+      ${badge}
+    `;
+  }
+ 
+  // Track which chip key is active per card region
+  const activeChipPerCard = {};
+ 
   document.querySelectorAll('.town-chip').forEach(chip => {
     chip.addEventListener('click', function() {
-      this.classList.toggle('active');
+      const key = this.dataset.town;
+      const data = townData[key];
+      if (!data) return;
+ 
+      const cardEl = document.getElementById('card-' + data.card);
+      if (!cardEl) return;
+ 
+      const prevKey = activeChipPerCard[data.card];
+ 
+      // Same chip clicked → reset card to default
+      if (prevKey === key) {
+        activeChipPerCard[data.card] = null;
+        this.classList.remove('active-blue');
+        cardEl.classList.add('card-updating');
+        setTimeout(() => {
+          renderCardContent(cardEl, defaultCards[data.card]);
+          cardEl.classList.remove('card-updating', 'town-focused');
+        }, 180);
+        return;
+      }
+ 
+      // Deactivate previous chip on this card
+      if (prevKey) {
+        const prevChip = document.querySelector(`.town-chip[data-town="${prevKey}"]`);
+        if (prevChip) prevChip.classList.remove('active-blue');
+      }
+ 
+      // Activate this chip
+      activeChipPerCard[data.card] = key;
+      this.classList.add('active-blue');
+ 
+      // Animate card content swap
+      cardEl.classList.add('card-updating');
+      setTimeout(() => {
+        renderCardContent(cardEl, data);
+        cardEl.classList.remove('card-updating');
+        cardEl.classList.add('town-focused');
+      }, 180);
     });
   });
-
+ 
   // Sticky nav shadow
   window.addEventListener('scroll', () => {
     const nav = document.querySelector('nav');
@@ -1768,3 +1967,4 @@
 </script>
 </body>
 </html>
+ 
