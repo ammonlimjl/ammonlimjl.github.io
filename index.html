@@ -1094,7 +1094,7 @@
       #home {
         display: block;
         position: relative;
-        min-height: 88vh;
+        min-height: calc(100vh - 88px);
         overflow: hidden;
       }
       .hero-right {
@@ -1211,11 +1211,22 @@
         gap: 8px;
       }
       .town-chip { font-size: 11px; padding: 7px 12px; }
-      .regions-grid { grid-template-columns: 1fr; gap: 12px; }
-      .region-card.featured { grid-column: 1; }
-      .regions-row2 { grid-template-columns: 1fr 1fr; gap: 12px; }
-      .region-card { padding: 20px; }
-      .region-name { font-size: 16px; }
+      /* ─── REGIONS — featured card + single dynamic card ─── */
+      .regions-grid { grid-template-columns: 1fr; gap: 0; }
+      .region-card.featured { grid-column: 1; padding: 16px 18px; margin-bottom: 10px; }
+      .region-card.featured .region-desc { display: block; font-size: 12px; line-height: 1.5; margin-top: 6px; }
+      .specialist-badge { margin-top: 8px; font-size: 10px; padding: 3px 10px; }
+      /* Hide the 4 desktop region cards on mobile */
+      .regions-grid > .region-card:not(.featured) { display: none; }
+      .regions-row2 { display: none; }
+      /* Show the mobile switcher */
+      #mobile-region-switcher { display: block; margin-bottom: 14px; }
+      #mobile-region-card { padding: 16px 18px; }
+      #mobile-region-card .region-name { font-size: 17px; font-weight: 800; margin-bottom: 6px; line-height: 1.2; }
+      #mobile-region-card .region-label { font-size: 9px; margin-bottom: 6px; }
+      #mobile-region-card .region-desc { display: block; font-size: 13px; line-height: 1.55; color: var(--muted); }
+      .town-chip { font-size: 10px; padding: 5px 10px; }
+      .towns-wrap { gap: 6px; }
 
       /* ─── TRACK RECORD ─── */
       .track-h2 { font-size: 28px; }
@@ -1238,7 +1249,9 @@
       /* ─── NEWS ─── */
       .news-h2 { font-size: 28px; }
       .news-grid { grid-template-columns: 1fr; gap: 16px; }
-      .news-img-wrap { height: 180px; }
+      .news-img-wrap { height: 220px; overflow: hidden; }
+      .news-img { width: 100%; height: 100%; aspect-ratio: unset; object-fit: cover; }
+      .news-card:first-child .news-img { aspect-ratio: unset; }
       .news-title { font-size: 16px; }
       .news-excerpt { display: none; }
 
@@ -1349,7 +1362,41 @@
         border-bottom: none !important;
       }
 
-      /* ─── SUBSCRIBE POPUP ─── */
+      /* Mobile region switcher — hidden on desktop */
+    #mobile-region-switcher { display: none; }
+    .mobile-region-tabs {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+    .mreg-tab {
+      flex: 1;
+      padding: 8px 0;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--dark);
+      transition: background 0.18s, color 0.18s, border-color 0.18s;
+    }
+    .mreg-tab.active {
+      background: var(--dark);
+      color: #fff;
+      border-color: var(--dark);
+    }
+    #mobile-region-card {
+      transition: opacity 0.18s ease;
+    }
+    #mobile-region-card.updating {
+      opacity: 0;
+    }
+
+    /* ─── SUBSCRIBE POPUP ─── */
       .subscribe-modal { padding: 36px 24px 28px; }
       .subscribe-title { font-size: 20px; }
     }
@@ -1358,7 +1405,7 @@
     @media (max-width: 390px) {
       .hero-h1 { font-size: 32px; }
       .listings-grid { grid-template-columns: 1fr; }
-      .regions-row2 { grid-template-columns: 1fr; }
+      /* regions-row2 stays 2-col even on small phones */
       .traits-grid { grid-template-columns: 1fr; }
       .hero-stats { grid-template-columns: repeat(3, 1fr); }
       .stat-num { font-size: 18px; }
@@ -1511,6 +1558,7 @@
   <a href="#contact" class="drawer-cta drawer-link">Get In Touch</a>
 </div>
 
+
 <!-- ─── HERO ─── -->
 <section id="home">
   <div class="hero-left">
@@ -1569,6 +1617,7 @@
     <span class="ticker-star">★</span>
   </div>
 </div>
+
 
 <!-- ─── ABOUT ─── -->
 <section id="about" class="section">
@@ -1655,6 +1704,22 @@
         <div class="region-desc">Growing corridor with JLD transformation driving values up.</div>
       </div>
     </div>
+
+    <!-- Mobile-only: single region card with tab switcher -->
+    <div id="mobile-region-switcher">
+      <div class="mobile-region-tabs">
+        <button class="mreg-tab active" data-region="central">Central</button>
+        <button class="mreg-tab" data-region="east">East</button>
+        <button class="mreg-tab" data-region="north">North</button>
+        <button class="mreg-tab" data-region="west">West</button>
+      </div>
+      <div class="region-card" id="mobile-region-card">
+        <div class="region-label">Central Region</div>
+        <div class="region-name">Bishan, Toa Payoh &amp; Ang Mo Kio</div>
+        <div class="region-desc">Mature heartland estates with some of Singapore&#39;s strongest resale demand. Proven track record from Toa Payoh&#39;s iconic towers to Bishan&#39;s family enclaves.</div>
+      </div>
+    </div>
+
     <div class="towns-wrap">
       <span class="town-chip" data-town="sengkang-punggol">Sengkang &amp; Punggol</span>
       <span class="town-chip" data-town="bishan-amk-toaPayoh">Bishan, AMK &amp; Toa Payoh</span>
@@ -2116,10 +2181,10 @@
       <div class="footer-col-title">HDB Tools</div>
       <ul class="footer-links">
         <li><a href="https://www.hdb.gov.sg" target="_blank">HDB Official Site</a></li>
-        <li><a href="https://www.hdb.gov.sg/cs/infoweb/residential/buying-a-flat/new/hfe" target="_blank">HFE Eligibility Check</a></li>
+        <li><a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/application-for-an-hdb-flat-eligibility-hfe-letter" target="_blank">HFE Eligibility Check</a></li>
         <li><a href="https://services2.hdb.gov.sg/webapp/BB33RTIS/BB33PReslTrans.jsp" target="_blank">Resale Price Tracker</a></li>
-        <li><a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility" target="_blank">Grant Calculator</a></li>
-        <li><a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/ethnic-integration-policy-and-spr-quota" target="_blank">Ethnic Quota Checker</a></li>
+        <li><a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility" target="_blank">Grant Eligibility</a></li>
+        <li><a href="https://services2.hdb.gov.sg/webapp/BB29ETHN/BB29STREET" target="_blank">Ethnic Quota Checker</a></li>
       </ul>
     </div>
   </div>
@@ -2377,6 +2442,84 @@
         cardEl.classList.remove('card-updating');
         cardEl.classList.add('town-focused');
       }, 180);
+    });
+  });
+
+  // ── Mobile Region Tab Switcher ──────────────────────────────────
+  const mobileRegionDefaults = {
+    central: {
+      label: "Central Region",
+      name: "Bishan, Toa Payoh &amp; Ang Mo Kio",
+      desc: "Mature heartland estates with strong resale demand. Proven track record from Toa Payoh's iconic towers to Bishan's family enclaves."
+    },
+    east: {
+      label: "East Region",
+      name: "Tampines &amp; Pasir Ris",
+      desc: "Singapore's vibrant east — family-friendly and in constant demand. Tampines' new town vitality meets Pasir Ris' spacious flats and coastal leisure."
+    },
+    north: {
+      label: "North Region",
+      name: "Woodlands &amp; Yishun",
+      desc: "Affordable with strong upgrading potential. New MRT lines and the Woodlands Regional Centre keep demand consistently high across the North."
+    },
+    west: {
+      label: "West · JLD Corridor",
+      name: "Jurong &amp; Clementi",
+      desc: "The Jurong Lake District transformation is redefining Singapore's western hub. One of the best long-term bets for upgraders and investors alike."
+    }
+  };
+
+  // Map town chip regions to mobile tab regions
+  const chipToMobileRegion = {
+    'ne': 'central', // fallback for ne chips hitting mobile card
+    'central': 'central',
+    'east': 'east',
+    'north': 'north',
+    'west': 'west'
+  };
+
+  function updateMobileRegionCard(data) {
+    const card = document.getElementById('mobile-region-card');
+    if (!card) return;
+    card.classList.add('updating');
+    setTimeout(() => {
+      card.querySelector('.region-label').textContent = data.label;
+      card.querySelector('.region-name').innerHTML = data.name;
+      card.querySelector('.region-desc').innerHTML = data.desc;
+      card.classList.remove('updating');
+    }, 180);
+  }
+
+  document.querySelectorAll('.mreg-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.mreg-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      const region = this.dataset.region;
+      updateMobileRegionCard(mobileRegionDefaults[region]);
+      // Clear any active town chips for a clean state
+      document.querySelectorAll('.town-chip.active-blue').forEach(c => c.classList.remove('active-blue'));
+    });
+  });
+
+  // When a town chip is clicked, also update the mobile card if on mobile
+  // (We hook into the existing chip click after a short delay to read the updated card data)
+  document.querySelectorAll('.town-chip').forEach(chip => {
+    chip.addEventListener('click', function() {
+      const key = this.dataset.town;
+      const data = townData[key];
+      if (!data) return;
+      const mobileCard = document.getElementById('mobile-region-card');
+      if (!mobileCard || mobileCard.offsetParent === null) return; // not visible = desktop
+      // Set the matching tab active
+      const region = chipToMobileRegion[data.card] || data.card;
+      document.querySelectorAll('.mreg-tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.region === region);
+      });
+      updateMobileRegionCard({
+        label: data.label,
+        name: data.name,
+        desc: data.desc
+      });
     });
   });
 
