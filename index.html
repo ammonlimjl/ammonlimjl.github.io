@@ -646,6 +646,7 @@
     .reviews-scroll {
       display: flex;
       gap: 20px;
+      width: 100%;
       overflow-x: auto;
       padding-bottom: 8px;
       scrollbar-width: none;
@@ -1084,91 +1085,203 @@
     /* ─── MOBILE RESPONSIVE ─── */
     @media (max-width: 768px) {
 
-      /* Nav */
-      nav {
-        padding: 0 20px;
-        height: 56px;
-      }
+      /* ─── NAV ─── */
+      nav { padding: 0 20px; height: 56px; }
       .nav-links { display: none; }
-      .btn-cta { padding: 8px 16px; font-size: 12px; }
+      .btn-cta { display: none; }
 
-      /* Hero */
+      /* ─── HERO — full-bleed photo with content overlaid ─── */
       #home {
-        grid-template-columns: 1fr;
-        min-height: auto;
+        display: block;
+        position: relative;
+        min-height: 88vh;
+        overflow: hidden;
+      }
+      .hero-right {
+        position: absolute;
+        inset: 0;
+        height: 100%;
+        display: block;
+      }
+      .hero-bg-img {
+        object-position: center 15%;
+      }
+      .hero-img-overlay {
+        background: linear-gradient(
+          180deg,
+          rgba(0,0,0,0.10) 0%,
+          rgba(0,0,0,0.08) 35%,
+          rgba(0,0,0,0.62) 65%,
+          rgba(0,0,0,0.88) 100%
+        ) !important;
       }
       .hero-left {
-        padding: 80px 24px 40px;
-        gap: 20px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 2;
+        padding: 0 20px 36px;
+        gap: 14px;
+        order: unset;
+        justify-content: flex-end;
+        display: flex;
+        flex-direction: column;
       }
-      .hero-h1 { font-size: 48px; }
-      .hero-right {
-        height: 260px;
+      .hero-h1 {
+        font-size: 38px;
+        letter-spacing: -0.02em;
+        color: #fff;
       }
-      .transaction-card {
-        bottom: 12px;
-        right: 12px;
-        padding: 12px 16px;
-        min-width: 160px;
+      .hero-h1 .italic-accent { color: var(--orange-bright); }
+      .hero-sub {
+        font-size: 14px;
+        line-height: 1.6;
+        color: rgba(255,255,255,0.82);
+        max-width: 100%;
       }
-      .tx-price { font-size: 18px; }
+      .hero-badge {
+        background: rgba(255,255,255,0.15);
+        border-color: rgba(255,255,255,0.25);
+        color: rgba(255,255,255,0.92);
+        backdrop-filter: blur(6px);
+        order: 2;
+      }
+      .hero-h1 { order: 1; }
+      .hero-sub { order: 3; }
+      .hero-stats { order: 4; }
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.18);
+        border-radius: 14px;
+        backdrop-filter: blur(8px);
+        overflow: hidden;
+      }
+      .hero-stats > div {
+        text-align: center;
+        padding: 14px 8px;
+        border-right: 1px solid rgba(255,255,255,0.12);
+      }
+      .hero-stats > div:last-child { border-right: none; }
+      .stat-num { font-size: 20px; color: #fff; }
+      .stat-label { font-size: 9px; color: rgba(255,255,255,0.65); }
+      .hero-cta {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .btn-primary, .btn-secondary {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        padding: 14px 20px;
+        font-size: 14px;
+      }
 
-      /* Ticker */
+      /* ─── TICKER ─── */
       .ticker-track span { font-size: 11px; margin-right: 28px; }
 
-      /* Sections */
-      .section { padding: 64px 24px; }
+      /* ─── SECTIONS ─── */
+      .section { padding: 56px 20px; }
+      .section-narrow { padding: 0; }
 
-      /* About */
+      /* ─── ABOUT ─── */
       .about-grid {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 32px;
       }
-      .about-img { aspect-ratio: 4/3; }
-      .satisfaction-card {
-        right: 12px;
-        bottom: 12px;
-      }
-      .about-h2 { font-size: 36px; }
-      .traits-grid { grid-template-columns: 1fr; }
+      .about-img { aspect-ratio: 4/5; object-position: center 10%; }
+      .about-img-wrap::before { display: none; }
+      .satisfaction-card { right: 8px; bottom: 8px; padding: 10px 14px; }
+      .about-h2 { font-size: 30px; }
+      .about-body { font-size: 15px; }
+      .traits-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .trait-card { padding: 16px; }
+      .trait-icon { font-size: 22px; }
+      .trait-title { font-size: 13px; }
 
-      /* Coverage */
-      .regions-grid { grid-template-columns: 1fr; }
+      /* ─── COVERAGE / EXPERTISE ─── */
+      .coverage-h2 { font-size: 28px; }
+      .towns-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .town-chip { font-size: 11px; padding: 7px 12px; }
+      .regions-grid { grid-template-columns: 1fr; gap: 12px; }
       .region-card.featured { grid-column: 1; }
-      .regions-row2 { grid-template-columns: 1fr; }
-      .coverage-h2 { font-size: 34px; }
+      .regions-row2 { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .region-card { padding: 20px; }
+      .region-name { font-size: 16px; }
 
-      /* Track record */
-      .listings-grid { grid-template-columns: 1fr; }
-      .track-h2 { font-size: 34px; }
+      /* ─── TRACK RECORD ─── */
+      .track-h2 { font-size: 28px; }
+      .listings-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .listing-img { height: 160px; }
+      .ach-label { font-size: 9px; }
+      .ach-value { font-size: 16px; }
+      .listing-flat-type { font-size: 11px; }
 
-      /* News */
-      .news-grid { grid-template-columns: 1fr; }
-      .news-h2 { font-size: 34px; }
+      /* ─── REVIEWS ─── */
+      .review-arrow { display: none; }
+      .reviews-slider-wrap { padding: 0; margin: 0; }
+      .review-card { flex: 0 0 280px; padding: 20px; }
+      .review-text { font-size: 13px; line-height: 1.6; }
 
-      /* Contact */
+      /* ─── NEWS ─── */
+      .news-h2 { font-size: 28px; }
+      .news-grid { grid-template-columns: 1fr; gap: 16px; }
+      .news-img-wrap { height: 180px; }
+      .news-title { font-size: 16px; }
+      .news-excerpt { display: none; }
+
+      /* ─── CONTACT ─── */
+      .contact-h2 { font-size: 28px; }
       .contact-grid {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 32px;
       }
-      .contact-h2 { font-size: 32px; }
+      .contact-methods { gap: 10px; }
+      .contact-method { padding: 14px 16px; gap: 12px; }
+      .contact-method-label { font-size: 11px; }
+      .contact-method-val { font-size: 13px; }
+      /* Stack email+phone fields vertically on mobile */
+      .form-group[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+      }
+      .form-input, .form-textarea { font-size: 16px; } /* prevent iOS zoom */
+      .btn-submit { font-size: 14px; padding: 15px; min-height: 48px; }
 
-      /* Footer */
-      .footer-top { grid-template-columns: 1fr; gap: 32px; }
-      footer { padding: 48px 24px 28px; }
+      /* ─── FOOTER ─── */
+      .footer-top { grid-template-columns: 1fr; gap: 28px; }
+      footer { padding: 44px 20px 24px; }
       .footer-bottom {
         flex-direction: column;
         gap: 8px;
         text-align: center;
       }
 
-      /* WhatsApp float */
-      .wa-float { padding: 12px 16px 12px 12px; font-size: 13px; }
+      /* ─── WHATSAPP FLOAT ─── */
+      .wa-float {
+        border-radius: 50%;
+        width: 54px;
+        height: 54px;
+        padding: 0;
+        justify-content: center;
+        bottom: 20px;
+        right: 16px;
+      }
       .wa-float span { display: none; }
-      .wa-float { border-radius: 50%; width: 56px; height: 56px; padding: 0; justify-content: center; }
-      .wa-icon { width: 36px; height: 36px; font-size: 20px; background: transparent; }
+      .wa-icon { width: 34px; height: 34px; font-size: 20px; background: transparent; }
 
-      /* Hamburger button */
+      /* ─── HAMBURGER ─── */
       .hamburger {
         display: flex;
         flex-direction: column;
@@ -1183,7 +1296,6 @@
         border-radius: 8px;
         transition: background 0.15s;
       }
-      .hamburger:hover { background: var(--cream-dark); }
       .hamburger .bar {
         display: block;
         width: 22px;
@@ -1197,7 +1309,7 @@
       .hamburger.open .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
       .hamburger.open .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-      /* Mobile drawer */
+      /* ─── MOBILE DRAWER ─── */
       .mobile-drawer {
         display: none;
         position: fixed;
@@ -1208,18 +1320,18 @@
         background: var(--cream);
         z-index: 99;
         flex-direction: column;
-        padding: 32px 24px;
+        padding: 28px 20px;
         gap: 0;
         overflow-y: auto;
       }
       .mobile-drawer.open { display: flex; }
       .mobile-drawer a {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        font-size: 22px;
+        font-size: 20px;
         font-weight: 700;
         color: var(--text);
         text-decoration: none;
-        padding: 18px 0;
+        padding: 16px 0;
         border-bottom: 1px solid var(--border);
         display: block;
         transition: color 0.15s;
@@ -1227,16 +1339,29 @@
       .mobile-drawer a:hover { color: var(--orange); }
       .mobile-drawer a:last-child { border-bottom: none; }
       .mobile-drawer .drawer-cta {
-        margin-top: 32px;
+        margin-top: 28px;
         background: var(--orange);
         color: #fff;
         border-radius: 14px;
-        padding: 18px;
+        padding: 16px;
         text-align: center;
         font-size: 16px;
         border-bottom: none !important;
       }
-      .mobile-drawer .drawer-cta:hover { background: var(--orange-bright); color: #fff; }
+
+      /* ─── SUBSCRIBE POPUP ─── */
+      .subscribe-modal { padding: 36px 24px 28px; }
+      .subscribe-title { font-size: 20px; }
+    }
+
+    /* ─── EXTRA SMALL PHONES (≤ 390px) ─── */
+    @media (max-width: 390px) {
+      .hero-h1 { font-size: 32px; }
+      .listings-grid { grid-template-columns: 1fr; }
+      .regions-row2 { grid-template-columns: 1fr; }
+      .traits-grid { grid-template-columns: 1fr; }
+      .hero-stats { grid-template-columns: repeat(3, 1fr); }
+      .stat-num { font-size: 18px; }
     }
 
     /* ─── SUBSCRIBE POPUP ─── */
@@ -1330,9 +1455,7 @@
     }
     .review-arrow.arrow-prev { left: -22px; }
     .review-arrow.arrow-next { right: -22px; }
-    @media (max-width: 768px) {
-      .review-arrow { display: none; }
-    }
+    
 
     .news-source {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -1939,12 +2062,12 @@
         </div>
         <div class="form-group" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
           <div>
-            <label class="form-label">Email Address</label>
-            <input type="email" name="email" class="form-input" placeholder="e.g. john@email.com">
+            <label class="form-label">Phone / WhatsApp <span style="color:#e05c00;">*</span></label>
+            <input type="tel" name="phone" class="form-input" placeholder="e.g. 9123 4567" required>
           </div>
           <div>
-            <label class="form-label">Phone / WhatsApp</label>
-            <input type="tel" name="phone" class="form-input" placeholder="e.g. 9123 4567">
+            <label class="form-label">Email Address</label>
+            <input type="email" name="email" class="form-input" placeholder="e.g. john@email.com">
           </div>
         </div>
         <div class="form-group">
@@ -2339,14 +2462,14 @@
           </div>`;
       } else {
         return res.json().then(data => {
-          btn.textContent = 'Subscribe — It's Free';
+          btn.textContent = "Subscribe — It's Free";
           btn.disabled = false;
           alert(data.errors ? data.errors.map(err => err.message).join(', ') : 'Something went wrong. Please try again.');
         });
       }
     })
     .catch(() => {
-      btn.textContent = 'Subscribe — It's Free';
+      btn.textContent = "Subscribe — It's Free";
       btn.disabled = false;
       alert('Network error. Please check your connection and try again.');
     });
