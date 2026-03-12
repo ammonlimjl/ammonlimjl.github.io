@@ -1,0 +1,1770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ammon Lim | HDB Real Estate Agent Singapore</title>
+  <meta name="description" content="Singapore's HDB specialist with 10+ years experience. 200+ transactions across 26 towns. Expert guidance on buying, selling & upgrading HDB flats.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:        #FAF8F3;
+      --cream-dark:   #F2EDE4;
+      --orange:       #EA580C;
+      --orange-bright:#F97316;
+      --orange-light: #FED7AA;
+      --orange-pale:  #FFF7ED;
+      --blue:         #2563EB;
+      --blue-dark:    #1D4ED8;
+      --blue-light:   #DBEAFE;
+      --blue-pale:    #EFF6FF;
+      --dark:         #1E120A;
+      --dark-mid:     #3A200E;
+      --text:         #1C1A17;
+      --muted:        #7A7065;
+      --border:       #E8E0D6;
+      --white:        #FFFFFF;
+      --green-sold:   #16A34A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ─── UTILITIES ─── */
+    .sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    .section-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--orange);
+    }
+    .section-label-blue { color: var(--blue); }
+    .italic-accent { font-style: italic; color: var(--orange); }
+    .italic-accent-blue { font-style: italic; color: var(--blue); }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 64px;
+    }
+    .nav-logo {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--orange); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .btn-cta {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      padding: 10px 22px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-cta:hover { background: var(--orange-bright); }
+
+    /* ─── HERO ─── */
+    #home {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 64px);
+      overflow: hidden;
+    }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 64px 56px 64px 64px;
+      gap: 24px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--orange-pale);
+      border: 1px solid var(--orange-light);
+      color: var(--orange);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      width: fit-content;
+    }
+    .hero-h1 {
+      font-size: clamp(52px, 6vw, 76px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+    .hero-sub {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 420px;
+    }
+    .hero-search {
+      display: flex;
+      gap: 8px;
+      max-width: 440px;
+    }
+    .hero-search input {
+      flex: 1;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      padding: 12px 18px;
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      background: #fff;
+      outline: none;
+      color: var(--text);
+    }
+    .hero-search input:focus { border-color: var(--orange); }
+    .hero-search button {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      padding: 12px 26px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .hero-search button:hover { background: var(--orange-bright); }
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+    }
+    .stat-num {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .stat-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .hero-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      position: relative;
+    }
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .hero-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(234,88,12,0.08) 0%, rgba(37,99,235,0.06) 100%),
+                  linear-gradient(180deg, transparent 60%, rgba(30,18,10,0.30) 100%);
+      pointer-events: none;
+    }
+    .transaction-card {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      background: #fff;
+      border-radius: 14px;
+      padding: 16px 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      min-width: 190px;
+    }
+    .tx-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .tx-price {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .tx-address {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .tx-sold {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--green-sold);
+      letter-spacing: 0.06em;
+    }
+
+    /* ─── TICKER ─── */
+    .ticker-wrap {
+      background: var(--dark);
+      overflow: hidden;
+      padding: 14px 0;
+      white-space: nowrap;
+    }
+    .ticker-track {
+      display: inline-block;
+      animation: ticker 30s linear infinite;
+    }
+    .ticker-track span {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-right: 40px;
+    }
+    .ticker-track span.highlight { color: var(--orange-bright); }
+    @keyframes ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ─── SECTION WRAPPER ─── */
+    .section { padding: 96px 64px; }
+    .section-narrow { max-width: 1200px; margin: 0 auto; }
+
+    /* ─── ABOUT ─── */
+    #about { background: var(--cream); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .about-img-wrap { position: relative; }
+    .about-img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      border-radius: 20px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .about-badge {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      background: rgba(255,255,255,0.92);
+      border-radius: 100px;
+      padding: 8px 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(8px);
+    }
+    .about-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green-sold); }
+    .satisfaction-card {
+      position: absolute;
+      bottom: 24px;
+      right: -20px;
+      background: var(--orange);
+      color: #fff;
+      border-radius: 14px;
+      padding: 16px 22px;
+      text-align: center;
+    }
+    .satisfaction-card .num {
+      font-size: 30px;
+      font-weight: 800;
+    }
+    .satisfaction-card .lbl {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 11px;
+      opacity: 0.9;
+    }
+    .about-content { display: flex; flex-direction: column; gap: 32px; }
+    .about-h2 {
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .about-p { font-size: 16px; color: var(--muted); line-height: 1.75; }
+    .traits-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .trait-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .trait-icon { font-size: 20px; margin-bottom: 10px; }
+    .trait-title {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .trait-desc {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ─── COVERAGE ─── */
+    #expertise { background: var(--cream-dark); }
+    .coverage-header { text-align: center; margin-bottom: 48px; }
+    .coverage-h2 {
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-top: 12px;
+    }
+    .regions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .region-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .region-card.featured {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+      grid-column: 1;
+    }
+    .region-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .region-card.featured .region-label { color: rgba(255,255,255,0.7); }
+    .region-name {
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+    .region-desc {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .region-card.featured .region-desc { color: rgba(255,255,255,0.85); }
+    .specialist-badge {
+      display: inline-block;
+      margin-top: 12px;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+    .regions-row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .towns-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .town-chip {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      padding: 6px 16px;
+      border-radius: 100px;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .town-chip:hover { border-color: var(--orange); color: var(--orange); }
+    .town-chip.active {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+    }
+    .town-chip.active-blue {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    /* ─── TRACK RECORD ─── */
+    #cases { background: var(--cream); }
+    .track-header { text-align: center; margin-bottom: 48px; }
+    .track-h2 {
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-top: 12px;
+    }
+    .track-sub {
+      font-size: 16px;
+      color: var(--muted);
+      margin-top: 12px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .listings-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .listing-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .listing-img {
+      width: 100%;
+      height: 180px;
+      position: relative;
+    }
+    .listing-img-bg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.45s ease;
+    }
+    .listing-card:hover .listing-img-bg {
+      transform: scale(1.05);
+    }
+    .listing-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .listing-card:hover {
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      transform: translateY(-3px);
+    }
+    .badge-for-sale {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(4px);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 6px;
+      color: var(--text);
+      z-index: 2;
+    }
+    .badge-sold {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--green-sold);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 6px;
+      color: #fff;
+      z-index: 2;
+    }
+    .listing-body { padding: 18px; }
+    .listing-location {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+    .listing-loc-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); }
+    .listing-name {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+    .listing-meta {
+      display: flex;
+      gap: 12px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .listing-price {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--orange);
+    }
+
+    /* ─── REVIEWS ─── */
+    #reviews {
+      background: var(--dark);
+      color: #fff;
+    }
+    .reviews-header { text-align: center; margin-bottom: 48px; }
+    .reviews-label { color: var(--orange-bright); }
+    .reviews-h2 {
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-top: 12px;
+      color: #fff;
+    }
+    .reviews-h2 .italic-accent { color: var(--orange-bright); }
+    .reviews-sub { font-size: 16px; color: rgba(255,255,255,0.6); margin-top: 12px; }
+    .reviews-scroll {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .reviews-scroll::-webkit-scrollbar { display: none; }
+    .review-card {
+      flex: 0 0 320px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .review-stars {
+      color: var(--orange-bright);
+      font-size: 14px;
+      margin-bottom: 14px;
+      letter-spacing: 2px;
+    }
+    .review-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .review-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .review-name {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .review-role {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ─── NEWS ─── */
+    #news { background: var(--cream); }
+    .news-header { text-align: center; margin-bottom: 48px; }
+    .news-h2 {
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-top: 12px;
+    }
+    .news-sub { font-size: 16px; color: var(--muted); margin-top: 12px; max-width: 480px; margin-left: auto; margin-right: auto; text-align: center; }
+    .news-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 20px;
+    }
+    .news-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .news-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.45s ease;
+    }
+    .news-card:first-child .news-img { aspect-ratio: 4/3; }
+    .news-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .news-card:hover { box-shadow: 0 10px 32px rgba(0,0,0,0.10); transform: translateY(-2px); }
+    .news-card:hover .news-img { transform: scale(1.04); }
+    .news-tag {
+      display: inline-block;
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--orange);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .news-img-wrap { position: relative; }
+    .news-body { padding: 20px; }
+    .news-date {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .news-title {
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 10px;
+    }
+    .news-card:not(:first-child) .news-title { font-size: 15px; }
+    .news-excerpt {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--cream-dark); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .contact-left { display: flex; flex-direction: column; gap: 28px; }
+    .contact-h2 {
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .contact-sub {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .contact-methods { display: flex; flex-direction: column; gap: 12px; }
+    .contact-method {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+    .contact-method:hover { border-color: var(--orange); }
+    .contact-method-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--orange-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .contact-method-icon.blue-icon { background: var(--blue-pale); }
+    .contact-method-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .contact-method-value {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .contact-right { background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 36px; }
+    .form-group { margin-bottom: 20px; }
+    .form-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .form-input, .form-textarea {
+      width: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: var(--cream);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus, .form-textarea:focus { border-color: var(--orange); }
+    .form-textarea { resize: vertical; min-height: 100px; }
+    .btn-submit {
+      width: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover { background: var(--orange-bright); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.7);
+      padding: 64px 64px 32px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer-brand {}
+    .footer-logo {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .footer-logo span { color: var(--orange-bright); }
+    .footer-desc {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+    }
+    .footer-col-title {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 20px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-links a {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: #fff; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+    }
+    .footer-legal {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ─── DESIGN POLISH ─── */
+    /* Photo warmth overlay on listing/news card images */
+    .listing-img { overflow: hidden; }
+    .listing-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.32) 100%);
+      pointer-events: none;
+    }
+    .news-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.28) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .news-tag { z-index: 2; }
+
+    /* Section divider: subtle top border for depth */
+    #about { border-top: 1px solid var(--border); }
+    #cases  { border-top: 1px solid rgba(0,0,0,0.06); }
+    #news   { border-top: 1px solid var(--border); }
+
+    /* About section — image subtle shadow */
+    .about-img-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -8px -8px 8px 8px;
+      background: var(--orange-pale);
+      border-radius: 24px;
+      z-index: -1;
+    }
+
+    /* Coverage region cards — hover lift */
+    .region-card {
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .region-card:not(.featured):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.09);
+      transform: translateY(-2px);
+    }
+
+    /* Review card hover */
+    .review-card {
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .review-card:hover {
+      border-color: rgba(249,115,22,0.35);
+      transform: translateY(-2px);
+    }
+
+    /* Improved contact method hover */
+    .contact-method:hover {
+      border-color: var(--orange);
+      background: var(--orange-pale);
+    }
+
+    /* ─── WHATSAPP FLOAT ─── */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #25D366;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 100px;
+      padding: 14px 22px 14px 16px;
+      box-shadow: 0 8px 32px rgba(37,211,102,0.4);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .wa-float:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(37,211,102,0.5);
+    }
+    .wa-icon {
+      width: 32px;
+      height: 32px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .wa-pulse {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 14px;
+      height: 14px;
+      background: var(--orange-bright);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.7; }
+    }
+
+    /* Hide mobile-only elements on desktop by default */
+    .hamburger { display: none; }
+    .mobile-drawer { display: none; }
+
+    /* ─── MOBILE RESPONSIVE ─── */
+    @media (max-width: 768px) {
+
+      /* Nav */
+      nav {
+        padding: 0 20px;
+        height: 56px;
+      }
+      .nav-links { display: none; }
+      .btn-cta { padding: 8px 16px; font-size: 12px; }
+
+      /* Hero */
+      #home {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .hero-left {
+        padding: 80px 24px 40px;
+        gap: 20px;
+      }
+      .hero-h1 { font-size: 48px; }
+      .hero-right {
+        height: 260px;
+      }
+      .transaction-card {
+        bottom: 12px;
+        right: 12px;
+        padding: 12px 16px;
+        min-width: 160px;
+      }
+      .tx-price { font-size: 18px; }
+
+      /* Ticker */
+      .ticker-track span { font-size: 11px; margin-right: 28px; }
+
+      /* Sections */
+      .section { padding: 64px 24px; }
+
+      /* About */
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .about-img { aspect-ratio: 4/3; }
+      .satisfaction-card {
+        right: 12px;
+        bottom: 12px;
+      }
+      .about-h2 { font-size: 36px; }
+      .traits-grid { grid-template-columns: 1fr; }
+
+      /* Coverage */
+      .regions-grid { grid-template-columns: 1fr; }
+      .region-card.featured { grid-column: 1; }
+      .regions-row2 { grid-template-columns: 1fr; }
+      .coverage-h2 { font-size: 34px; }
+
+      /* Track record */
+      .listings-grid { grid-template-columns: 1fr; }
+      .track-h2 { font-size: 34px; }
+
+      /* News */
+      .news-grid { grid-template-columns: 1fr; }
+      .news-h2 { font-size: 34px; }
+
+      /* Contact */
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .contact-h2 { font-size: 32px; }
+
+      /* Footer */
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      footer { padding: 48px 24px 28px; }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+
+      /* WhatsApp float */
+      .wa-float { padding: 12px 16px 12px 12px; font-size: 13px; }
+      .wa-float span { display: none; }
+      .wa-float { border-radius: 50%; width: 56px; height: 56px; padding: 0; justify-content: center; }
+      .wa-icon { width: 36px; height: 36px; font-size: 20px; background: transparent; }
+
+      /* Hamburger button */
+      .hamburger {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 40px;
+        height: 40px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 6px;
+        border-radius: 8px;
+        transition: background 0.15s;
+      }
+      .hamburger:hover { background: var(--cream-dark); }
+      .hamburger .bar {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: var(--text);
+        border-radius: 2px;
+        transition: transform 0.25s ease, opacity 0.2s ease;
+        transform-origin: center;
+      }
+      .hamburger.open .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .hamburger.open .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+      .hamburger.open .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+      /* Mobile drawer */
+      .mobile-drawer {
+        display: none;
+        position: fixed;
+        top: 56px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--cream);
+        z-index: 99;
+        flex-direction: column;
+        padding: 32px 24px;
+        gap: 0;
+        overflow-y: auto;
+      }
+      .mobile-drawer.open { display: flex; }
+      .mobile-drawer a {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--text);
+        text-decoration: none;
+        padding: 18px 0;
+        border-bottom: 1px solid var(--border);
+        display: block;
+        transition: color 0.15s;
+      }
+      .mobile-drawer a:hover { color: var(--orange); }
+      .mobile-drawer a:last-child { border-bottom: none; }
+      .mobile-drawer .drawer-cta {
+        margin-top: 32px;
+        background: var(--orange);
+        color: #fff;
+        border-radius: 14px;
+        padding: 18px;
+        text-align: center;
+        font-size: 16px;
+        border-bottom: none !important;
+      }
+      .mobile-drawer .drawer-cta:hover { background: var(--orange-bright); color: #fff; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a href="#home" class="nav-logo">Ammon <span>Lim</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#cases">Cases</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#news">News</a></li>
+  </ul>
+  <a href="#contact" class="btn-cta sans" id="nav-cta">Get In Touch</a>
+  <button class="hamburger" id="hamburger-btn" aria-label="Open menu">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+</nav>
+
+<!-- ─── MOBILE DRAWER ─── -->
+<div class="mobile-drawer" id="mobile-drawer">
+  <a href="#about" class="drawer-link">About</a>
+  <a href="#expertise" class="drawer-link">Expertise</a>
+  <a href="#cases" class="drawer-link">Cases</a>
+  <a href="#reviews" class="drawer-link">Reviews</a>
+  <a href="#news" class="drawer-link">News</a>
+  <a href="#contact" class="drawer-cta drawer-link">Get In Touch</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section id="home">
+  <div class="hero-left">
+    <div class="hero-badge sans">🏠 Singapore's HDB Specialist</div>
+    <h1 class="hero-h1">Your <em class="italic-accent">Home</em><br>Is My<br>Passion.</h1>
+    <p class="hero-sub">From Sengkang to Sembawang, Tampines to Toa Payoh — island-wide HDB expertise with a personal touch. Let's find the home that truly fits your life.</p>
+    <div class="hero-search">
+      <input type="text" placeholder="Search by town, flat type, budget…">
+      <button class="sans">Search</button>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">200+</div>
+        <div class="stat-label sans">Transactions</div>
+      </div>
+      <div>
+        <div class="stat-num">10+</div>
+        <div class="stat-label sans">Years Exp.</div>
+      </div>
+      <div>
+        <div class="stat-num">26</div>
+        <div class="stat-label sans">Towns Covered</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="DSC03210_IJFR.jpg" alt="Ammon Lim – Singapore HDB Specialist, Marina Bay backdrop" class="hero-bg-img">
+    <div class="hero-img-overlay"></div>
+    <div class="transaction-card">
+      <div class="tx-label">Latest Transaction</div>
+      <div class="tx-price">$658,000</div>
+      <div class="tx-address sans">Punggol Waterway, 5-Room</div>
+      <div class="tx-sold sans">✓ SOLD IN 12 DAYS</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TICKER ─── -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span>3-Room HDB Woodlands · <span class="highlight">Sold $440K</span></span>
+    <span>★</span>
+    <span>3-Room HDB Bedok · Rented $2,100/mo</span>
+    <span>★</span>
+    <span>5-Room HDB Sengkang · <span class="highlight">Sold $638K</span></span>
+    <span>★</span>
+    <span>4-Room HDB Tampines · Sold $520K</span>
+    <span>★</span>
+    <span>3-Room HDB Toa Payoh · Rented $2,400/mo</span>
+    <span>★</span>
+    <span>5-Room HDB Punggol · <span class="highlight">Sold $712K</span></span>
+    <span>★</span>
+    <span>Executive Maisonette Bishan · Sold $858K</span>
+    <span>★</span>
+    <span>4-Room HDB Jurong West · Sold $480K</span>
+    <span>★</span>
+    <!-- duplicate for seamless loop -->
+    <span>3-Room HDB Woodlands · <span class="highlight">Sold $440K</span></span>
+    <span>★</span>
+    <span>3-Room HDB Bedok · Rented $2,100/mo</span>
+    <span>★</span>
+    <span>5-Room HDB Sengkang · <span class="highlight">Sold $638K</span></span>
+    <span>★</span>
+    <span>4-Room HDB Tampines · Sold $520K</span>
+    <span>★</span>
+    <span>3-Room HDB Toa Payoh · Rented $2,400/mo</span>
+    <span>★</span>
+    <span>5-Room HDB Punggol · <span class="highlight">Sold $712K</span></span>
+    <span>★</span>
+    <span>Executive Maisonette Bishan · Sold $858K</span>
+    <span>★</span>
+    <span>4-Room HDB Jurong West · Sold $480K</span>
+    <span>★</span>
+  </div>
+</div>
+
+<!-- ─── ABOUT ─── -->
+<section id="about" class="section">
+  <div class="section-narrow">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <img src="DSC02974_IJFR.jpg" alt="Ammon Lim – Your Singapore HDB Specialist" class="about-img">
+        <div class="about-badge">
+          <span class="dot"></span>
+          <span class="sans">Started in Sengkang 🏠</span>
+        </div>
+        <div class="satisfaction-card">
+          <div class="num">98%</div>
+          <div class="lbl sans">Client Satisfaction</div>
+        </div>
+      </div>
+      <div class="about-content">
+        <div>
+          <div class="section-label">About Ammon</div>
+          <h2 class="about-h2">A Local Who <em class="italic-accent">Truly</em><br>Knows HDB Living</h2>
+        </div>
+        <p class="about-p">Born and raised in Sengkang, I understand what it means to find a home — not just a flat. With over 10 years in HDB real estate, I've helped more than 200 families buy, sell, and upgrade across all 26 towns in Singapore. My approach is simple: honest advice, local expertise, and a genuine commitment to your best outcome.</p>
+        <div class="traits-grid">
+          <div class="trait-card">
+            <div class="trait-icon">🤝</div>
+            <div class="trait-title sans">Honest Advice</div>
+            <div class="trait-desc">I tell you what you need to hear, not what you want to hear.</div>
+          </div>
+          <div class="trait-card">
+            <div class="trait-icon">📍</div>
+            <div class="trait-title sans">Local Knowledge</div>
+            <div class="trait-desc">From Sengkang roots to island-wide reach — every town, intimately.</div>
+          </div>
+          <div class="trait-card">
+            <div class="trait-icon">⚡</div>
+            <div class="trait-title sans">Fast Results</div>
+            <div class="trait-desc">Most listings sell within 2–4 weeks with my marketing approach.</div>
+          </div>
+          <div class="trait-card">
+            <div class="trait-icon">💬</div>
+            <div class="trait-title sans">Always Reachable</div>
+            <div class="trait-desc">WhatsApp, call, or meet — I'm here when you need me.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── COVERAGE ─── -->
+<section id="expertise" class="section">
+  <div class="section-narrow">
+    <div class="coverage-header">
+      <div class="section-label">Coverage</div>
+      <h2 class="coverage-h2">Island-Wide <em class="italic-accent">HDB</em> Expertise</h2>
+    </div>
+    <div class="regions-grid">
+      <div class="region-card featured">
+        <div class="region-label">North-East Region · Deep Specialist</div>
+        <div class="region-name">Sengkang &amp;<br>Punggol</div>
+        <div class="region-desc">Where it all began. Deep familiarity with Waterway estates, BTO launches, and resale dynamics in the North-East.</div>
+        <div class="specialist-badge">Deep Specialist</div>
+      </div>
+      <div class="region-card">
+        <div class="region-label">Central Region</div>
+        <div class="region-name">Bishan, Toa Payoh<br>&amp; Ang Mo Kio</div>
+        <div class="region-desc">Mature estates with strong demand and premium valuations.</div>
+      </div>
+      <div class="region-card">
+        <div class="region-label">East Region</div>
+        <div class="region-name">Tampines &amp;<br>Pasir Ris</div>
+        <div class="region-desc">Family-friendly with excellent amenities and transport links.</div>
+      </div>
+    </div>
+    <div class="regions-row2">
+      <div class="region-card">
+        <div class="region-label">North Region</div>
+        <div class="region-name">Woodlands &amp; Yishun</div>
+        <div class="region-desc">Affordable with strong upgrading potential and new MRT lines.</div>
+      </div>
+      <div class="region-card">
+        <div class="region-label">West Region</div>
+        <div class="region-name">Jurong &amp; Clementi</div>
+        <div class="region-desc">Growing corridor with JLD transformation driving values up.</div>
+      </div>
+    </div>
+    <div class="towns-wrap">
+      <span class="town-chip active">Sengkang</span>
+      <span class="town-chip active">Punggol</span>
+      <span class="town-chip">Ang Mo Kio</span>
+      <span class="town-chip">Bedok</span>
+      <span class="town-chip">Bishan</span>
+      <span class="town-chip">Bukit Batok</span>
+      <span class="town-chip">Bukit Merah</span>
+      <span class="town-chip">Clementi</span>
+      <span class="town-chip">Geylang</span>
+      <span class="town-chip">Hougang</span>
+      <span class="town-chip">Jurong East</span>
+      <span class="town-chip">Jurong West</span>
+      <span class="town-chip">Kallang</span>
+      <span class="town-chip">Marine Parade</span>
+      <span class="town-chip">Pasir Ris</span>
+      <span class="town-chip">Queenstown</span>
+      <span class="town-chip">Sembawang</span>
+      <span class="town-chip">Serangoon</span>
+      <span class="town-chip">Tampines</span>
+      <span class="town-chip">Toa Payoh</span>
+      <span class="town-chip">Woodlands</span>
+      <span class="town-chip">Yishun</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TRACK RECORD ─── -->
+<section id="cases" class="section" style="background: var(--cream-dark);">
+  <div class="section-narrow">
+    <div class="track-header">
+      <div class="section-label">Track Record</div>
+      <h2 class="track-h2">Real Results, <em class="italic-accent">Real</em> Families</h2>
+      <p class="track-sub sans">A selection of recently closed transactions — every one a real story, a real family, a real home.</p>
+    </div>
+    <div class="listings-grid">
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1472148439583-1f4cf81b80e0?auto=format&fit=crop&w=600&q=80" alt="Punggol Waterway HDB flats" class="listing-img-bg">
+          <span class="badge-for-sale">For Sale</span>
+          <span class="badge-sold">✓ Sold</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-location"><span class="listing-loc-dot"></span><span class="sans">Punggol, Block 170</span></div>
+          <div class="listing-name">5-Room Waterway Terraces</div>
+          <div class="listing-meta sans"><span>🛏 5 Rooms</span><span>📐 110 sqm</span><span>🏢 12F</span></div>
+          <div class="listing-price">$712,000</div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1527465094057-db061fdbfaf7?auto=format&fit=crop&w=600&q=80" alt="Tampines HDB high-rise flat" class="listing-img-bg">
+          <span class="badge-for-sale">For Sale</span>
+          <span class="badge-sold">✓ Sold</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-location"><span class="listing-loc-dot"></span><span class="sans">Tampines, Block 430</span></div>
+          <div class="listing-name">4-Room Premiere Flat</div>
+          <div class="listing-meta sans"><span>🛏 4 Rooms</span><span>📐 90 sqm</span><span>🏢 8F</span></div>
+          <div class="listing-price">$520,000</div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1494380963178-7e05eb8fe22c?auto=format&fit=crop&w=600&q=80" alt="Toa Payoh HDB estate aerial" class="listing-img-bg">
+          <span class="badge-for-sale">For Rent</span>
+          <span class="badge-sold">✓ Rented</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-location"><span class="listing-loc-dot"></span><span class="sans">Toa Payoh, Block 110</span></div>
+          <div class="listing-name">3-Room Heritage Flat</div>
+          <div class="listing-meta sans"><span>🛏 3 Rooms</span><span>📐 68 sqm</span><span>🏢 5F</span></div>
+          <div class="listing-price">$2,400 / mo</div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1559727801-763c7c950494?auto=format&fit=crop&w=600&q=80" alt="Bishan HDB high-rise building" class="listing-img-bg">
+          <span class="badge-for-sale">For Sale</span>
+          <span class="badge-sold">✓ Sold</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-location"><span class="listing-loc-dot"></span><span class="sans">Bishan, Block 113</span></div>
+          <div class="listing-name">Executive Maisonette</div>
+          <div class="listing-meta sans"><span>🛏 5 Rooms</span><span>📐 146 sqm</span><span>🏢 3F</span></div>
+          <div class="listing-price">$858,000</div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1558241480-0c99dfae074d?auto=format&fit=crop&w=600&q=80" alt="Sengkang HDB estate" class="listing-img-bg">
+          <span class="badge-for-sale">For Sale</span>
+          <span class="badge-sold">✓ Sold</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-location"><span class="listing-loc-dot"></span><span class="sans">Sengkang, Block 302A</span></div>
+          <div class="listing-name">5-Room Fernvale Flat</div>
+          <div class="listing-meta sans"><span>🛏 5 Rooms</span><span>📐 108 sqm</span><span>🏢 15F</span></div>
+          <div class="listing-price">$638,000</div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1553874106-b1c71e8a8a66?auto=format&fit=crop&w=600&q=80" alt="Woodlands HDB aerial view" class="listing-img-bg">
+          <span class="badge-for-sale">For Sale</span>
+          <span class="badge-sold">✓ Sold</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-location"><span class="listing-loc-dot"></span><span class="sans">Woodlands, Block 88</span></div>
+          <div class="listing-name">4-Room DBSS Flat</div>
+          <div class="listing-meta sans"><span>🛏 4 Rooms</span><span>📐 93 sqm</span><span>🏢 10F</span></div>
+          <div class="listing-price">$441,000</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── REVIEWS ─── -->
+<section id="reviews" class="section">
+  <div class="section-narrow">
+    <div class="reviews-header">
+      <div class="section-label reviews-label">Client Stories</div>
+      <h2 class="reviews-h2">What Families <em class="italic-accent">Say</em></h2>
+      <p class="reviews-sub sans">Real words from real families I've had the privilege to serve.</p>
+    </div>
+    <div class="reviews-scroll">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Ammon was incredibly patient with us throughout the whole process. He knew exactly what we needed and found us the perfect flat in Tampines within 3 weeks. Highly recommend!"</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background: #7C3AED;">MN</div>
+          <div>
+            <div class="review-name sans">Mdm Norzahra</div>
+            <div class="review-role sans">Tampines · Buyer</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"We sold our Bishan flat above valuation in just 18 days. Ammon's marketing strategy and honest guidance made the whole selling process stress-free for our family."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background: #0891B2;">TC</div>
+          <div>
+            <div class="review-name sans">The Chan Family</div>
+            <div class="review-role sans">Bishan · Sellers</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"As a single mum selling my flat in Woodlands, I needed someone I could trust. Ammon gave me honest advice and got me the best price. He truly cares about his clients."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background: #DC2626;">PL</div>
+          <div>
+            <div class="review-name sans">Priya L.</div>
+            <div class="review-role sans">Woodlands · Seller</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"First-time buyers here — we had so many questions. Ammon walked us through every step, from HFE application to key collection. We couldn't have done it without him!"</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background: #059669;">SL</div>
+          <div>
+            <div class="review-name sans">Sarah &amp; Leon T.</div>
+            <div class="review-role sans">Punggol · First-time Buyers</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Upgrading from our 3-room to a 5-room in Sengkang felt overwhelming. Ammon coordinated the sale and purchase seamlessly — we moved without a single hiccup."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background: var(--orange);">JC</div>
+          <div>
+            <div class="review-name sans">James &amp; Clara</div>
+            <div class="review-role sans">Sengkang · Upgraders</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── NEWS ─── -->
+<section id="news" class="section">
+  <div class="section-narrow">
+    <div class="news-header">
+      <div class="section-label">Insights &amp; Updates</div>
+      <h2 class="news-h2">HDB <em class="italic-accent">News</em> &amp; Market Tips</h2>
+      <p class="news-sub sans">Stay informed with the latest HDB policy updates, market trends, and home-buying guides from Ammon.</p>
+    </div>
+    <div class="news-grid">
+      <div class="news-card">
+        <div class="news-img-wrap">
+          <img src="https://images.unsplash.com/photo-1610730297006-ed0e847c34f9?auto=format&fit=crop&w=900&q=80" alt="Singapore business district skyline" class="news-img">
+          <span class="news-tag">Market Insight</span>
+        </div>
+        <div class="news-body">
+          <div class="news-date sans">March 2026</div>
+          <div class="news-title">HDB Resale Prices Hit Record High in Q1 2026 — What It Means for Buyers &amp; Sellers</div>
+          <div class="news-excerpt sans">Resale prices surged for the third consecutive quarter. Ammon breaks down which towns are hottest and what buyers can still afford.</div>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-img-wrap">
+          <img src="https://images.unsplash.com/photo-1706512199237-06867557fb85?auto=format&fit=crop&w=600&q=80" alt="Singapore skyline evening Marina Bay" class="news-img">
+          <span class="news-tag" style="background: var(--blue);">HDB Policy</span>
+        </div>
+        <div class="news-body">
+          <div class="news-date sans">February 2025</div>
+          <div class="news-title">Understanding the New HFE Letter: A Step-by-Step Guide</div>
+          <div class="news-excerpt sans">The HFE letter replaces multiple eligibility checks. Here's what you need to prepare.</div>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-img-wrap">
+          <img src="https://images.unsplash.com/photo-1546410985-67dafaa7d790?auto=format&fit=crop&w=600&q=80" alt="Singapore HDB concrete building" class="news-img">
+          <span class="news-tag">Buyer's Guide</span>
+        </div>
+        <div class="news-body">
+          <div class="news-date sans">January 2025</div>
+          <div class="news-title">5 Things First-Time HDB Buyers Always Get Wrong</div>
+          <div class="news-excerpt sans">From grant eligibility to ethnic quotas — avoid these common mistakes before you start viewing.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact" class="section">
+  <div class="section-narrow">
+    <div class="contact-grid">
+      <div class="contact-left">
+        <div>
+          <div class="section-label">Get In Touch</div>
+          <h2 class="contact-h2">Let's Find Your <em class="italic-accent">Perfect</em> Home</h2>
+        </div>
+        <p class="contact-sub">Whether you're buying, selling, or just exploring your options — I'm happy to have a no-obligation chat. No pressure, just honest advice.</p>
+        <div class="contact-methods">
+          <a href="https://wa.me/6580989441" class="contact-method">
+            <div class="contact-method-icon">📱</div>
+            <div>
+              <div class="contact-method-label sans">WhatsApp / Call</div>
+              <div class="contact-method-value sans">+65 8098 9441</div>
+            </div>
+          </a>
+          <a href="mailto:ammonlimjl@gmail.com" class="contact-method">
+            <div class="contact-method-icon blue-icon">✉️</div>
+            <div>
+              <div class="contact-method-label sans">Email</div>
+              <div class="contact-method-value sans">ammonlimjl@gmail.com</div>
+            </div>
+          </a>
+          <div class="contact-method">
+            <div class="contact-method-icon" style="background: var(--blue-pale);">🏛️</div>
+            <div>
+              <div class="contact-method-label sans">CEA Registration</div>
+              <div class="contact-method-value sans">R065633I · Licensed Real Estate Agent</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-right">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input type="text" class="form-input" placeholder="e.g. John Tan">
+        </div>
+        <div class="form-group">
+          <label class="form-label">What area are you looking at?</label>
+          <input type="text" class="form-input" placeholder="e.g. Sengkang, Tampines, anywhere…">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tell me more (optional)</label>
+          <textarea class="form-textarea" placeholder="Budget, flat type, timeline, or any questions…"></textarea>
+        </div>
+        <button class="btn-submit sans">Send Message — I'll Reply Within 24hrs 👋</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">Ammon <span>Lim</span></div>
+      <p class="footer-desc">Singapore's dedicated HDB specialist. From Sengkang to island-wide — helping families find their perfect home with honesty, expertise, and heart.</p>
+      <div class="footer-badge">
+        <span>🏛️</span>
+        <span>CEA Licensed · R065633I</span>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#contact">Buy HDB</a></li>
+        <li><a href="#contact">Sell HDB</a></li>
+        <li><a href="#contact">Rental</a></li>
+        <li><a href="#contact">Valuation</a></li>
+        <li><a href="#contact">Financial Planning</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="#about">About Ammon</a></li>
+        <li><a href="#cases">Past Cases</a></li>
+        <li><a href="#reviews">Client Reviews</a></li>
+        <li><a href="#news">HDB News</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">HDB Tools</div>
+      <ul class="footer-links">
+        <li><a href="https://www.hdb.gov.sg" target="_blank">HDB Official Site</a></li>
+        <li><a href="https://www.hdb.gov.sg/cs/infoweb/residential/buying-a-flat/new/hfe" target="_blank">HFE Eligibility Check</a></li>
+        <li><a href="https://services2.hdb.gov.sg/webapp/BB33RTIS/BB33PReslTrans.jsp" target="_blank">Resale Price Tracker</a></li>
+        <li><a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility" target="_blank">Grant Calculator</a></li>
+        <li><a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/ethnic-integration-policy-and-spr-quota" target="_blank">Ethnic Quota Checker</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Ammon Lim. All rights reserved.</div>
+    <div class="footer-legal">Licensed by CEA · Singapore Estate Agency Pte Ltd · L3009643J</div>
+  </div>
+</footer>
+
+<!-- ─── WHATSAPP FLOAT BUTTON ─── -->
+<a href="https://wa.me/6580989441" class="wa-float" target="_blank" rel="noopener">
+  <div class="wa-pulse"></div>
+  <div class="wa-icon">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </div>
+  <span>WhatsApp Ammon</span>
+</a>
+
+<script>
+  // Hamburger menu
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const mobileDrawer = document.getElementById('mobile-drawer');
+  const navCta = document.getElementById('nav-cta');
+
+  function closeDrawer() {
+    hamburgerBtn.classList.remove('open');
+    mobileDrawer.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  hamburgerBtn.addEventListener('click', () => {
+    const isOpen = mobileDrawer.classList.toggle('open');
+    hamburgerBtn.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  // Close drawer when a link is tapped
+  document.querySelectorAll('.drawer-link').forEach(link => {
+    link.addEventListener('click', closeDrawer);
+  });
+
+  // Show/hide hamburger vs CTA based on screen width
+  function updateNav() {
+    const isMobile = window.innerWidth <= 768;
+    hamburgerBtn.style.display = isMobile ? 'flex' : 'none';
+    navCta.style.display = isMobile ? 'none' : '';
+    if (!isMobile) closeDrawer();
+  }
+  updateNav();
+  window.addEventListener('resize', updateNav);
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Town chip toggle
+  document.querySelectorAll('.town-chip').forEach(chip => {
+    chip.addEventListener('click', function() {
+      this.classList.toggle('active');
+    });
+  });
+
+  // Sticky nav shadow
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.boxShadow = window.scrollY > 10 ? '0 2px 20px rgba(0,0,0,0.08)' : 'none';
+  });
+</script>
+</body>
+</html>
