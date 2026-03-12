@@ -1083,6 +1083,34 @@
     .mobile-drawer { display: none; }
 
     /* ─── MOBILE RESPONSIVE ─── */
+    /* ── Mobile region switcher: hidden by default, shown in mobile media query ── */
+    #mobile-region-switcher { display: none; }
+    .mobile-region-tabs {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+    .mreg-tab {
+      flex: 1;
+      padding: 8px 0;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--dark);
+      transition: background 0.18s, color 0.18s, border-color 0.18s;
+    }
+    .mreg-tab.active {
+      background: var(--dark);
+      color: #fff;
+      border-color: var(--dark);
+    }
+
     @media (max-width: 768px) {
 
       /* ─── NAV ─── */
@@ -1094,7 +1122,7 @@
       #home {
         display: block;
         position: relative;
-        min-height: calc(100vh - 88px);
+        min-height: calc(100svh - 56px - 48px);
         overflow: hidden;
       }
       .hero-right {
@@ -1211,20 +1239,37 @@
         gap: 8px;
       }
       .town-chip { font-size: 11px; padding: 7px 12px; }
-      /* ─── REGIONS — featured card + single dynamic card ─── */
+      /* ─── REGIONS — single card only ─── */
       .regions-grid { grid-template-columns: 1fr; gap: 0; }
-      .region-card.featured { grid-column: 1; padding: 16px 18px; margin-bottom: 10px; }
-      .region-card.featured .region-desc { display: block; font-size: 12px; line-height: 1.5; margin-top: 6px; }
-      .specialist-badge { margin-top: 8px; font-size: 10px; padding: 3px 10px; }
-      /* Hide the 4 desktop region cards on mobile */
+      .region-card.featured { grid-column: 1; padding: 18px 20px; margin-bottom: 14px; }
+      .region-card.featured .region-label { font-size: 9px; margin-bottom: 6px; }
+      .region-card.featured .region-name { font-size: 22px; line-height: 1.15; margin-bottom: 8px; }
+      .region-card.featured .region-desc { display: block; font-size: 13px; line-height: 1.5; margin-top: 6px; }
+      .specialist-badge { margin-top: 10px; font-size: 10px; padding: 3px 10px; }
+      /* Hide all other desktop cards + tab switcher on mobile */
       .regions-grid > .region-card:not(.featured) { display: none; }
       .regions-row2 { display: none; }
-      /* Show the mobile switcher */
-      #mobile-region-switcher { display: block; margin-bottom: 14px; }
-      #mobile-region-card { padding: 16px 18px; }
-      #mobile-region-card .region-name { font-size: 17px; font-weight: 800; margin-bottom: 6px; line-height: 1.2; }
-      #mobile-region-card .region-label { font-size: 9px; margin-bottom: 6px; }
-      #mobile-region-card .region-desc { display: block; font-size: 13px; line-height: 1.55; color: var(--muted); }
+      #mobile-region-switcher { display: none; }
+      /* Smooth swap animation */
+      #card-ne {
+        transition: opacity 0.2s ease, transform 0.2s ease;
+      }
+      #card-ne.card-swap {
+        opacity: 0;
+        transform: translateY(6px);
+        pointer-events: none;
+      }
+      /* Light style override when a non-home town is active */
+      #card-ne.mobile-town-active {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--orange);
+        color: var(--dark);
+      }
+      #card-ne.mobile-town-active .region-label { color: var(--orange); }
+      #card-ne.mobile-town-active .region-name { color: var(--dark); }
+      #card-ne.mobile-town-active .region-desc { color: var(--muted); }
+      #card-ne.mobile-town-active .specialist-badge { display: none; }
       .town-chip { font-size: 10px; padding: 5px 10px; }
       .towns-wrap { gap: 6px; }
 
@@ -1362,41 +1407,7 @@
         border-bottom: none !important;
       }
 
-      /* Mobile region switcher — hidden on desktop */
-    #mobile-region-switcher { display: none; }
-    .mobile-region-tabs {
-      display: flex;
-      gap: 7px;
-      margin-bottom: 10px;
-    }
-    .mreg-tab {
-      flex: 1;
-      padding: 8px 0;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      background: #fff;
-      cursor: pointer;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--dark);
-      transition: background 0.18s, color 0.18s, border-color 0.18s;
-    }
-    .mreg-tab.active {
-      background: var(--dark);
-      color: #fff;
-      border-color: var(--dark);
-    }
-    #mobile-region-card {
-      transition: opacity 0.18s ease;
-    }
-    #mobile-region-card.updating {
-      opacity: 0;
-    }
-
-    /* ─── SUBSCRIBE POPUP ─── */
+      /* ─── SUBSCRIBE POPUP ─── */
       .subscribe-modal { padding: 36px 24px 28px; }
       .subscribe-title { font-size: 20px; }
     }
@@ -2399,7 +2410,7 @@
     `;
   }
 
-  // Track which chip key is active per card region
+  // Track which chip key is active
   const activeChipPerCard = {};
 
   document.querySelectorAll('.town-chip').forEach(chip => {
@@ -2408,40 +2419,62 @@
       const data = townData[key];
       if (!data) return;
 
-      const cardEl = document.getElementById('card-' + data.card);
-      if (!cardEl) return;
+      const mobileCard = document.getElementById('card-ne');
+      const isMobile = !!mobileCard && window.innerWidth <= 768;
+      const wasActive = this.classList.contains('active-blue');
 
-      const prevKey = activeChipPerCard[data.card];
+      // Single-select: clear all active chips globally
+      document.querySelectorAll('.town-chip.active-blue').forEach(c => c.classList.remove('active-blue'));
+      Object.keys(activeChipPerCard).forEach(k => { activeChipPerCard[k] = null; });
 
-      // Same chip clicked → reset card to default
-      if (prevKey === key) {
-        activeChipPerCard[data.card] = null;
-        this.classList.remove('active-blue');
-        cardEl.classList.add('card-updating');
-        setTimeout(() => {
-          renderCardContent(cardEl, defaultCards[data.card]);
-          cardEl.classList.remove('card-updating', 'town-focused');
-        }, 180);
+      if (wasActive) {
+        // Chip toggled off — restore defaults
+        if (isMobile) {
+          // Restore dark featured style + default Sengkang content
+          mobileCard.classList.add('card-swap');
+          setTimeout(() => {
+            mobileCard.classList.remove('mobile-town-active');
+            renderCardContent(mobileCard, defaultCards['ne']);
+            mobileCard.classList.remove('card-swap');
+          }, 200);
+        } else {
+          const cardEl = document.getElementById('card-' + data.card);
+          if (cardEl) {
+            cardEl.classList.add('card-updating');
+            setTimeout(() => {
+              renderCardContent(cardEl, defaultCards[data.card]);
+              cardEl.classList.remove('card-updating', 'town-focused');
+            }, 180);
+          }
+        }
         return;
       }
 
-      // Deactivate previous chip on this card
-      if (prevKey) {
-        const prevChip = document.querySelector(`.town-chip[data-town="${prevKey}"]`);
-        if (prevChip) prevChip.classList.remove('active-blue');
-      }
-
-      // Activate this chip
+      // Activate chip
       activeChipPerCard[data.card] = key;
       this.classList.add('active-blue');
 
-      // Animate card content swap
-      cardEl.classList.add('card-updating');
-      setTimeout(() => {
-        renderCardContent(cardEl, data);
-        cardEl.classList.remove('card-updating');
-        cardEl.classList.add('town-focused');
-      }, 180);
+      if (isMobile) {
+        // ── Mobile: update the single #card-ne with any town's data ──
+        const isHome = (data.card === 'ne');
+        mobileCard.classList.add('card-swap');
+        setTimeout(() => {
+          mobileCard.classList.toggle('mobile-town-active', !isHome);
+          renderCardContent(mobileCard, data);
+          mobileCard.classList.remove('card-swap');
+        }, 200);
+      } else {
+        // ── Desktop: update the matching region card ──
+        const cardEl = document.getElementById('card-' + data.card);
+        if (cardEl) {
+          cardEl.classList.add('card-updating');
+          setTimeout(() => {
+            renderCardContent(cardEl, data);
+            cardEl.classList.remove('card-updating');
+            cardEl.classList.add('town-focused');
+          }, 180);
+        }
+      }
     });
   });
 
@@ -2481,13 +2514,9 @@
   function updateMobileRegionCard(data) {
     const card = document.getElementById('mobile-region-card');
     if (!card) return;
-    card.classList.add('updating');
-    setTimeout(() => {
-      card.querySelector('.region-label').textContent = data.label;
-      card.querySelector('.region-name').innerHTML = data.name;
-      card.querySelector('.region-desc').innerHTML = data.desc;
-      card.classList.remove('updating');
-    }, 180);
+    card.querySelector('.region-label').textContent = data.label;
+    card.querySelector('.region-name').innerHTML = data.name;
+    card.querySelector('.region-desc').innerHTML = data.desc;
   }
 
   document.querySelectorAll('.mreg-tab').forEach(tab => {
@@ -2501,27 +2530,7 @@
     });
   });
 
-  // When a town chip is clicked, also update the mobile card if on mobile
-  // (We hook into the existing chip click after a short delay to read the updated card data)
-  document.querySelectorAll('.town-chip').forEach(chip => {
-    chip.addEventListener('click', function() {
-      const key = this.dataset.town;
-      const data = townData[key];
-      if (!data) return;
-      const mobileCard = document.getElementById('mobile-region-card');
-      if (!mobileCard || mobileCard.offsetParent === null) return; // not visible = desktop
-      // Set the matching tab active
-      const region = chipToMobileRegion[data.card] || data.card;
-      document.querySelectorAll('.mreg-tab').forEach(t => {
-        t.classList.toggle('active', t.dataset.region === region);
-      });
-      updateMobileRegionCard({
-        label: data.label,
-        name: data.name,
-        desc: data.desc
-      });
-    });
-  });
+
 
   // Sticky nav shadow
   window.addEventListener('scroll', () => {
