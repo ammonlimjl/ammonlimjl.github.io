@@ -298,21 +298,40 @@ function geometryToPath(geom) {
   return '';
 }
 
-// Town label overrides — only labels for areas worth naming on the map
-const LABEL_OVERRIDES = {
-  // Move some labels off-center to avoid coastline / cluster overlap
-  'PUNGGOL':       { dy: -2 },
-  'SENGKANG':      { dy:  4 },
-  'TAMPINES':      { dy:  0 },
-  'BEDOK':         { dy:  6 },
-  'BISHAN':        { dy: -2 },
-  'TOA PAYOH':     { dy:  2 },
-  'ANG MO KIO':    { dy: -4 },
-  'BUKIT MERAH':   { dy:  4 },
-  'QUEENSTOWN':    { dy: -2 },
-  'KALLANG':       { dy:  2 },
-  'GEYLANG':       { dy:  2 },
-  'MARINE PARADE': { dy:  6 },
+// Hand-tuned label parking positions: pulls labels OUT to the perimeter so each
+// has clear room, then we draw a leader line to the polygon centroid.
+// x/y are in viewBox coordinates (0..1000, 0..540).
+// undefined = render label at centroid (no leader line)
+const LABEL_PARK = {
+  // Top edge
+  'WOODLANDS':       { x: 130,  y: 50 },
+  'SEMBAWANG':       { x: 320,  y: 35 },
+  'YISHUN':          { x: 470,  y: 25 },
+  'PUNGGOL':         { x: 660,  y: 30 },
+  'SENGKANG':        { x: 800,  y: 60 },
+  // Right edge
+  'PASIR RIS':       { x: 935,  y: 130 },
+  'TAMPINES':        { x: 935,  y: 245 },
+  'BEDOK':           { x: 935,  y: 320 },
+  'MARINE PARADE':   { x: 935,  y: 410 },
+  // Bottom edge
+  'GEYLANG':         { x: 800,  y: 510 },
+  'KALLANG':         { x: 660,  y: 525 },
+  'BUKIT MERAH':     { x: 510,  y: 525 },
+  'QUEENSTOWN':      { x: 380,  y: 510 },
+  'CLEMENTI':        { x: 240,  y: 510 },
+  // Left edge
+  'JURONG WEST':     { x: 65,   y: 425 },
+  'JURONG EAST':     { x: 65,   y: 365 },
+  'BUKIT BATOK':     { x: 65,   y: 290 },
+  'BUKIT PANJANG':   { x: 65,   y: 220 },
+  'CHOA CHU KANG':   { x: 65,   y: 150 },
+  // Interior labels (no leader line needed — small dy offset is enough)
+  'BISHAN':          { inline: true, dy: -2 },
+  'TOA PAYOH':       { inline: true, dy:  2 },
+  'ANG MO KIO':      { inline: true, dy: -4 },
+  'HOUGANG':         { inline: true, dy:  0 },
+  'SERANGOON':       { inline: true, dy:  4 },
 };
 
 // Hide tiny / non-HDB / water areas from labelling
@@ -380,22 +399,50 @@ async function renderCoverageMap() {
       <!-- Sea -->
       <rect width="${VB_W}" height="${VB_H}" fill="#eaf1f5"/>
 
-      <!-- All planning area polygons (one clean cream, faint borders) -->
+      <!-- All planning area polygons (one clean cream, bolder borders) -->
       ${features.map(f => {
         const className = `map-area ${f.covId ? 'is-clickable' : ''} ${f.isActive ? 'is-active' : ''}`;
         return `<path class="${className}" data-name="${esc(f.name)}" data-id="${esc(f.covId || '')}" d="${f.path}" stroke-linejoin="round"/>`;
       }).join('')}
 
-      <!-- Town labels (only for HDB towns we cover) -->
-      ${features.filter(f => !HIDE_LABELS.has(f.name)).map(f => {
+      <!-- Leader lines + dots (drawn before labels so labels overlay them) -->
+      ${features.filter(f => !HIDE_LABELS.has(f.name) && LABEL_PARK[f.name] && !LABEL_PARK[f.name].inline).map(f => {
         const [cx, cy] = f.centroid;
-        const override = LABEL_OVERRIDES[f.name] || {};
-        const fontSize = f.isActive ? 12 : 10.5;
-        const weight   = f.isActive ? 700 : 600;
-        const fill     = f.isActive ? '#FFFFFF' : '#3A200E';
-        const filter   = f.isActive ? '' : `filter="url(#labelShadow)"`;
+        const park = LABEL_PARK[f.name];
+        return `
+          <line x1="${cx}" y1="${cy}" x2="${park.x}" y2="${park.y}" stroke="#7a5d3a" stroke-width="0.8" stroke-dasharray="2,2" opacity="0.7" pointer-events="none"/>
+          <circle cx="${cx}" cy="${cy}" r="3" fill="#3A200E" pointer-events="none"/>
+        `;
+      }).join('')}
+
+      <!-- Town label pills -->
+      ${features.filter(f => !HIDE_LABELS.has(f.name)).map(f => {
         const display = f.name.split(/[\s-]/).map(w => w[0] + w.slice(1).toLowerCase()).join(' ');
-        return `<text class="map-label" x="${cx + (override.dx || 0)}" y="${cy + (override.dy || 0)}" text-anchor="middle" font-size="${fontSize}" font-weight="${weight}" fill="${fill}" font-family="system-ui,-apple-system,sans-serif" ${filter} pointer-events="none">${esc(display)}</text>`;
+        const park = LABEL_PARK[f.name];
+        const isInline = !park || park.inline;
+        let lx, ly;
+        if (isInline) {
+          const [cx, cy] = f.centroid;
+          const dy = park?.dy || 0;
+          lx = cx;
+          ly = cy + dy;
+        } else {
+          lx = park.x;
+          ly = park.y;
+        }
+        const fontSize = f.isActive ? 12 : 11;
+        const fill = f.isActive ? '#1C1A17' : '#3A200E';
+        // Approximate pill width based on character count (close enough for our font)
+        const pillW = Math.max(50, display.length * 6.4 + 16);
+        const pillH = 18;
+        const bg = f.isActive ? '#FED7AA' : '#FFFFFF';
+        const stroke = f.isActive ? '#EA580C' : '#3A200E';
+        return `
+          <g class="map-label-group" pointer-events="none">
+            <rect x="${lx - pillW/2}" y="${ly - pillH/2 - 1}" width="${pillW}" height="${pillH}" rx="9" fill="${bg}" stroke="${stroke}" stroke-width="1"/>
+            <text x="${lx}" y="${ly + 4}" text-anchor="middle" font-size="${fontSize}" font-weight="700" fill="${fill}" font-family="system-ui,-apple-system,sans-serif">${esc(display)}</text>
+          </g>
+        `;
       }).join('')}
     `;
   }

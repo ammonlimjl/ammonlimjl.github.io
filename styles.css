@@ -699,18 +699,18 @@ nav {
 .map-svg { width: 100%; height: auto; display: block; }
 .map-area {
   fill: #F2E8D2;
-  stroke: #D8C9A8;
-  stroke-width: 0.5;
+  stroke: #8A7553;
+  stroke-width: 1.2;
   transition: fill 0.15s ease;
 }
 .map-area.is-clickable { cursor: pointer; }
 .map-area.is-clickable:hover { fill: #E8D9B5; }
 .map-area.is-active {
-  fill: #1E120A;
-  stroke: #1E120A;
-  stroke-width: 1;
+  fill: #FED7AA;
+  stroke: #3A200E;
+  stroke-width: 1.6;
 }
-.map-label { pointer-events: none; user-select: none; }
+.map-label-group { user-select: none; }
 .map-legend {
   display: flex;
   gap: 18px;
