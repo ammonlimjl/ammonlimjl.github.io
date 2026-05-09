@@ -253,157 +253,170 @@ window.slideReviews = function(dir) {
 };
 
 
-/* ─── COVERAGE MAP: real-ish Singapore outline + always-visible town labels ─ */
-
-// Hand-crafted SVG path approximating Singapore's coastline.
-// viewBox 0 0 1000 540 → Singapore main island fits ~50,90 to 950,440.
-// Includes Sentosa (small offshore island, south).
-const SG_MAIN_ISLAND_PATH = `
-  M 60,360
-  Q 70,335 95,318
-  Q 145,278 215,242
-  Q 285,210 360,180
-  Q 435,150 510,128
-  Q 565,115 615,118
-  Q 645,122 670,130
-  Q 685,108 710,98
-  Q 740,92 770,108
-  Q 790,122 800,140
-  Q 838,148 875,178
-  Q 915,212 935,255
-  Q 952,298 940,338
-  Q 920,372 880,388
-  Q 830,402 780,408
-  Q 720,412 670,415
-  Q 625,418 590,422
-  L 575,448
-  Q 562,452 558,438
-  Q 540,428 510,425
-  Q 470,422 435,425
-  Q 380,430 320,428
-  Q 250,422 180,408
-  Q 110,392 70,378
-  Q 55,370 60,360
-  Z
-`.replace(/\s+/g, ' ').trim();
-
-// Sentosa — tiny island south of HarbourFront
-const SG_SENTOSA_PATH = `M 405,470 Q 420,460 445,463 Q 470,468 470,478 Q 460,486 430,485 Q 410,482 405,470 Z`;
-
-// Pulau Tekong — NE
-const SG_TEKONG_PATH = `M 905,135 Q 935,128 950,148 Q 952,170 935,178 Q 915,180 905,170 Q 898,150 905,135 Z`;
+/* ─── COVERAGE MAP: real Singapore planning areas from GeoJSON ─────────── */
 
 const VB_W = 1000, VB_H = 540;
+
+// Geographic bounds for Singapore main island + nearby (manually tuned to fit nicely in viewbox)
+const SG_BOUNDS = { lngMin: 103.602, lngMax: 104.082, latMin: 1.158, latMax: 1.478 };
+
+// Equirectangular projection: lng/lat → SVG x/y
+function project(lng, lat) {
+  const x = ((lng - SG_BOUNDS.lngMin) / (SG_BOUNDS.lngMax - SG_BOUNDS.lngMin)) * VB_W;
+  const y = ((SG_BOUNDS.latMax - lat) / (SG_BOUNDS.latMax - SG_BOUNDS.latMin)) * VB_H;
+  return [x, y];
+}
+
+// Compute polygon centroid (for label placement) — averages all polygon vertices
+function polygonCentroid(rings) {
+  let sx = 0, sy = 0, n = 0;
+  for (const ring of rings) {
+    for (const [lng, lat] of ring) {
+      const [x, y] = project(lng, lat);
+      sx += x; sy += y; n++;
+    }
+  }
+  return n ? [sx / n, sy / n] : [VB_W / 2, VB_H / 2];
+}
+
+// Convert one Polygon's rings to an SVG path string
+function ringsToPath(rings) {
+  return rings.map(ring => {
+    const pts = ring.map(([lng, lat]) => {
+      const [x, y] = project(lng, lat);
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    });
+    return 'M' + pts.join('L') + 'Z';
+  }).join(' ');
+}
+
+// Convert a GeoJSON geometry (Polygon or MultiPolygon) to a single SVG path string
+function geometryToPath(geom) {
+  if (!geom) return '';
+  if (geom.type === 'Polygon')      return ringsToPath(geom.coordinates);
+  if (geom.type === 'MultiPolygon') return geom.coordinates.map(ringsToPath).join(' ');
+  return '';
+}
+
+// Town label overrides — only labels for areas worth naming on the map
+const LABEL_OVERRIDES = {
+  // Move some labels off-center to avoid coastline / cluster overlap
+  'PUNGGOL':       { dy: -2 },
+  'SENGKANG':      { dy:  4 },
+  'TAMPINES':      { dy:  0 },
+  'BEDOK':         { dy:  6 },
+  'BISHAN':        { dy: -2 },
+  'TOA PAYOH':     { dy:  2 },
+  'ANG MO KIO':    { dy: -4 },
+  'BUKIT MERAH':   { dy:  4 },
+  'QUEENSTOWN':    { dy: -2 },
+  'KALLANG':       { dy:  2 },
+  'GEYLANG':       { dy:  2 },
+  'MARINE PARADE': { dy:  6 },
+};
+
+// Hide tiny / non-HDB / water areas from labelling
+const HIDE_LABELS = new Set([
+  'CENTRAL WATER CATCHMENT', 'WESTERN WATER CATCHMENT', 'SUNGEI KADUT', 'LIM CHU KANG',
+  'MANDAI', 'SIMPANG', 'SELETAR', 'NORTH-EASTERN ISLANDS', 'CHANGI BAY', 'CHANGI',
+  'TENGAH', 'TUAS', 'PIONEER', 'BOON LAY', 'WESTERN ISLANDS', 'SOUTHERN ISLANDS',
+  'STRAITS VIEW', 'MARINA EAST', 'MARINA SOUTH', 'MUSEUM', 'SINGAPORE RIVER',
+  'DOWNTOWN CORE', 'NEWTON', 'ORCHARD', 'ROCHOR', 'RIVER VALLEY', 'TANGLIN',
+  'OUTRAM', 'NOVENA', 'PAYA LEBAR', 'BUKIT TIMAH',
+]);
 
 async function renderCoverageMap() {
   const svg = $('#coverage-map');
   const detail = $('#map-detail');
   if (!svg || !detail) return;
 
-  let data, valData;
+  let cov, valData, geo;
   try {
-    [data, valData] = await Promise.all([
+    [cov, valData, geo] = await Promise.all([
       loadJSON('data/coverage.json'),
       loadJSON('data/valuation.json').catch(() => null),
+      loadJSON('data/singapore-planning-simplified.geojson'),
     ]);
   }
   catch (e) { console.warn('Coverage load failed', e); return; }
 
-  const regions = data.regions.map(r => ({
-    ...r,
-    sx: (r.x / 100) * VB_W,
-    sy: (r.y / 100) * VB_H,
-  }));
+  const regions = cov.regions;
+  const areaToRegion = cov.areaToRegion;
+  const uraRegions = cov.uraRegions;
+  const areaToCovId = {}; // GeoJSON area name → coverage region id
+  for (const r of regions) for (const a of (r.areas || [])) areaToCovId[a] = r.id;
+
   let activeId = 'sp';
 
-  // Convert label positions: small offset so labels sit beside pins
-  function labelAnchor(r) {
-    // Default: above pin
-    let lx = r.sx, ly = r.sy - 14, anchor = 'middle';
-    // Hand-tune crowded clusters so labels don't overlap
-    const overrides = {
-      'sp':  { ly: r.sy - 14 },
-      'bat': { ly: r.sy - 14 },
-      'tb':  { ly: r.sy - 14 },
-      'sy':  { ly: r.sy - 14 },
-      'wd':  { ly: r.sy - 14 },
-      'pr':  { ly: r.sy - 14 },
-      'hg':  { lx: r.sx - 14, anchor: 'end',   ly: r.sy + 4 },
-      'sg':  { ly: r.sy + 22 },
-      'cck': { ly: r.sy - 14 },
-      'bp':  { lx: r.sx - 14, anchor: 'end',   ly: r.sy + 4 },
-      'bb':  { lx: r.sx - 14, anchor: 'end',   ly: r.sy + 4 },
-      'jur': { ly: r.sy + 22 },
-      'cle': { ly: r.sy + 22 },
-      'qt':  { lx: r.sx - 14, anchor: 'end',   ly: r.sy + 4 },
-      'bm':  { ly: r.sy + 22 },
-      'kl':  { lx: r.sx + 14, anchor: 'start', ly: r.sy + 4 },
-      'gl':  { ly: r.sy + 22 },
-      'mp':  { ly: r.sy + 22 },
-    };
-    return { lx, ly, anchor, ...overrides[r.id] };
-  }
-
   function svgContent() {
-    const cores = regions.filter(r => r.tier === 'core');
+    const features = geo.features.map(f => {
+      const name = (f.properties?.name || '').toUpperCase();
+      const path = geometryToPath(f.geometry);
+      if (!path) return null;
+      const region = areaToRegion[name] || 'CENTRAL';
+      const baseFill = uraRegions[region]?.color || '#EAE1CB';
+      const covId = areaToCovId[name];
+      const covRegion = covId ? regions.find(r => r.id === covId) : null;
+      const isCore = covRegion?.tier === 'core';
+      const isActive = covId === activeId;
+      const centroid = polygonCentroid(
+        f.geometry.type === 'MultiPolygon'
+          ? f.geometry.coordinates.flat()
+          : f.geometry.coordinates
+      );
+      return { name, path, baseFill, covId, isCore, isActive, centroid };
+    }).filter(Boolean);
+
+    // Sort: regular areas first, active last (so active draws on top)
+    features.sort((a, b) => (a.isActive ? 1 : 0) - (b.isActive ? 1 : 0));
+
     return `
       <defs>
-        <radialGradient id="islandGrad" cx="50%" cy="40%">
-          <stop offset="0%" stop-color="#f6efde"/>
-          <stop offset="100%" stop-color="#e6d8b8"/>
-        </radialGradient>
-        <radialGradient id="coreGlow" cx="50%" cy="50%">
-          <stop offset="0%" stop-color="#EA580C" stop-opacity="0.5"/>
-          <stop offset="100%" stop-color="#EA580C" stop-opacity="0"/>
-        </radialGradient>
         <filter id="labelShadow">
           <feMorphology in="SourceAlpha" operator="dilate" radius="2"/>
-          <feGaussianBlur stdDeviation="0.5"/>
-          <feFlood flood-color="#fff" flood-opacity="0.95"/>
+          <feGaussianBlur stdDeviation="0.4"/>
+          <feFlood flood-color="#fff" flood-opacity="0.92"/>
           <feComposite in2="SourceAlpha" operator="in"/>
           <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
+        <pattern id="seaPattern" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
+          <rect width="14" height="14" fill="#dfe9f0"/>
+          <path d="M0,7 Q3.5,4 7,7 T14,7" stroke="#c8d6e0" stroke-width="0.5" fill="none" opacity="0.6"/>
+        </pattern>
       </defs>
 
-      <!-- Sea -->
-      <rect width="${VB_W}" height="${VB_H}" fill="#e8e0cc"/>
+      <!-- Sea (subtle wave pattern) -->
+      <rect width="${VB_W}" height="${VB_H}" fill="url(#seaPattern)"/>
 
-      <!-- Subtle latitude/longitude grid for "map" feel -->
-      <g stroke="#d6c9aa" stroke-width="0.5" opacity="0.4">
-        ${[140,240,340,440].map(y => `<line x1="0" y1="${y}" x2="${VB_W}" y2="${y}"/>`).join('')}
-        ${[200,400,600,800].map(x => `<line x1="${x}" y1="0" x2="${x}" y2="${VB_H}"/>`).join('')}
+      <!-- Sea labels for atmosphere -->
+      <g font-family="'Georgia',serif" fill="#7896a8" font-size="14" font-style="italic" opacity="0.75">
+        <text x="${VB_W - 18}" y="${VB_H - 28}" text-anchor="end">Singapore Strait</text>
+        <text x="22" y="22" letter-spacing="3" font-style="normal" font-size="11" font-weight="700" fill="#9d8758">SINGAPORE</text>
+        <text x="${VB_W / 2}" y="22" text-anchor="middle" font-size="13" fill="#7896a8">Johor Strait</text>
       </g>
 
-      <!-- Main island + small islands -->
-      <path d="${SG_MAIN_ISLAND_PATH}" fill="url(#islandGrad)" stroke="#a89568" stroke-width="1.4" stroke-linejoin="round"/>
-      <path d="${SG_SENTOSA_PATH}"     fill="url(#islandGrad)" stroke="#a89568" stroke-width="1"/>
-      <path d="${SG_TEKONG_PATH}"      fill="url(#islandGrad)" stroke="#a89568" stroke-width="1"/>
+      <!-- All planning area polygons -->
+      ${features.map(f => {
+        const inactiveStroke = '#b9a378';
+        const stroke = f.isActive ? '#EA580C' : (f.isCore ? '#EA580C' : inactiveStroke);
+        const strokeWidth = f.isActive ? 3 : (f.isCore ? 1.6 : 0.7);
+        const fill = f.isActive
+          ? '#FED7AA'
+          : (f.isCore ? '#FCE2C8' : f.baseFill);
+        const className = `map-area ${f.covId ? 'is-clickable' : ''} ${f.isCore ? 'is-core' : ''} ${f.isActive ? 'is-active' : ''}`;
+        return `<path class="${className}" data-name="${esc(f.name)}" data-id="${esc(f.covId || '')}" d="${f.path}" fill="${fill}" stroke="${stroke}" stroke-width="${strokeWidth}" stroke-linejoin="round"/>`;
+      }).join('')}
 
-      <!-- Compass / annotation -->
-      <g font-family="system-ui,-apple-system,sans-serif" fill="#9d8758" font-size="10" font-weight="600" letter-spacing="2">
-        <text x="${VB_W - 16}" y="22" text-anchor="end">SINGAPORE</text>
-        <text x="60" y="${VB_H - 14}">N ↑</text>
-      </g>
-
-      <!-- Core specialty halos -->
-      ${cores.map(r => `<circle cx="${r.sx}" cy="${r.sy}" r="50" fill="url(#coreGlow)" pointer-events="none"/>`).join('')}
-
-      <!-- All region pins + labels -->
-      ${regions.map(r => {
-        const isActive = r.id === activeId;
-        const isCore = r.tier === 'core';
-        const radius = isActive ? 11 : (isCore ? 8 : 5.5);
-        const fill = isCore ? '#EA580C' : '#7a6e58';
-        const { lx, ly, anchor } = labelAnchor(r);
-        const labelSize = isActive ? 14 : (isCore ? 13 : 11);
-        const labelWeight = (isActive || isCore) ? 700 : 600;
-        const labelFill = isActive ? '#EA580C' : '#1a1815';
-        return `
-          <g class="map-pin ${isActive ? 'is-active' : ''} ${isCore ? 'is-core' : ''}" data-id="${r.id}">
-            <circle cx="${r.sx}" cy="${r.sy}" r="${radius}" fill="${fill}" stroke="#fff" stroke-width="${isActive ? 3 : 2}"/>
-            <text class="map-pin-label" x="${lx}" y="${ly}" text-anchor="${anchor}" font-size="${labelSize}" font-weight="${labelWeight}" fill="${labelFill}" font-family="system-ui,-apple-system,sans-serif" filter="url(#labelShadow)" pointer-events="none">${esc(r.shortLabel || r.name.split(' & ')[0])}</text>
-          </g>
-        `;
+      <!-- Town labels (only for HDB towns we cover) -->
+      ${features.filter(f => !HIDE_LABELS.has(f.name)).map(f => {
+        const [cx, cy] = f.centroid;
+        const override = LABEL_OVERRIDES[f.name] || {};
+        const fontSize = f.isCore ? 12 : 10.5;
+        const weight   = f.isCore ? 700  : 600;
+        const fill     = f.isActive ? '#EA580C' : '#2a1f15';
+        // Title-case the name
+        const display = f.name.split(/[\s-]/).map(w => w[0] + w.slice(1).toLowerCase()).join(' ');
+        return `<text class="map-label" x="${cx + (override.dx || 0)}" y="${cy + (override.dy || 0)}" text-anchor="middle" font-size="${fontSize}" font-weight="${weight}" fill="${fill}" font-family="system-ui,-apple-system,sans-serif" filter="url(#labelShadow)" pointer-events="none">${esc(display)}</text>`;
       }).join('')}
     `;
   }
@@ -454,7 +467,7 @@ async function renderCoverageMap() {
         <span class="map-detail-val">${esc(r.schools)}</span>
       </div>` : '';
     const prices = priceSnapshotHTML(r);
-    const shortName = (r.shortLabel || r.name).split(' · ')[0].split(' & ')[0].split(' / ')[0];
+    const shortName = r.name.split(' & ')[0].split(',')[0].split(' / ')[0];
     return `
       <div class="map-detail-tier">${tier}</div>
       <div class="map-detail-name">${esc(r.name)}</div>
@@ -477,10 +490,10 @@ async function renderCoverageMap() {
   }
 
   svg.addEventListener('click', (e) => {
-    const g = e.target.closest('.map-pin');
-    if (!g) return;
-    const id = g.dataset.id;
-    if (!id) return;
+    const area = e.target.closest('.map-area');
+    if (!area) return;
+    const id = area.dataset.id;
+    if (!id) return; // non-covered area (e.g., Tuas, Marina South)
     activeId = id;
     rerender();
   });

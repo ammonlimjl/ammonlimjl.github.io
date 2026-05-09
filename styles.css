@@ -656,18 +656,20 @@ nav {
 }
 .map-wrap {
   position: relative;
-  background: #fff;
+  background: #f4f7fa;
   border: 1px solid var(--border);
   border-radius: 18px;
-  padding: 14px;
+  padding: 12px;
   margin-bottom: 22px;
   box-shadow: var(--shadow-sm);
+  overflow: hidden;
 }
-.map-svg { width: 100%; height: auto; display: block; cursor: pointer; }
-.map-pin { transition: transform 0.15s ease; cursor: pointer; }
-.map-pin:hover circle { stroke-width: 3; }
-.map-pin.is-active { transform: scale(1.05); transform-origin: center; }
-.map-pin-label { pointer-events: none; }
+.map-svg { width: 100%; height: auto; display: block; }
+.map-area { transition: fill 0.15s ease, stroke-width 0.15s ease; }
+.map-area.is-clickable { cursor: pointer; }
+.map-area.is-clickable:hover { fill: #FED7AA; stroke: #EA580C; stroke-width: 1.5; }
+.map-area.is-active { stroke-width: 3; }
+.map-label { pointer-events: none; user-select: none; }
 .map-legend {
   display: flex;
   gap: 18px;

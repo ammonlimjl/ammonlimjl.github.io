@@ -14,6 +14,39 @@
   },
   "items": [
     {
+      "id": "q1-2026-rpi-first-drop",
+      "tag": "MARKET",
+      "tagColor": "#1E120A",
+      "image": "",
+      "date": "April 2026",
+      "title": "HDB Resale Prices Just Fell — First Drop Since 2019",
+      "excerpt": "Q1 2026 RPI came in at 203.4, a 0.1% dip — the first quarterly decline in 7 years. 6,285 transactions, down 4.6% YoY. Cooling driven by the incoming MOP wave and easing buyer urgency. Most analysts forecast 2026 full-year resale growth at 0.5–5%.",
+      "source": "HDB.gov.sg · EdgeProp · Stacked Homes",
+      "myTake": ""
+    },
+    {
+      "id": "dawson-record-1-7m",
+      "tag": "MILESTONE",
+      "tagColor": "#EA580C",
+      "image": "",
+      "date": "April 2026",
+      "title": "$1.7M Dawson Road 5-Room — New All-Time HDB Resale Record",
+      "excerpt": "A 5-Room flat at Dawson Road, Queenstown crossed at S$1.7M, setting a new HDB resale record. Q1 2026 saw 412 million-dollar HDB deals — up from 350 in Q4 2025 — even as the broader index fell. Premium units in mature towns continue to outperform.",
+      "source": "PropNex · PropertyNet.SG · Stacked Homes",
+      "myTake": ""
+    },
+    {
+      "id": "feb-2026-bto-subdued",
+      "tag": "BTO",
+      "tagColor": "#2d6a4f",
+      "image": "",
+      "date": "March 2026",
+      "title": "Feb 2026 BTO Subdued — 15K Applications vs 33K in October",
+      "excerpt": "The February 2026 BTO sales exercise drew ~15,000 applications, less than half of October 2025's 33,000 despite a concurrent SBF release. Signals a more selective buyer pool. Looking ahead: 6,900 flats coming in June across Ang Mo Kio, Bishan, Bukit Merah, Sembawang and Woodlands.",
+      "source": "HDB.gov.sg · CNA · 99.co",
+      "myTake": ""
+    },
+    {
       "id": "pearls-hill-tallest",
       "tag": "BTO",
       "tagColor": "#2d6a4f",
