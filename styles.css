@@ -701,14 +701,22 @@ nav {
   fill: #F2E8D2;
   stroke: #8A7553;
   stroke-width: 1.2;
-  transition: fill 0.15s ease;
+  transition: fill 0.15s ease, stroke 0.15s ease;
 }
 .map-area.is-clickable { cursor: pointer; }
 .map-area.is-clickable:hover { fill: #E8D9B5; }
 .map-area.is-active {
-  fill: #FED7AA;
-  stroke: #3A200E;
-  stroke-width: 1.6;
+  fill: #FB923C;
+  stroke: #C2410C;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 6px rgba(234,88,12,0.7))
+          drop-shadow(0 0 14px rgba(234,88,12,0.45));
+}
+.map-region-callout { cursor: pointer; }
+.map-region-callout .map-region-pill rect { transition: fill 0.15s ease, stroke 0.15s ease; }
+.map-region-callout:hover .map-region-pill rect { fill: #FFF7ED; stroke: #EA580C; }
+.map-region-callout.is-active .map-region-pill rect {
+  filter: drop-shadow(0 0 4px rgba(234,88,12,0.5));
 }
 .map-label-group { user-select: none; }
 .map-legend {
@@ -1633,15 +1641,15 @@ footer {
     height: 100%;
     display: block;
   }
-  .hero-bg-img { object-position: center 25%; }
+  .hero-bg-img { object-position: center 12%; }
   .hero-img-overlay {
     background: linear-gradient(
       180deg,
       rgba(0,0,0,0) 0%,
-      rgba(0,0,0,0) 45%,
-      rgba(0,0,0,0.40) 65%,
-      rgba(0,0,0,0.78) 85%,
-      rgba(0,0,0,0.92) 100%
+      rgba(0,0,0,0) 30%,
+      rgba(0,0,0,0.55) 50%,
+      rgba(0,0,0,0.85) 75%,
+      rgba(0,0,0,0.95) 100%
     );
   }
   .hero-left {

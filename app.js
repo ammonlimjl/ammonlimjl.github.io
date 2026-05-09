@@ -298,40 +298,32 @@ function geometryToPath(geom) {
   return '';
 }
 
-// Hand-tuned label parking positions: pulls labels OUT to the perimeter so each
-// has clear room, then we draw a leader line to the polygon centroid.
+// One callout pill per coverage REGION (not per polygon). All pills sit on
+// the perimeter; a leader line connects each to its representative centroid.
 // x/y are in viewBox coordinates (0..1000, 0..540).
-// undefined = render label at centroid (no leader line)
-const LABEL_PARK = {
-  // Top edge
-  'WOODLANDS':       { x: 130,  y: 50 },
-  'SEMBAWANG':       { x: 320,  y: 35 },
-  'YISHUN':          { x: 470,  y: 25 },
-  'PUNGGOL':         { x: 660,  y: 30 },
-  'SENGKANG':        { x: 800,  y: 60 },
-  // Right edge
-  'PASIR RIS':       { x: 935,  y: 130 },
-  'TAMPINES':        { x: 935,  y: 245 },
-  'BEDOK':           { x: 935,  y: 320 },
-  'MARINE PARADE':   { x: 935,  y: 410 },
-  // Bottom edge
-  'GEYLANG':         { x: 800,  y: 510 },
-  'KALLANG':         { x: 660,  y: 525 },
-  'BUKIT MERAH':     { x: 510,  y: 525 },
-  'QUEENSTOWN':      { x: 380,  y: 510 },
-  'CLEMENTI':        { x: 240,  y: 510 },
-  // Left edge
-  'JURONG WEST':     { x: 65,   y: 425 },
-  'JURONG EAST':     { x: 65,   y: 365 },
-  'BUKIT BATOK':     { x: 65,   y: 290 },
-  'BUKIT PANJANG':   { x: 65,   y: 220 },
-  'CHOA CHU KANG':   { x: 65,   y: 150 },
-  // Interior labels (no leader line needed — small dy offset is enough)
-  'BISHAN':          { inline: true, dy: -2 },
-  'TOA PAYOH':       { inline: true, dy:  2 },
-  'ANG MO KIO':      { inline: true, dy: -4 },
-  'HOUGANG':         { inline: true, dy:  0 },
-  'SERANGOON':       { inline: true, dy:  4 },
+const REGION_LABEL_PARK = {
+  // Top edge (left → right)
+  'wd':  { x: 130, y: 50,  label: 'Woodlands' },
+  'sy':  { x: 350, y: 30,  label: 'Sembawang & Yishun' },
+  'bat': { x: 580, y: 30,  label: 'Bishan · AMK · Toa Payoh' },
+  'sp':  { x: 845, y: 50,  label: 'Sengkang & Punggol' },
+  // Right edge (top → bottom)
+  'pr':  { x: 935, y: 125, label: 'Pasir Ris' },
+  'hg':  { x: 935, y: 200, label: 'Hougang' },
+  'tb':  { x: 935, y: 280, label: 'Tampines & Bedok' },
+  'sg':  { x: 935, y: 365, label: 'Serangoon' },
+  'mp':  { x: 935, y: 450, label: 'Marine Parade' },
+  // Bottom edge (right → left)
+  'gl':  { x: 770, y: 522, label: 'Geylang' },
+  'kl':  { x: 615, y: 522, label: 'Kallang/Whampoa' },
+  'bm':  { x: 470, y: 522, label: 'Bukit Merah' },
+  'qt':  { x: 325, y: 522, label: 'Queenstown' },
+  'cle': { x: 170, y: 522, label: 'Clementi' },
+  // Left edge (bottom → top)
+  'jur': { x: 65,  y: 425, label: 'Jurong East & West' },
+  'bb':  { x: 65,  y: 340, label: 'Bukit Batok' },
+  'bp':  { x: 65,  y: 250, label: 'Bukit Panjang' },
+  'cck': { x: 65,  y: 165, label: 'Choa Chu Kang' },
 };
 
 // Hide tiny / non-HDB / water areas from labelling
@@ -367,6 +359,25 @@ async function renderCoverageMap() {
 
   let activeId = 'sp';
 
+  // Compute representative centroid for each region (avg of all area centroids)
+  const regionCentroids = {};
+  {
+    const centroidsByArea = {};
+    for (const f of geo.features) {
+      const name = (f.properties?.name || '').toUpperCase();
+      centroidsByArea[name] = polygonCentroid(
+        f.geometry.type === 'MultiPolygon' ? f.geometry.coordinates.flat() : f.geometry.coordinates
+      );
+    }
+    for (const r of regions) {
+      const pts = (r.areas || []).map(a => centroidsByArea[a]).filter(Boolean);
+      if (!pts.length) continue;
+      const sx = pts.reduce((s, p) => s + p[0], 0) / pts.length;
+      const sy = pts.reduce((s, p) => s + p[1], 0) / pts.length;
+      regionCentroids[r.id] = [sx, sy];
+    }
+  }
+
   function svgContent() {
     const features = geo.features.map(f => {
       const name = (f.properties?.name || '').toUpperCase();
@@ -374,25 +385,21 @@ async function renderCoverageMap() {
       if (!path) return null;
       const covId = areaToCovId[name];
       const isActive = covId === activeId;
-      const centroid = polygonCentroid(
-        f.geometry.type === 'MultiPolygon'
-          ? f.geometry.coordinates.flat()
-          : f.geometry.coordinates
-      );
-      return { name, path, covId, isActive, centroid };
+      return { name, path, covId, isActive };
     }).filter(Boolean);
 
-    // Sort: regular areas first, active last (so active draws on top)
+    // Sort: regular areas first, active last (so active draws on top with glow)
     features.sort((a, b) => (a.isActive ? 1 : 0) - (b.isActive ? 1 : 0));
 
     return `
       <defs>
-        <filter id="labelShadow">
-          <feMorphology in="SourceAlpha" operator="dilate" radius="2"/>
-          <feGaussianBlur stdDeviation="0.4"/>
-          <feFlood flood-color="#fff" flood-opacity="0.92"/>
-          <feComposite in2="SourceAlpha" operator="in"/>
-          <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+        <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
         </filter>
       </defs>
 
@@ -405,42 +412,34 @@ async function renderCoverageMap() {
         return `<path class="${className}" data-name="${esc(f.name)}" data-id="${esc(f.covId || '')}" d="${f.path}" stroke-linejoin="round"/>`;
       }).join('')}
 
-      <!-- Leader lines + dots (drawn before labels so labels overlay them) -->
-      ${features.filter(f => !HIDE_LABELS.has(f.name) && LABEL_PARK[f.name] && !LABEL_PARK[f.name].inline).map(f => {
-        const [cx, cy] = f.centroid;
-        const park = LABEL_PARK[f.name];
+      <!-- One callout per region: dot + leader line + clickable pill -->
+      ${regions.map(r => {
+        const park = REGION_LABEL_PARK[r.id];
+        const c = regionCentroids[r.id];
+        if (!park || !c) return '';
+        const [cx, cy] = c;
+        const isActive = r.id === activeId;
+        const display = park.label;
+        const pillW = Math.max(70, display.length * 6.6 + 18);
+        const pillH = 22;
+        const bg = isActive ? '#FED7AA' : '#FFFFFF';
+        const stroke = isActive ? '#EA580C' : '#3A200E';
+        const textFill = isActive ? '#3A200E' : '#1C1A17';
+        const lineStroke = isActive ? '#EA580C' : '#7a5d3a';
+        const lineOpacity = isActive ? 1 : 0.7;
         return `
-          <line x1="${cx}" y1="${cy}" x2="${park.x}" y2="${park.y}" stroke="#7a5d3a" stroke-width="0.8" stroke-dasharray="2,2" opacity="0.7" pointer-events="none"/>
-          <circle cx="${cx}" cy="${cy}" r="3" fill="#3A200E" pointer-events="none"/>
-        `;
-      }).join('')}
-
-      <!-- Town label pills -->
-      ${features.filter(f => !HIDE_LABELS.has(f.name)).map(f => {
-        const display = f.name.split(/[\s-]/).map(w => w[0] + w.slice(1).toLowerCase()).join(' ');
-        const park = LABEL_PARK[f.name];
-        const isInline = !park || park.inline;
-        let lx, ly;
-        if (isInline) {
-          const [cx, cy] = f.centroid;
-          const dy = park?.dy || 0;
-          lx = cx;
-          ly = cy + dy;
-        } else {
-          lx = park.x;
-          ly = park.y;
-        }
-        const fontSize = f.isActive ? 12 : 11;
-        const fill = f.isActive ? '#1C1A17' : '#3A200E';
-        // Approximate pill width based on character count (close enough for our font)
-        const pillW = Math.max(50, display.length * 6.4 + 16);
-        const pillH = 18;
-        const bg = f.isActive ? '#FED7AA' : '#FFFFFF';
-        const stroke = f.isActive ? '#EA580C' : '#3A200E';
-        return `
-          <g class="map-label-group" pointer-events="none">
-            <rect x="${lx - pillW/2}" y="${ly - pillH/2 - 1}" width="${pillW}" height="${pillH}" rx="9" fill="${bg}" stroke="${stroke}" stroke-width="1"/>
-            <text x="${lx}" y="${ly + 4}" text-anchor="middle" font-size="${fontSize}" font-weight="700" fill="${fill}" font-family="system-ui,-apple-system,sans-serif">${esc(display)}</text>
+          <g class="map-region-callout ${isActive ? 'is-active' : ''}" data-id="${esc(r.id)}">
+            <line x1="${cx}" y1="${cy}" x2="${park.x}" y2="${park.y}"
+                  stroke="${lineStroke}" stroke-width="${isActive ? 1.4 : 1}"
+                  stroke-dasharray="${isActive ? '0' : '3,2'}" opacity="${lineOpacity}" pointer-events="none"/>
+            <circle cx="${cx}" cy="${cy}" r="4" fill="${isActive ? '#EA580C' : '#3A200E'}" pointer-events="none"/>
+            <g class="map-region-pill">
+              <rect x="${park.x - pillW/2}" y="${park.y - pillH/2}" width="${pillW}" height="${pillH}" rx="11"
+                    fill="${bg}" stroke="${stroke}" stroke-width="${isActive ? 1.6 : 1}"/>
+              <text x="${park.x}" y="${park.y + 4}" text-anchor="middle"
+                    font-size="${isActive ? 12 : 11}" font-weight="700" fill="${textFill}"
+                    font-family="system-ui,-apple-system,sans-serif">${esc(display)}</text>
+            </g>
           </g>
         `;
       }).join('')}
@@ -516,10 +515,18 @@ async function renderCoverageMap() {
   }
 
   svg.addEventListener('click', (e) => {
+    // Pill click takes priority — pills are at perimeter, easier to hit
+    const callout = e.target.closest('.map-region-callout');
+    if (callout) {
+      const id = callout.dataset.id;
+      if (id) { activeId = id; rerender(); }
+      return;
+    }
+    // Polygon click as fallback
     const area = e.target.closest('.map-area');
     if (!area) return;
     const id = area.dataset.id;
-    if (!id) return; // non-covered area (e.g., Tuas, Marina South)
+    if (!id) return;
     activeId = id;
     rerender();
   });
