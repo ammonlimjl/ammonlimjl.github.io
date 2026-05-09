@@ -253,53 +253,183 @@ window.slideReviews = function(dir) {
 };
 
 
-/* ─── COVERAGE MAP: render SVG island + pins from coverage.json ────────── */
+/* ─── COVERAGE MAP: real-ish Singapore outline + always-visible town labels ─ */
+
+// Hand-crafted SVG path approximating Singapore's coastline.
+// viewBox 0 0 1000 540 → Singapore main island fits ~50,90 to 950,440.
+// Includes Sentosa (small offshore island, south).
+const SG_MAIN_ISLAND_PATH = `
+  M 60,360
+  Q 70,335 95,318
+  Q 145,278 215,242
+  Q 285,210 360,180
+  Q 435,150 510,128
+  Q 565,115 615,118
+  Q 645,122 670,130
+  Q 685,108 710,98
+  Q 740,92 770,108
+  Q 790,122 800,140
+  Q 838,148 875,178
+  Q 915,212 935,255
+  Q 952,298 940,338
+  Q 920,372 880,388
+  Q 830,402 780,408
+  Q 720,412 670,415
+  Q 625,418 590,422
+  L 575,448
+  Q 562,452 558,438
+  Q 540,428 510,425
+  Q 470,422 435,425
+  Q 380,430 320,428
+  Q 250,422 180,408
+  Q 110,392 70,378
+  Q 55,370 60,360
+  Z
+`.replace(/\s+/g, ' ').trim();
+
+// Sentosa — tiny island south of HarbourFront
+const SG_SENTOSA_PATH = `M 405,470 Q 420,460 445,463 Q 470,468 470,478 Q 460,486 430,485 Q 410,482 405,470 Z`;
+
+// Pulau Tekong — NE
+const SG_TEKONG_PATH = `M 905,135 Q 935,128 950,148 Q 952,170 935,178 Q 915,180 905,170 Q 898,150 905,135 Z`;
+
+const VB_W = 1000, VB_H = 540;
 
 async function renderCoverageMap() {
   const svg = $('#coverage-map');
   const detail = $('#map-detail');
   if (!svg || !detail) return;
 
-  let data;
-  try { data = await loadJSON('data/coverage.json'); }
+  let data, valData;
+  try {
+    [data, valData] = await Promise.all([
+      loadJSON('data/coverage.json'),
+      loadJSON('data/valuation.json').catch(() => null),
+    ]);
+  }
   catch (e) { console.warn('Coverage load failed', e); return; }
 
-  const regions = data.regions;
+  const regions = data.regions.map(r => ({
+    ...r,
+    sx: (r.x / 100) * VB_W,
+    sy: (r.y / 100) * VB_H,
+  }));
   let activeId = 'sp';
 
-  // Stylized Singapore island silhouette (artistic interpretation, not survey-accurate)
-  const islandPath = "M 60,290 C 80,235 130,200 180,180 C 230,165 280,150 340,135 C 400,118 460,100 520,95 C 575,90 630,98 680,105 C 715,108 745,108 780,118 C 820,130 855,145 890,170 C 920,195 945,225 955,260 C 960,290 945,320 920,340 C 880,365 835,375 790,380 C 750,385 715,395 680,410 C 640,425 600,440 555,452 C 510,460 465,462 420,455 C 370,448 325,438 280,425 C 240,415 200,405 165,390 C 130,375 100,355 80,335 C 65,320 55,305 60,290 Z";
+  // Convert label positions: small offset so labels sit beside pins
+  function labelAnchor(r) {
+    // Default: above pin
+    let lx = r.sx, ly = r.sy - 14, anchor = 'middle';
+    // Hand-tune crowded clusters so labels don't overlap
+    const overrides = {
+      'sp':  { ly: r.sy - 14 },
+      'bat': { ly: r.sy - 14 },
+      'tb':  { ly: r.sy - 14 },
+      'sy':  { ly: r.sy - 14 },
+      'wd':  { ly: r.sy - 14 },
+      'pr':  { ly: r.sy - 14 },
+      'hg':  { lx: r.sx - 14, anchor: 'end',   ly: r.sy + 4 },
+      'sg':  { ly: r.sy + 22 },
+      'cck': { ly: r.sy - 14 },
+      'bp':  { lx: r.sx - 14, anchor: 'end',   ly: r.sy + 4 },
+      'bb':  { lx: r.sx - 14, anchor: 'end',   ly: r.sy + 4 },
+      'jur': { ly: r.sy + 22 },
+      'cle': { ly: r.sy + 22 },
+      'qt':  { lx: r.sx - 14, anchor: 'end',   ly: r.sy + 4 },
+      'bm':  { ly: r.sy + 22 },
+      'kl':  { lx: r.sx + 14, anchor: 'start', ly: r.sy + 4 },
+      'gl':  { ly: r.sy + 22 },
+      'mp':  { ly: r.sy + 22 },
+    };
+    return { lx, ly, anchor, ...overrides[r.id] };
+  }
 
-  function svgHTML() {
+  function svgContent() {
     const cores = regions.filter(r => r.tier === 'core');
     return `
       <defs>
         <radialGradient id="islandGrad" cx="50%" cy="40%">
-          <stop offset="0%" stop-color="#f4ede0"/>
-          <stop offset="100%" stop-color="#e8dcc4"/>
+          <stop offset="0%" stop-color="#f6efde"/>
+          <stop offset="100%" stop-color="#e6d8b8"/>
         </radialGradient>
         <radialGradient id="coreGlow" cx="50%" cy="50%">
-          <stop offset="0%" stop-color="#EA580C" stop-opacity="0.45"/>
+          <stop offset="0%" stop-color="#EA580C" stop-opacity="0.5"/>
           <stop offset="100%" stop-color="#EA580C" stop-opacity="0"/>
         </radialGradient>
+        <filter id="labelShadow">
+          <feMorphology in="SourceAlpha" operator="dilate" radius="2"/>
+          <feGaussianBlur stdDeviation="0.5"/>
+          <feFlood flood-color="#fff" flood-opacity="0.95"/>
+          <feComposite in2="SourceAlpha" operator="in"/>
+          <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
       </defs>
-      <rect width="1000" height="540" fill="#ebe5d8"/>
-      <path d="${islandPath}" fill="url(#islandGrad)" stroke="#c8b994" stroke-width="1.5"/>
-      ${cores.map(r => `<circle cx="${r.x}" cy="${r.y}" r="55" fill="url(#coreGlow)" pointer-events="none"/>`).join('')}
+
+      <!-- Sea -->
+      <rect width="${VB_W}" height="${VB_H}" fill="#e8e0cc"/>
+
+      <!-- Subtle latitude/longitude grid for "map" feel -->
+      <g stroke="#d6c9aa" stroke-width="0.5" opacity="0.4">
+        ${[140,240,340,440].map(y => `<line x1="0" y1="${y}" x2="${VB_W}" y2="${y}"/>`).join('')}
+        ${[200,400,600,800].map(x => `<line x1="${x}" y1="0" x2="${x}" y2="${VB_H}"/>`).join('')}
+      </g>
+
+      <!-- Main island + small islands -->
+      <path d="${SG_MAIN_ISLAND_PATH}" fill="url(#islandGrad)" stroke="#a89568" stroke-width="1.4" stroke-linejoin="round"/>
+      <path d="${SG_SENTOSA_PATH}"     fill="url(#islandGrad)" stroke="#a89568" stroke-width="1"/>
+      <path d="${SG_TEKONG_PATH}"      fill="url(#islandGrad)" stroke="#a89568" stroke-width="1"/>
+
+      <!-- Compass / annotation -->
+      <g font-family="system-ui,-apple-system,sans-serif" fill="#9d8758" font-size="10" font-weight="600" letter-spacing="2">
+        <text x="${VB_W - 16}" y="22" text-anchor="end">SINGAPORE</text>
+        <text x="60" y="${VB_H - 14}">N ↑</text>
+      </g>
+
+      <!-- Core specialty halos -->
+      ${cores.map(r => `<circle cx="${r.sx}" cy="${r.sy}" r="50" fill="url(#coreGlow)" pointer-events="none"/>`).join('')}
+
+      <!-- All region pins + labels -->
       ${regions.map(r => {
         const isActive = r.id === activeId;
         const isCore = r.tier === 'core';
-        const radius = isActive ? 14 : (isCore ? 10 : 6);
-        const fill = isCore ? '#EA580C' : '#9b8e74';
-        const labelY = r.y - (isActive ? 22 : 18);
-        const shortName = esc(r.name.split(' & ')[0].split(' / ')[0]);
+        const radius = isActive ? 11 : (isCore ? 8 : 5.5);
+        const fill = isCore ? '#EA580C' : '#7a6e58';
+        const { lx, ly, anchor } = labelAnchor(r);
+        const labelSize = isActive ? 14 : (isCore ? 13 : 11);
+        const labelWeight = (isActive || isCore) ? 700 : 600;
+        const labelFill = isActive ? '#EA580C' : '#1a1815';
         return `
           <g class="map-pin ${isActive ? 'is-active' : ''} ${isCore ? 'is-core' : ''}" data-id="${r.id}">
-            <circle cx="${r.x}" cy="${r.y}" r="${radius}" fill="${fill}" stroke="#fff" stroke-width="${isActive ? 3 : 2}"/>
-            ${isCore ? `<text class="map-pin-label" x="${r.x}" y="${labelY}" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1815" font-family="system-ui,-apple-system,sans-serif">${shortName}</text>` : ''}
+            <circle cx="${r.sx}" cy="${r.sy}" r="${radius}" fill="${fill}" stroke="#fff" stroke-width="${isActive ? 3 : 2}"/>
+            <text class="map-pin-label" x="${lx}" y="${ly}" text-anchor="${anchor}" font-size="${labelSize}" font-weight="${labelWeight}" fill="${labelFill}" font-family="system-ui,-apple-system,sans-serif" filter="url(#labelShadow)" pointer-events="none">${esc(r.shortLabel || r.name.split(' & ')[0])}</text>
           </g>
         `;
       }).join('')}
+    `;
+  }
+
+  // Pull median resale prices for the active town from valuation.json
+  function priceSnapshotHTML(r) {
+    if (!valData?.byTownAndType) return '';
+    const town = r.valuationTown;
+    const bucket = valData.byTownAndType?.[town];
+    if (!bucket) return '';
+    const types = ['3-Room', '4-Room', '5-Room'];
+    const fmt = (k) => k >= 1000 ? '$' + (k / 1000).toFixed(2) + 'M' : '$' + Math.round(k) + 'K';
+    const cells = types
+      .map(t => {
+        const b = bucket[t];
+        if (!b) return null;
+        return `<div class="map-price-cell"><div class="map-price-type">${t}</div><div class="map-price-val">${fmt(b.p50)}</div></div>`;
+      })
+      .filter(Boolean)
+      .join('');
+    if (!cells) return '';
+    return `
+      <div class="map-detail-row map-detail-prices">
+        <span class="map-detail-label">Median resale (last 12 mo)</span>
+        <div class="map-price-grid">${cells}</div>
+      </div>
     `;
   }
 
@@ -307,34 +437,42 @@ async function renderCoverageMap() {
     const r = regions.find(x => x.id === activeId);
     if (!r) return '';
     const tier = r.tier === 'core' ? 'CORE SPECIALTY' : 'ACTIVE COVERAGE';
+    const angle = r.marketAngle ? `<div class="map-detail-stats">${esc(r.marketAngle)}</div>` : '';
+    const conn = r.connectivity ? `
+      <div class="map-detail-row">
+        <span class="map-detail-label">Connectivity</span>
+        <span class="map-detail-val">${esc(r.connectivity)}</span>
+      </div>` : '';
     const projects = r.projects ? `
       <div class="map-detail-row">
-        <span class="map-detail-label">Key projects</span>
+        <span class="map-detail-label">Key landmarks</span>
         <span class="map-detail-val">${esc(r.projects)}</span>
       </div>` : '';
-    const latest = r.latest?.trim() ? `
+    const schools = r.schools ? `
       <div class="map-detail-row">
-        <span class="map-detail-label">Recent</span>
-        <span class="map-detail-val">${esc(r.latest)}</span>
+        <span class="map-detail-label">Schools nearby</span>
+        <span class="map-detail-val">${esc(r.schools)}</span>
       </div>` : '';
-    const shortName = r.name.split(' & ')[0].split(' / ')[0];
-    const askText = `Hi Ammon, I'd like to know more about ${r.name}.`;
+    const prices = priceSnapshotHTML(r);
+    const shortName = (r.shortLabel || r.name).split(' · ')[0].split(' & ')[0].split(' / ')[0];
     return `
       <div class="map-detail-tier">${tier}</div>
       <div class="map-detail-name">${esc(r.name)}</div>
-      <div class="map-detail-stats">${esc(r.stats || '')}</div>
+      ${angle}
+      ${prices}
+      ${conn}
       ${projects}
-      ${latest}
+      ${schools}
       <div class="map-detail-cta">
-        <a class="map-detail-cta-btn" href="${waUrl(askText)}" target="_blank" rel="noopener">
-          💬 Ask Ammon about ${esc(shortName)}
-        </a>
+        <button class="map-detail-cta-btn" data-action="goto-valuation" data-town="${esc(r.valuationTown || '')}">
+          ⚡ Get full valuation for ${esc(shortName)}
+        </button>
       </div>
     `;
   }
 
   function rerender() {
-    svg.innerHTML = svgHTML();
+    svg.innerHTML = svgContent();
     detail.innerHTML = detailHTML();
   }
 
@@ -347,46 +485,32 @@ async function renderCoverageMap() {
     rerender();
   });
 
-  rerender();
-
-  // Town chips → highlight matching pin
-  const chipToRegion = {
-    'sengkang-punggol':    'sp',
-    'bishan-amk-toaPayoh': 'bat',
-    'tampines-bedok':      'tb',
-    'jurong-east-west':    'jur',
-    'pasir-ris':           'pr',
-    'sembawang-yishun':    'sy',
-    'bukit-panjang':       'bp',
-    'choa-chu-kang':       'cck',
-    'woodlands':           'wd',
-    'hougang':             'hg',
-    'serangoon':           'sg',
-    'bukit-batok':         'bb',
-    'bukit-merah':         'bm',
-    'clementi':            'cle',
-    'geylang':             'gl',
-    'kallang':             'kl',
-    'marine-parade':       'mp',
-    'queenstown':          'qt',
-  };
-  $$('.town-chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      const wasActive = chip.classList.contains('is-active');
-      $$('.town-chip').forEach(c => c.classList.remove('is-active'));
-      if (wasActive) {
-        activeId = 'sp'; // default
-        rerender();
-        return;
-      }
-      chip.classList.add('is-active');
-      const rid = chipToRegion[chip.dataset.town];
-      if (rid && regions.some(r => r.id === rid)) {
-        activeId = rid;
-        rerender();
-      }
-    });
+  detail.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-action="goto-valuation"]');
+    if (!btn) return;
+    const town = btn.dataset.town;
+    if (town) selectValuationTown(town);
+    document.getElementById('valuation')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+
+  rerender();
+}
+
+// Imperatively set the valuation tool's town (called from map "Get valuation for X" CTA)
+function selectValuationTown(town) {
+  if (!VAL_STATE.data) return;
+  if (!VAL_STATE.data.byTownAndType?.[town]) return;
+  VAL_STATE.town = town;
+  const root = document.getElementById('val-towns');
+  if (!root) return;
+  root.querySelectorAll('.val-chip').forEach(c => {
+    const active = c.dataset.val === town;
+    c.classList.toggle('is-active', active);
+    c.setAttribute('aria-checked', active);
+  });
+  // Reset stale result
+  const result = $('#val-result');
+  if (result) { result.hidden = true; result.innerHTML = ''; }
 }
 
 

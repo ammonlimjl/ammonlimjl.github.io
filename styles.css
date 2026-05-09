@@ -396,22 +396,16 @@ nav {
   transform-origin: 50% 50%;
 }
 .parallax-photo[data-bg="parallax-waterway"] {
-  background:
-    radial-gradient(ellipse 60% 80% at 30% 20%, #2a4d5e 0%, transparent 60%),
-    radial-gradient(ellipse 70% 50% at 80% 90%, #1a3140 0%, transparent 70%),
-    radial-gradient(ellipse 40% 30% at 60% 40%, #3d6275 0%, transparent 80%),
-    linear-gradient(165deg, #2c4a5b 0%, #14242f 100%);
+  background-image: url('punggol-drone.jpg');
+  background-color: #14242f;
 }
 .parallax-photo[data-bg="parallax-central"] {
-  background:
-    radial-gradient(ellipse 50% 70% at 70% 30%, #8a5a35 0%, transparent 65%),
-    radial-gradient(ellipse 80% 40% at 20% 80%, #2a1f15 0%, transparent 70%),
-    radial-gradient(ellipse 30% 25% at 50% 50%, #b07338 0%, transparent 80%),
-    linear-gradient(155deg, #5a3a22 0%, #1a120b 100%);
+  background-image: url('bishan-drone.jpg');
+  background-color: #1a120b;
 }
 @keyframes kenburns {
-  0%   { transform: scale(1.04) translate(-1.5%, 0.5%); }
-  100% { transform: scale(1.14) translate(2%, -2%); }
+  0%   { transform: scale(1.02) translate(-1%, 0.5%); }
+  100% { transform: scale(1.08) translate(1.5%, -1.5%); }
 }
 .parallax-grain {
   position: absolute;
@@ -744,8 +738,39 @@ nav {
   font-size: 13px;
   line-height: 1.45;
 }
+.map-detail-prices { flex-direction: column; align-items: stretch; }
+.map-price-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+  width: 100%;
+}
+.map-price-cell {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 10px;
+  padding: 10px 8px;
+  text-align: center;
+}
+.map-price-type {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.map-price-val {
+  font-family: 'Georgia', serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--orange-bright);
+  letter-spacing: -0.01em;
+}
 .map-detail-cta {
-  margin-top: 16px;
+  margin-top: 18px;
   display: flex;
   gap: 8px;
 }
@@ -770,37 +795,10 @@ nav {
 }
 .map-detail-cta-btn:hover { background: var(--orange-bright); }
 
-.cov-towns-h {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 12px;
-}
-.towns-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
-.town-chip {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 13px;
-  padding: 6px 16px;
-  border-radius: 100px;
-  border: 1.5px solid var(--border);
-  background: #fff;
-  color: var(--text);
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.town-chip:hover { border-color: var(--orange); color: var(--orange); }
-.town-chip.is-active {
-  background: var(--orange);
-  border-color: var(--orange);
-  color: #fff;
-}
 .towns-hint {
   font-size: 11.5px;
   color: var(--muted);
-  margin-top: 12px;
+  margin-top: 4px;
   letter-spacing: 0.04em;
   text-align: center;
 }
@@ -1698,8 +1696,8 @@ footer {
   .map-detail-name { font-size: 22px; }
   .map-detail-row { font-size: 12.5px; gap: 12px; }
   .map-detail-val { font-size: 12.5px; }
-  .town-chip { font-size: 11px; padding: 5px 12px; }
-  .towns-wrap { gap: 6px; }
+  .map-price-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .map-price-val { font-size: 14px; }
 
   /* ─── TRACK RECORD ─── */
   .track-h2 { font-size: 28px; }
