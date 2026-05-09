@@ -353,18 +353,14 @@ async function renderCoverageMap() {
       const name = (f.properties?.name || '').toUpperCase();
       const path = geometryToPath(f.geometry);
       if (!path) return null;
-      const region = areaToRegion[name] || 'CENTRAL';
-      const baseFill = uraRegions[region]?.color || '#EAE1CB';
       const covId = areaToCovId[name];
-      const covRegion = covId ? regions.find(r => r.id === covId) : null;
-      const isCore = covRegion?.tier === 'core';
       const isActive = covId === activeId;
       const centroid = polygonCentroid(
         f.geometry.type === 'MultiPolygon'
           ? f.geometry.coordinates.flat()
           : f.geometry.coordinates
       );
-      return { name, path, baseFill, covId, isCore, isActive, centroid };
+      return { name, path, covId, isActive, centroid };
     }).filter(Boolean);
 
     // Sort: regular areas first, active last (so active draws on top)
@@ -379,44 +375,27 @@ async function renderCoverageMap() {
           <feComposite in2="SourceAlpha" operator="in"/>
           <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
-        <pattern id="seaPattern" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
-          <rect width="14" height="14" fill="#dfe9f0"/>
-          <path d="M0,7 Q3.5,4 7,7 T14,7" stroke="#c8d6e0" stroke-width="0.5" fill="none" opacity="0.6"/>
-        </pattern>
       </defs>
 
-      <!-- Sea (subtle wave pattern) -->
-      <rect width="${VB_W}" height="${VB_H}" fill="url(#seaPattern)"/>
+      <!-- Sea -->
+      <rect width="${VB_W}" height="${VB_H}" fill="#eaf1f5"/>
 
-      <!-- Sea labels for atmosphere -->
-      <g font-family="'Georgia',serif" fill="#7896a8" font-size="14" font-style="italic" opacity="0.75">
-        <text x="${VB_W - 18}" y="${VB_H - 28}" text-anchor="end">Singapore Strait</text>
-        <text x="22" y="22" letter-spacing="3" font-style="normal" font-size="11" font-weight="700" fill="#9d8758">SINGAPORE</text>
-        <text x="${VB_W / 2}" y="22" text-anchor="middle" font-size="13" fill="#7896a8">Johor Strait</text>
-      </g>
-
-      <!-- All planning area polygons -->
+      <!-- All planning area polygons (one clean cream, faint borders) -->
       ${features.map(f => {
-        const inactiveStroke = '#b9a378';
-        const stroke = f.isActive ? '#EA580C' : (f.isCore ? '#EA580C' : inactiveStroke);
-        const strokeWidth = f.isActive ? 3 : (f.isCore ? 1.6 : 0.7);
-        const fill = f.isActive
-          ? '#FED7AA'
-          : (f.isCore ? '#FCE2C8' : f.baseFill);
-        const className = `map-area ${f.covId ? 'is-clickable' : ''} ${f.isCore ? 'is-core' : ''} ${f.isActive ? 'is-active' : ''}`;
-        return `<path class="${className}" data-name="${esc(f.name)}" data-id="${esc(f.covId || '')}" d="${f.path}" fill="${fill}" stroke="${stroke}" stroke-width="${strokeWidth}" stroke-linejoin="round"/>`;
+        const className = `map-area ${f.covId ? 'is-clickable' : ''} ${f.isActive ? 'is-active' : ''}`;
+        return `<path class="${className}" data-name="${esc(f.name)}" data-id="${esc(f.covId || '')}" d="${f.path}" stroke-linejoin="round"/>`;
       }).join('')}
 
       <!-- Town labels (only for HDB towns we cover) -->
       ${features.filter(f => !HIDE_LABELS.has(f.name)).map(f => {
         const [cx, cy] = f.centroid;
         const override = LABEL_OVERRIDES[f.name] || {};
-        const fontSize = f.isCore ? 12 : 10.5;
-        const weight   = f.isCore ? 700  : 600;
-        const fill     = f.isActive ? '#EA580C' : '#2a1f15';
-        // Title-case the name
+        const fontSize = f.isActive ? 12 : 10.5;
+        const weight   = f.isActive ? 700 : 600;
+        const fill     = f.isActive ? '#FFFFFF' : '#3A200E';
+        const filter   = f.isActive ? '' : `filter="url(#labelShadow)"`;
         const display = f.name.split(/[\s-]/).map(w => w[0] + w.slice(1).toLowerCase()).join(' ');
-        return `<text class="map-label" x="${cx + (override.dx || 0)}" y="${cy + (override.dy || 0)}" text-anchor="middle" font-size="${fontSize}" font-weight="${weight}" fill="${fill}" font-family="system-ui,-apple-system,sans-serif" filter="url(#labelShadow)" pointer-events="none">${esc(display)}</text>`;
+        return `<text class="map-label" x="${cx + (override.dx || 0)}" y="${cy + (override.dy || 0)}" text-anchor="middle" font-size="${fontSize}" font-weight="${weight}" fill="${fill}" font-family="system-ui,-apple-system,sans-serif" ${filter} pointer-events="none">${esc(display)}</text>`;
       }).join('')}
     `;
   }
@@ -514,14 +493,8 @@ function selectValuationTown(town) {
   if (!VAL_STATE.data) return;
   if (!VAL_STATE.data.byTownAndType?.[town]) return;
   VAL_STATE.town = town;
-  const root = document.getElementById('val-towns');
-  if (!root) return;
-  root.querySelectorAll('.val-chip').forEach(c => {
-    const active = c.dataset.val === town;
-    c.classList.toggle('is-active', active);
-    c.setAttribute('aria-checked', active);
-  });
-  // Reset stale result
+  const sel = document.getElementById('val-town-select');
+  if (sel) sel.value = town;
   const result = $('#val-result');
   if (result) { result.hidden = true; result.innerHTML = ''; }
 }
@@ -585,11 +558,24 @@ async function initValuationTool() {
   const towns = Object.keys(data.byTownAndType).sort();
   VAL_STATE.town = towns.includes('Punggol') ? 'Punggol' : towns[0];
 
-  buildValChips('val-towns',  towns,        'town');
-  buildValChips('val-types',  FLAT_TYPES,   'type');
-  buildValChips('val-floors', FLOORS,       'floor');
+  // Town: dropdown (long list)
+  buildValTownSelect(towns);
+  // Flat type & floor: chips (short lists)
+  buildValChips('val-types',  FLAT_TYPES, 'type');
+  buildValChips('val-floors', FLOORS,     'floor');
 
   $('#val-submit')?.addEventListener('click', computeValuation);
+}
+
+function buildValTownSelect(towns) {
+  const sel = $('#val-town-select');
+  if (!sel) return;
+  sel.innerHTML = towns.map(t => `<option value="${esc(t)}"${VAL_STATE.town === t ? ' selected' : ''}>${esc(t)}</option>`).join('');
+  sel.addEventListener('change', (e) => {
+    VAL_STATE.town = e.target.value;
+    const result = $('#val-result');
+    if (result) { result.hidden = true; result.innerHTML = ''; }
+  });
 }
 
 function computeValuation() {

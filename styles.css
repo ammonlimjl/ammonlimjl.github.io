@@ -222,8 +222,7 @@ nav {
 .hero-img-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, rgba(234,88,12,0.08) 0%, rgba(37,99,235,0.06) 100%),
-              linear-gradient(180deg, transparent 60%, rgba(30,18,10,0.30) 100%);
+  background: linear-gradient(180deg, transparent 70%, rgba(30,18,10,0.20) 100%);
   pointer-events: none;
 }
 
@@ -504,6 +503,39 @@ nav {
   color: var(--muted);
   font-weight: 700;
 }
+.val-select-wrap {
+  position: relative;
+}
+.val-select-wrap::after {
+  content: '';
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--orange);
+  border-bottom: 2px solid var(--orange);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+.val-select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  padding: 14px 44px 14px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background: var(--cream);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+.val-select:hover { border-color: var(--orange); }
+.val-select:focus { border-color: var(--orange); background: #fff; }
 .val-chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .val-chip {
   padding: 8px 14px;
@@ -665,10 +697,19 @@ nav {
   overflow: hidden;
 }
 .map-svg { width: 100%; height: auto; display: block; }
-.map-area { transition: fill 0.15s ease, stroke-width 0.15s ease; }
+.map-area {
+  fill: #F2E8D2;
+  stroke: #D8C9A8;
+  stroke-width: 0.5;
+  transition: fill 0.15s ease;
+}
 .map-area.is-clickable { cursor: pointer; }
-.map-area.is-clickable:hover { fill: #FED7AA; stroke: #EA580C; stroke-width: 1.5; }
-.map-area.is-active { stroke-width: 3; }
+.map-area.is-clickable:hover { fill: #E8D9B5; }
+.map-area.is-active {
+  fill: #1E120A;
+  stroke: #1E120A;
+  stroke-width: 1;
+}
 .map-label { pointer-events: none; user-select: none; }
 .map-legend {
   display: flex;
@@ -1592,14 +1633,15 @@ footer {
     height: 100%;
     display: block;
   }
-  .hero-bg-img { object-position: center 15%; }
+  .hero-bg-img { object-position: center 25%; }
   .hero-img-overlay {
     background: linear-gradient(
       180deg,
-      rgba(0,0,0,0.10) 0%,
-      rgba(0,0,0,0.08) 35%,
-      rgba(0,0,0,0.62) 65%,
-      rgba(0,0,0,0.88) 100%
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,0) 45%,
+      rgba(0,0,0,0.40) 65%,
+      rgba(0,0,0,0.78) 85%,
+      rgba(0,0,0,0.92) 100%
     );
   }
   .hero-left {
