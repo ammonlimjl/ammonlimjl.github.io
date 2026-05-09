@@ -1,0 +1,129 @@
+{
+  "_meta": {
+    "description": "Track record cases shown in the Past Cases / Track Record section.",
+    "edit": "Edit this file directly. Each entry needs: photo (path under Track Records/), town, block, flatType, deal ('SOLD' or 'BOUGHT'), achievementLabel, achievementValue."
+  },
+  "cases": [
+    {
+      "id": "punggol-405b",
+      "photo": "Track Records/405B PUNGGOL 2RM SOLD IN 1 VIEWING.jpg",
+      "alt": "405B Punggol HDB sold in 1 viewing",
+      "town": "Punggol",
+      "block": "Blk 405B",
+      "flatType": "2-Room HDB",
+      "deal": "SOLD",
+      "achievementLabel": "SOLD IN",
+      "achievementValue": "1 VIEWING"
+    },
+    {
+      "id": "punggol-220b",
+      "photo": "Track Records/220B PUNGGOL 4RM BOUGHT FOR 680K HIGH FLOOR WITHOUT COV.jpg",
+      "alt": "220B Punggol 4-room bought without COV",
+      "town": "Punggol",
+      "block": "Blk 220B",
+      "flatType": "4-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
+    },
+    {
+      "id": "punggol-683a",
+      "photo": "Track Records/683A PUNGGOL 3RM 67SQM SOLD 600K WITH 50K COV.jpg",
+      "alt": "683A Punggol 3-room sold with $50K COV",
+      "town": "Punggol",
+      "block": "Blk 683A",
+      "flatType": "3-Room HDB",
+      "deal": "SOLD",
+      "achievementLabel": "SOLD WITH",
+      "achievementValue": "$50K COV"
+    },
+    {
+      "id": "punggol-323a",
+      "photo": "Track Records/323A PUNGGOL 5 ROOM FULLY RENOVATED TOP FLOOR BOUGHT AT 880K WITHOUT ANY COV.jpg",
+      "alt": "323A Punggol 5-room top floor bought without COV",
+      "town": "Punggol",
+      "block": "Blk 323A",
+      "flatType": "5-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
+    },
+    {
+      "id": "sengkang-121d",
+      "photo": "Track Records/121D SENGKANG 5RM BOUGHT AT 660K TOP FLOOR WITH NO COV FULLY RENOVATED.jpg",
+      "alt": "121D Sengkang 5-room top floor bought without COV",
+      "town": "Sengkang",
+      "block": "Blk 121D",
+      "flatType": "5-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
+    },
+    {
+      "id": "bukit-batok-451a",
+      "photo": "Track Records/451A BUKIT BATOK 3RM 525K SOLD IN LESS THAN 4 WEEKS.jpg",
+      "alt": "451A Bukit Batok 3-room sold in less than 4 weeks",
+      "town": "Bukit Batok",
+      "block": "Blk 451A",
+      "flatType": "3-Room HDB",
+      "deal": "SOLD",
+      "achievementLabel": "SOLD IN",
+      "achievementValue": "< 4 WEEKS"
+    },
+    {
+      "id": "punggol-601c",
+      "photo": "Track Records/601C PUNGGOL 2RM BOUGHT WITH ZERO COV.jpeg",
+      "alt": "601C Punggol 2-room bought without COV",
+      "town": "Punggol",
+      "block": "Blk 601C",
+      "flatType": "2-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
+    },
+    {
+      "id": "punggol-665a",
+      "photo": "Track Records/665A PUNGGOL 4RM BOUGHT WITH ZERO COV.jpeg",
+      "alt": "665A Punggol 4-room bought without COV",
+      "town": "Punggol",
+      "block": "Blk 665A",
+      "flatType": "4-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
+    },
+    {
+      "id": "punggol-677a",
+      "photo": "Track Records/677A PUNGGOL 4 ROOM BOUGHT WITH ZERO COV.jpeg",
+      "alt": "677A Punggol 4-room bought without COV",
+      "town": "Punggol",
+      "block": "Blk 677A",
+      "flatType": "4-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
+    },
+    {
+      "id": "jurong-east-110",
+      "photo": "Track Records/110 JURONG EAST 3RM FULLY RENOVATED BOUGHT WITH ZERO COV.jpeg",
+      "alt": "110 Jurong East 3-room bought without COV",
+      "town": "Jurong East",
+      "block": "Blk 110",
+      "flatType": "3-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
+    },
+    {
+      "id": "pasir-ris-109",
+      "photo": "Track Records/109 PASIR RIS BOUGHT WITH ZERO COV.jpeg",
+      "alt": "109 Pasir Ris HDB bought without COV",
+      "town": "Pasir Ris",
+      "block": "Blk 109",
+      "flatType": "4-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
+    }
+  ]
+}

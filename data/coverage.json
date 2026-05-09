@@ -1,0 +1,50 @@
+{
+  "_meta": {
+    "description": "Coverage map regions. tier='core' renders with orange highlight halo; tier='cover' renders as a smaller pin. Coordinates (x,y) are positioned over the Singapore GeoJSON projection in the SVG (viewBox 0 0 1000 540).",
+    "edit": "Update transactions, projects, latest as your portfolio grows. The map UI reads this file directly — no code changes needed."
+  },
+  "regions": [
+    {
+      "id": "sp",
+      "name": "Sengkang & Punggol",
+      "x": 735, "y": 120,
+      "tier": "core",
+      "stats": "Top deal volume · #1 specialty",
+      "projects": "Punggol Waterway · Sengkang Riverside · Punggol Digital District",
+      "latest": "Multiple ZERO COV resales · 220B / 405B / 601C / 665A / 677A / 683A"
+    },
+    {
+      "id": "bat",
+      "name": "Bishan / AMK / Toa Payoh",
+      "x": 520, "y": 240,
+      "tier": "core",
+      "stats": "Mature heartland · premium valuations",
+      "projects": "Bishan Loft · Toa Payoh Crest · AMK Court",
+      "latest": "Active across Central — ask for current listings"
+    },
+    {
+      "id": "tb",
+      "name": "Tampines & Bedok",
+      "x": 830, "y": 250,
+      "tier": "core",
+      "stats": "East side · family-friendly demand",
+      "projects": "Tampines GreenVerge · Bedok Reservoir",
+      "latest": "Active in East — recent COV-free deals"
+    },
+    { "id": "sy",  "name": "Sembawang & Yishun",  "x": 600, "y": 120, "tier": "cover", "stats": "Active coverage", "projects": "EastDelta @ Canberra", "latest": "" },
+    { "id": "wd",  "name": "Woodlands",            "x": 455, "y": 115, "tier": "cover", "stats": "Active coverage", "projects": "Champions Bliss · Marsiling estates", "latest": "" },
+    { "id": "pr",  "name": "Pasir Ris",            "x": 870, "y": 175, "tier": "cover", "stats": "Active coverage", "projects": "Pasir Ris Heights", "latest": "Blk 109 · COV-free" },
+    { "id": "hg",  "name": "Hougang",              "x": 640, "y": 215, "tier": "cover", "stats": "Active coverage", "projects": "Hougang RiverCourt", "latest": "" },
+    { "id": "sg",  "name": "Serangoon",            "x": 600, "y": 285, "tier": "cover", "stats": "Active coverage", "projects": "Lorong Lew Lian · NEX corridor", "latest": "" },
+    { "id": "cck", "name": "Choa Chu Kang",        "x": 300, "y": 200, "tier": "cover", "stats": "Active coverage", "projects": "Keat Hong Mirage", "latest": "" },
+    { "id": "bp",  "name": "Bukit Panjang",        "x": 355, "y": 240, "tier": "cover", "stats": "Active coverage", "projects": "Senja Heights", "latest": "" },
+    { "id": "bb",  "name": "Bukit Batok",          "x": 330, "y": 295, "tier": "cover", "stats": "Active coverage", "projects": "West Plains", "latest": "Blk 451A · sold < 4 weeks" },
+    { "id": "jur", "name": "Jurong East & West",   "x": 255, "y": 345, "tier": "cover", "stats": "Active coverage · JLD corridor", "projects": "Jurong Lake Vista", "latest": "Blk 110 Jurong East · COV-free" },
+    { "id": "cle", "name": "Clementi",             "x": 380, "y": 370, "tier": "cover", "stats": "Active coverage", "projects": "Casa Clementi", "latest": "" },
+    { "id": "qt",  "name": "Queenstown",           "x": 455, "y": 405, "tier": "cover", "stats": "Active coverage", "projects": "Dawson SkyTerrace", "latest": "" },
+    { "id": "bm",  "name": "Bukit Merah",          "x": 495, "y": 430, "tier": "cover", "stats": "Active coverage", "projects": "Telok Blangah Beacon", "latest": "" },
+    { "id": "kl",  "name": "Kallang",              "x": 585, "y": 380, "tier": "cover", "stats": "Active coverage", "projects": "Kallang Trivelis", "latest": "" },
+    { "id": "gl",  "name": "Geylang",              "x": 650, "y": 385, "tier": "cover", "stats": "Active coverage", "projects": "MacPherson Spring", "latest": "" },
+    { "id": "mp",  "name": "Marine Parade",        "x": 720, "y": 415, "tier": "cover", "stats": "Active coverage", "projects": "Pine Close · Katong corridor", "latest": "" }
+  ]
+}
