@@ -1,0 +1,26 @@
+# Claude Code local state
+.claude/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+
+# Node (if scripts grow)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment / secrets (none today, but keep prophylactically)
+.env
+.env.local
+*.local
+
+# Files with token-like names (do not commit accidental download artifacts)
+eyJ*
+data/singapore-planning-areas.geojson

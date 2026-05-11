@@ -1,0 +1,14 @@
+{
+  "name": "ammonlim-website",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "Singapore HDB specialist — static site",
+  "scripts": {
+    "compress": "node scripts/compress-photos.mjs",
+    "refresh-valuation": "node scripts/refresh-valuation.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.5"
+  }
+}

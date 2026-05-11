@@ -1,0 +1,35 @@
+name: Refresh HDB valuation data
+
+on:
+  schedule:
+    # 1st of each month at 03:00 SGT (= 19:00 UTC the previous day)
+    - cron: '0 19 1 * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run refresh script
+        run: node scripts/refresh-valuation.mjs
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet data/valuation.json; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/valuation.json
+          git commit -m "chore: refresh valuation data ($(date -u +%Y-%m-%d))"
+          git push
