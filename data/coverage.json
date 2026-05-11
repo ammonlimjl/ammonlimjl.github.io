@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "description": "Coverage regions. Each region maps to one or more PLANNING AREA polygons in data/singapore-planning-simplified.geojson (matched by 'areas' array — values are uppercase GeoJSON property names).",
+    "description": "Coverage regions. Each region maps to one or more PLANNING AREA polygons in data/singapore-planning-simplified.geojson (matched by 'areas' array; values are uppercase GeoJSON property names).",
     "tier": "core' = orange highlight + heavier stroke; 'cover' = standard active",
     "edit": "Update marketAngle, schools, projects, connectivity to keep buyer info fresh. Median prices auto-pulled from data/valuation.json."
   },
@@ -76,7 +76,7 @@
       "areas": ["SENGKANG", "PUNGGOL"],
       "valuationTown": "Punggol",
       "tier": "core",
-      "marketAngle": "Highest BTO concentration in Singapore. 3,200+ flats hitting MOP in 2026 — the biggest resale supply wave nationwide.",
+      "marketAngle": "Highest BTO concentration in Singapore. 3,200+ flats hitting MOP in 2026, the biggest resale supply wave nationwide.",
       "connectivity": "NEL · LRT · Punggol Coast MRT (TEL 4)",
       "projects": "Punggol Waterway · Punggol Digital District · Sengkang Riverside · Coney Island",
       "schools": "Mee Toh · Compassvale · Punggol Cove · Greendale"
@@ -186,7 +186,7 @@
       "areas": ["BUKIT BATOK"],
       "valuationTown": "Bukit Batok",
       "tier": "cover",
-      "marketAngle": "Serene greenery. Tengah developing nearby — long-term upside with the new estate's amenities.",
+      "marketAngle": "Serene greenery. Tengah developing nearby, with long-term upside from the new estate's amenities.",
       "connectivity": "NSL · JRL (upcoming)",
       "projects": "West Plains · Bukit Gombak Park · The Reflections at Keppel Bay nearby",
       "schools": "Bukit View · Princess Elizabeth · Hillgrove"
@@ -219,7 +219,7 @@
       "areas": ["QUEENSTOWN"],
       "valuationTown": "Queenstown",
       "tier": "cover",
-      "marketAngle": "Singapore's first satellite town — now one of its most coveted addresses. Dawson set the $1.7M HDB record in Q1 2026.",
+      "marketAngle": "Singapore's first satellite town. Now one of its most coveted addresses. Dawson set the $1.7M HDB record in Q1 2026.",
       "connectivity": "EWL · CCL · TEL",
       "projects": "Dawson SkyTerrace · Stirling Residences · Queensway Shopping Centre",
       "schools": "Queenstown Primary · Crescent Girls' · Anglo-Chinese (Independent)"
@@ -252,7 +252,7 @@
       "areas": ["GEYLANG"],
       "valuationTown": "Geylang",
       "tier": "cover",
-      "marketAngle": "Often overlooked — best-priced flats near city centre, with strong rental yields.",
+      "marketAngle": "Often overlooked. Best-priced flats near city centre, with strong rental yields.",
       "connectivity": "EWL · DTL · CCL",
       "projects": "MacPherson Spring · Geylang Serai · Paya Lebar Quarter",
       "schools": "Geylang Methodist · MacPherson · Tanjong Katong"

@@ -4,8 +4,8 @@
     "edit": "Add/remove entries here when your active inventory changes. Reorder to control display order. To swap a hero photo, change the `hero` path to point to a different file inside the listing's folder.",
     "fields": {
       "id": "Stable slug (used for the folder under Listings/)",
-      "address": "Street address — shown as card title",
-      "town": "HDB town — used for chip and SEO",
+      "address": "Street address (shown as card title)",
+      "town": "HDB town (used for chip and SEO)",
       "price": "Display price string, e.g. '$440K' or '$1.05M'",
       "priceFull": "Numeric price for sorting / WhatsApp prefill, e.g. 'S$ 440,000'",
       "beds": "Bedrooms",
@@ -15,7 +15,7 @@
       "flatType": "Display flat type (e.g. '3-Room', '4-Room', '5-Room')",
       "topYear": "TOP year (4-digit)",
       "lease": "Lease length in years (typically 99)",
-      "tagline": "Punchy 1-liner — the PropertyGuru listing's About headline",
+      "tagline": "Punchy 1-liner (the PropertyGuru listing's About headline)",
       "badges": "Array of short tags shown on the photo (e.g. 'HIGH FLOOR', 'RENOVATED', 'CORNER UNIT')",
       "hero": "Path to the hero photo (resolved from repo root)",
       "propertyGuruUrl": "Full link to the PropertyGuru listing page"
