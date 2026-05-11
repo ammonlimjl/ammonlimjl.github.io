@@ -254,29 +254,38 @@ nav {
   letter-spacing: 2px;
   text-shadow: 0 1px 6px rgba(0,0,0,0.5);
 }
-.hero-photo-stat {
+/* Bottom credit strip: $30M+ · 26 towns · ★★★★★ 5.0 */
+.hero-credit-strip {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  line-height: 0.95;
+  gap: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.92);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.55);
+}
+.hero-credit-strip .hcs-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+}
+.hero-credit-strip .hcs-val {
+  font-family: 'Georgia', serif;
+  font-size: 14px;
+  font-weight: 700;
   color: #fff;
-  text-shadow: 0 2px 14px rgba(0,0,0,0.55);
+  letter-spacing: -0.01em;
 }
-.hero-photo-stat-num {
-  font-family: 'Georgia', serif;
-  font-size: 64px;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-}
-.hero-photo-stat-lbl {
-  font-family: 'Georgia', serif;
-  font-size: 18px;
-  margin-top: 4px;
-  color: rgba(255,255,255,0.85);
-}
-.hero-photo-stat-lbl em {
-  font-style: italic;
+.hero-credit-strip .hcs-stars {
   color: var(--orange-bright);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+}
+.hero-credit-strip .hcs-sep {
+  color: rgba(255,255,255,0.45);
+  font-size: 13px;
 }
 
 /* ─── TRUST STRIP ─── */
@@ -1960,8 +1969,8 @@ footer {
   .hero-bg-img { object-position: center 30%; }
   .hero-img-overlay {
     background:
-      linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.15) 28%, rgba(0,0,0,0) 50%),
-      linear-gradient(180deg, transparent 75%, rgba(28,19,11,0.20) 100%);
+      linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 22%),
+      linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.55) 100%);
   }
 
   /* Editorial overlay only on mobile (where photo is the focal hero block) */
@@ -1977,20 +1986,14 @@ footer {
     top: 18px;
     left: 20px;
   }
-  .hero-stamp--bottom {
+  .hero-credit-strip {
     position: absolute;
-    bottom: 18px;
+    bottom: 16px;
+    left: 20px;
     right: 20px;
-    text-align: right;
+    justify-content: center;
+    flex-wrap: wrap;
   }
-  .hero-photo-stat {
-    position: absolute;
-    top: 16%;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .hero-photo-stat-num { font-size: 56px; }
-  .hero-photo-stat-lbl { font-size: 16px; }
   .hero-left {
     position: relative;
     background: var(--cream);
