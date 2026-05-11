@@ -177,8 +177,8 @@
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#valuation">Free Valuation</a></li>
+    <li><a href="#active-listings">Listings</a></li>
     <li><a href="#expertise">Coverage</a></li>
-    <li><a href="#cases">Cases</a></li>
     <li><a href="#reviews">Reviews</a></li>
     <li><a href="#news">News</a></li>
   </ul>
@@ -194,8 +194,9 @@
 <div class="mobile-drawer" id="mobile-drawer">
   <a href="#about" class="drawer-link">About</a>
   <a href="#valuation" class="drawer-link">Free Valuation</a>
+  <a href="#active-listings" class="drawer-link">Active Listings</a>
   <a href="#expertise" class="drawer-link">Coverage</a>
-  <a href="#cases" class="drawer-link">Cases</a>
+  <a href="#cases" class="drawer-link">Past Cases</a>
   <a href="#reviews" class="drawer-link">Reviews</a>
   <a href="#news" class="drawer-link">News</a>
   <a href="#contact" class="drawer-cta drawer-link">Get In Touch</a>
@@ -390,6 +391,30 @@
       Updated monthly from <strong>data.gov.sg</strong> ·
       <span id="val-data-stamp">loading…</span> ·
       Free · No signup
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── ACTIVE LISTINGS ─── -->
+<section id="active-listings" class="section section-soft">
+  <div class="section-narrow">
+    <div class="track-header">
+      <div class="section-label">Available Now</div>
+      <h2 class="track-h2">Active <em class="italic-accent">HDB Listings</em></h2>
+      <p class="track-sub sans">Hand-picked HDB resale flats currently on the market. Updated as my inventory changes.</p>
+    </div>
+    <div class="active-listings-grid-wrap">
+      <button class="active-arrow active-arrow-left" onclick="activeListingsScroll(-1)" aria-label="Previous">←</button>
+      <button class="active-arrow active-arrow-right" onclick="activeListingsScroll(1)" aria-label="Next">→</button>
+      <div class="active-listings-grid" id="active-listings-grid">
+        <!-- Cards rendered from data/listings-active.json by app.js -->
+      </div>
+    </div>
+    <div style="text-align:center; margin-top: 24px;">
+      <a href="https://www.propertyguru.com.sg/agent/ammon-lim-13481125" target="_blank" rel="noopener" class="btn-secondary sans">
+        View all my listings on PropertyGuru →
+      </a>
     </div>
   </div>
 </section>

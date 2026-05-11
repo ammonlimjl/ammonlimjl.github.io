@@ -1016,6 +1016,255 @@ nav {
   color: var(--muted);
 }
 
+/* ─── ACTIVE LISTINGS ─── */
+.active-listings-grid-wrap {
+  position: relative;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding-top: 12px;
+  margin-top: -12px;
+}
+.active-listings-grid {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-left: max(64px, calc((100vw - 1200px) / 2 + 64px));
+  padding-right: max(64px, calc((100vw - 1200px) / 2 + 64px));
+  padding-bottom: 16px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+  cursor: grab;
+}
+.active-listings-grid::-webkit-scrollbar { display: none; }
+.active-listings-grid:active { cursor: grabbing; }
+
+.active-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  min-width: 340px;
+  max-width: 340px;
+  flex-shrink: 0;
+  transition: box-shadow 0.25s, transform 0.25s;
+  display: flex;
+  flex-direction: column;
+}
+.active-card:hover {
+  box-shadow: 0 20px 48px rgba(28,19,11,0.16);
+  transform: translateY(-4px);
+}
+.active-card-photo {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  background: var(--cream-dark);
+}
+.active-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.active-card:hover .active-card-img { transform: scale(1.05); }
+.active-card-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.45) 100%);
+  pointer-events: none;
+}
+.active-card-status {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 5px 11px;
+  background: var(--orange);
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  border-radius: 6px;
+  z-index: 2;
+}
+.active-card-price-overlay {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  right: 14px;
+  z-index: 2;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.active-card-price-overlay .price {
+  font-family: 'Georgia', serif;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+}
+.active-card-price-overlay .psf {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 11px;
+  color: rgba(255,255,255,0.85);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+  text-align: right;
+}
+.active-card-badges {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+}
+.active-card-badge {
+  padding: 4px 9px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(4px);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  border-radius: 4px;
+}
+.active-card-body {
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.active-card-town {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--orange);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.active-card-town::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--orange);
+  display: inline-block;
+}
+.active-card-addr {
+  font-family: 'Georgia', serif;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+.active-card-tagline {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+  font-style: italic;
+}
+.active-card-specs {
+  display: flex;
+  gap: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  color: var(--text);
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-top: 4px;
+}
+.active-card-spec { display: flex; align-items: center; gap: 4px; }
+.active-card-spec .num { font-weight: 700; }
+.active-card-spec .lbl { color: var(--muted); font-size: 11px; }
+.active-card-cta {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 6px;
+}
+.active-card-btn {
+  flex: 1;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 11px 12px;
+  border-radius: 100px;
+  text-decoration: none;
+  text-align: center;
+  border: 1.5px solid;
+  transition: background 0.15s, color 0.15s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.active-card-btn-primary {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+}
+.active-card-btn-primary:hover { background: var(--orange-bright); }
+.active-card-btn-secondary {
+  background: #fff;
+  border-color: var(--border);
+  color: var(--text);
+}
+.active-card-btn-secondary:hover { border-color: var(--orange); color: var(--orange); }
+.active-arrow {
+  position: absolute;
+  top: 46%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  transition: background 0.2s, border-color 0.2s;
+}
+.active-arrow:hover { background: var(--dark); color: #fff; border-color: var(--dark); }
+.active-arrow-left  { left: max(18px, calc((100vw - 1200px) / 2 + 18px)); }
+.active-arrow-right { right: max(18px, calc((100vw - 1200px) / 2 + 18px)); }
+@media (max-width: 768px) {
+  .active-listings-grid-wrap { margin-left: 0; margin-right: 0; }
+  .active-listings-grid {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 12px;
+    gap: 14px;
+  }
+  .active-card { min-width: 280px; max-width: 280px; }
+  .active-arrow { display: none; }
+  .active-card-photo { height: 180px; }
+  .active-card-addr { font-size: 17px; }
+  .active-card-price-overlay .price { font-size: 22px; }
+}
+
 /* ─── REVIEWS ─── */
 #reviews { background: var(--dark); color: #fff; }
 .reviews-header { text-align: center; margin-bottom: 48px; }

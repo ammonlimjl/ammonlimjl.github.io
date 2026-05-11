@@ -187,6 +187,69 @@ function setupListingsScroll(el) {
 }
 
 
+/* ─── ACTIVE LISTINGS: render from JSON ─────────────────────────────────── */
+
+async function renderActiveListings() {
+  const grid = $('#active-listings-grid');
+  if (!grid) return;
+  let data;
+  try { data = await loadJSON('data/listings-active.json'); }
+  catch (e) { console.warn('Active listings load failed', e); return; }
+
+  grid.innerHTML = data.listings.map(l => {
+    const waText = `Hi Ammon, I'm interested in ${l.address} (${l.flatType}, ${l.priceFull}). Can we chat?`;
+    const badges = (l.badges || []).slice(0, 3).map(b => `<span class="active-card-badge">${esc(b)}</span>`).join('');
+    return `
+      <article class="active-card">
+        <a class="active-card-photo" href="${esc(l.propertyGuruUrl)}" target="_blank" rel="noopener" aria-label="View ${esc(l.address)} on PropertyGuru">
+          <img class="active-card-img" src="${encodePath(l.hero)}" alt="${esc(l.address)} — ${esc(l.flatType)} HDB for sale" loading="lazy">
+          <span class="active-card-status">FOR SALE</span>
+          <div class="active-card-badges">${badges}</div>
+          <div class="active-card-price-overlay">
+            <span class="price">${esc(l.price)}</span>
+            <span class="psf">S$ ${l.psf} psf</span>
+          </div>
+        </a>
+        <div class="active-card-body">
+          <div class="active-card-town">${esc(l.town)}</div>
+          <div class="active-card-addr">${esc(l.address)}</div>
+          <div class="active-card-tagline">${esc(l.tagline)}</div>
+          <div class="active-card-specs">
+            <span class="active-card-spec"><span class="num">${esc(l.flatType)}</span></span>
+            <span class="active-card-spec"><span class="num">${l.beds}</span> <span class="lbl">beds</span></span>
+            <span class="active-card-spec"><span class="num">${l.baths}</span> <span class="lbl">bath</span></span>
+            <span class="active-card-spec"><span class="num">${l.sqft}</span> <span class="lbl">sqft</span></span>
+          </div>
+          <div class="active-card-cta">
+            <a class="active-card-btn active-card-btn-primary" href="${waUrl(waText)}" target="_blank" rel="noopener">💬 WhatsApp</a>
+            <a class="active-card-btn active-card-btn-secondary" href="${esc(l.propertyGuruUrl)}" target="_blank" rel="noopener">View Listing →</a>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  setupActiveListingsDrag(grid);
+}
+
+function setupActiveListingsDrag(el) {
+  let isDown = false, startX, scrollLeft;
+  el.addEventListener('mousedown', e => { isDown = true; startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft; });
+  el.addEventListener('mouseleave', () => { isDown = false; });
+  el.addEventListener('mouseup',   () => { isDown = false; });
+  el.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    el.scrollLeft = scrollLeft - ((e.pageX - el.offsetLeft) - startX);
+  });
+}
+
+window.activeListingsScroll = function(dir) {
+  const el = $('#active-listings-grid');
+  if (el) el.scrollBy({ left: dir * 360, behavior: 'smooth' });
+};
+
+
 /* ─── HDB NEWS: render from JSON ───────────────────────────────────────── */
 
 async function renderNews() {
@@ -857,6 +920,7 @@ window.handleSubscribe = async function(e) {
 /* ─── BOOT ─────────────────────────────────────────────────────────────── */
 
 renderListings();
+renderActiveListings();
 renderNews();
 renderCoverageMap();
 initValuationTool();
