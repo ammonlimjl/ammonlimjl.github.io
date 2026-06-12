@@ -790,6 +790,78 @@ function handleValuationLead(e) {
 }
 
 
+/* ─── TOWN GUIDE PAGES (/towns/<town>/) ────────────────────────────────── */
+
+const TOWN_TYPES = ['2-Room', '3-Room', '4-Room', '5-Room', 'Exec'];
+
+async function renderTownPage() {
+  const root = $('[data-town]');
+  if (!root) return;
+  const town = root.dataset.town;
+
+  // Live price snapshot from valuation.json
+  const priceEl = $('#town-prices');
+  if (priceEl) {
+    try {
+      const data = await loadJSON('/data/valuation.json');
+      const bucket = data.byTownAndType?.[town];
+      if (bucket) {
+        const rows = TOWN_TYPES.filter(t => bucket[t]).map(t => {
+          const b = bucket[t];
+          return `
+            <tr>
+              <td class="tp-type">${esc(t)}</td>
+              <td>${fmtPrice(b.p25)} – ${fmtPrice(b.p75)}</td>
+              <td class="tp-median">${fmtPrice(b.p50)}</td>
+              <td class="tp-count">${b.count}</td>
+            </tr>`;
+        }).join('');
+        priceEl.innerHTML = `
+          <table class="town-price-table sans">
+            <thead><tr><th>Flat type</th><th>Typical range</th><th>Median</th><th>Sales (12 mo)</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+          <div class="val-trust sans" style="margin-top:14px;">
+            Official HDB resale transactions, last 12 months · data.gov.sg ·
+            ${data._meta?.lastUpdated ? 'refreshed ' + esc(data._meta.lastUpdated) : ''}
+          </div>`;
+      }
+    } catch (e) { console.warn('Town prices load failed', e); }
+  }
+
+  // Closed deals in this town from listings.json
+  const casesEl = $('#town-cases');
+  if (casesEl) {
+    try {
+      const data = await loadJSON('/data/listings.json');
+      const cases = data.cases.filter(c => c.town === town);
+      if (!cases.length) {
+        $('#town-cases-section')?.remove();
+      } else {
+        casesEl.innerHTML = cases.map(c => `
+          <article class="listing-card">
+            <div class="listing-img">
+              <img class="listing-img-bg" src="${encodePath(c.photo)}" alt="${esc(c.alt || '')}" loading="lazy">
+              <span class="badge-sold">✓ ${esc(c.deal)}</span>
+            </div>
+            <div class="listing-body">
+              <div class="listing-location"><span class="listing-loc-dot"></span><span class="sans">${esc(c.town)} · ${esc(c.block)}</span></div>
+              <div class="listing-achievement">
+                <span class="ach-label">${esc(c.achievementLabel)}</span>
+                <span class="ach-value">${esc(c.achievementValue)}</span>
+              </div>
+              <div class="listing-card-footer sans">
+                <span class="listing-flat-type">${esc(c.flatType)}</span>
+              </div>
+            </div>
+          </article>
+        `).join('');
+      }
+    } catch (e) { console.warn('Town cases load failed', e); }
+  }
+}
+
+
 /* ─── CONTACT FORM (Formspree) ─────────────────────────────────────────── */
 
 window.handleContact = async function(e) {
@@ -909,3 +981,4 @@ renderActiveListings();
 renderNews();
 renderCoverageMap();
 initValuationTool();
+renderTownPage();
