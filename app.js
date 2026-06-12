@@ -141,10 +141,20 @@ function setupListingsScroll(el) {
     }
   }
 
+  // Keep the position in a JS accumulator and assign it each frame.
+  // Reading scrollLeft back every frame can round-trip to the same value
+  // and freeze the crawl (browser quantises scroll positions).
+  let pos = null;
   function step() {
     if (!paused && !arrowAnimating && !prefersReduced) {
-      el.scrollLeft += 0.6;
-      checkLoop();
+      if (pos === null) pos = el.scrollLeft;
+      pos += 0.6;
+      const half = el.scrollWidth / 2;
+      if (half > 0 && pos >= half) pos -= half;
+      el.style.scrollBehavior = 'auto';
+      el.scrollLeft = pos;
+    } else {
+      pos = null; // resync after user interaction
     }
     requestAnimationFrame(step);
   }
