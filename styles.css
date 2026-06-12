@@ -2623,3 +2623,18 @@ html.anim .town-chart-svg path[pathLength] {
   padding: 6px 14px;
   border-radius: 8px;
 }
+
+/* Buy page art bands */
+.parallax-photo[data-bg="art-buy-skyline"] {
+  background-image: url('art/buy-skyline-watercolor.jpg');
+  background-color: #dceaf2;
+}
+.parallax-photo[data-bg="art-buy-courtyard"] {
+  background-image: url('art/buy-courtyard-watercolor.jpg');
+  background-color: #e9ded2;
+}
+.parallax-photo[data-bg="art-buy-towers"] {
+  background-image: url('art/buy-towers-watercolor.jpg');
+  background-color: #e3e6e0;
+  background-position: center 32%;
+}
