@@ -10,8 +10,9 @@ const waUrl = (text) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURICompon
 const $  = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-// Encode path segments (keeps '/') for URLs containing spaces
-const encodePath = (p) => p.split('/').map(encodeURIComponent).join('/');
+// Encode path segments (keeps '/') for URLs containing spaces.
+// Returns a root-absolute URL so it works from any page depth (/, /valuation/, …).
+const encodePath = (p) => '/' + p.split('/').map(encodeURIComponent).join('/');
 
 // Lightweight HTML escape for safe data interpolation
 function esc(str = '') {
@@ -90,7 +91,7 @@ async function renderListings() {
   const grid = $('#listingsGrid');
   if (!grid) return;
   let data;
-  try { data = await loadJSON('data/listings.json'); }
+  try { data = await loadJSON('/data/listings.json'); }
   catch (e) { console.warn('Listings load failed', e); return; }
 
   grid.innerHTML = data.cases.map(c => `
@@ -193,7 +194,7 @@ async function renderActiveListings() {
   const grid = $('#active-listings-grid');
   if (!grid) return;
   let data;
-  try { data = await loadJSON('data/listings-active.json'); }
+  try { data = await loadJSON('/data/listings-active.json'); }
   catch (e) { console.warn('Active listings load failed', e); return; }
 
   grid.innerHTML = data.listings.map(l => {
@@ -256,7 +257,7 @@ async function renderNews() {
   const scroll = $('#newsScroll');
   if (!scroll) return;
   let data;
-  try { data = await loadJSON('data/news.json'); }
+  try { data = await loadJSON('/data/news.json'); }
   catch (e) { console.warn('News load failed', e); return; }
 
   scroll.innerHTML = data.items.map(n => {
@@ -407,9 +408,9 @@ async function renderCoverageMap() {
   let cov, valData, geo;
   try {
     [cov, valData, geo] = await Promise.all([
-      loadJSON('data/coverage.json'),
-      loadJSON('data/valuation.json').catch(() => null),
-      loadJSON('data/singapore-planning-simplified.geojson'),
+      loadJSON('/data/coverage.json'),
+      loadJSON('/data/valuation.json').catch(() => null),
+      loadJSON('/data/singapore-planning-simplified.geojson'),
     ]);
   }
   catch (e) { console.warn('Coverage load failed', e); return; }
@@ -565,9 +566,9 @@ async function renderCoverageMap() {
       ${projects}
       ${schools}
       <div class="map-detail-cta">
-        <button class="map-detail-cta-btn" data-action="goto-valuation" data-town="${esc(r.valuationTown || '')}">
+        <a class="map-detail-cta-btn" href="/valuation/?town=${encodeURIComponent(r.valuationTown || '')}">
           ⚡ Get full valuation for ${esc(shortName)}
-        </button>
+        </a>
       </div>
     `;
   }
@@ -594,26 +595,7 @@ async function renderCoverageMap() {
     rerender();
   });
 
-  detail.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-action="goto-valuation"]');
-    if (!btn) return;
-    const town = btn.dataset.town;
-    if (town) selectValuationTown(town);
-    document.getElementById('valuation')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-
   rerender();
-}
-
-// Imperatively set the valuation tool's town (called from map "Get valuation for X" CTA)
-function selectValuationTown(town) {
-  if (!VAL_STATE.data) return;
-  if (!VAL_STATE.data.byTownAndType?.[town]) return;
-  VAL_STATE.town = town;
-  const sel = document.getElementById('val-town-select');
-  if (sel) sel.value = town;
-  const result = $('#val-result');
-  if (result) { result.hidden = true; result.innerHTML = ''; }
 }
 
 
@@ -660,7 +642,7 @@ async function initValuationTool() {
   if (!card) return;
 
   let data;
-  try { data = await loadJSON('data/valuation.json'); }
+  try { data = await loadJSON('/data/valuation.json'); }
   catch (e) { console.warn('Valuation data load failed', e); return; }
 
   VAL_STATE.data = data;
@@ -671,9 +653,12 @@ async function initValuationTool() {
     stamp.textContent = 'Last refreshed ' + data._meta.lastUpdated;
   }
 
-  // Towns: derived from data keys
+  // Towns: derived from data keys. ?town= in the URL (e.g. from the coverage
+  // map CTA) preselects; otherwise default to Punggol.
   const towns = Object.keys(data.byTownAndType).sort();
-  VAL_STATE.town = towns.includes('Punggol') ? 'Punggol' : towns[0];
+  const urlTown = new URLSearchParams(location.search).get('town');
+  VAL_STATE.town = (urlTown && towns.includes(urlTown)) ? urlTown
+    : towns.includes('Punggol') ? 'Punggol' : towns[0];
 
   // Town: dropdown (long list)
   buildValTownSelect(towns);
@@ -862,11 +847,11 @@ window.handleContact = async function(e) {
 /* ─── SUBSCRIBE POPUP ──────────────────────────────────────────────────── */
 
 let subscribeShown = false;
-const newsSec = $('#news');
 function checkSubscribePopup() {
-  if (subscribeShown || !newsSec) return;
-  const rect = newsSec.getBoundingClientRect();
-  if (rect.top < window.innerHeight * 0.8) {
+  if (subscribeShown) return;
+  const doc = document.documentElement;
+  const progress = (window.scrollY + window.innerHeight) / doc.scrollHeight;
+  if (window.scrollY > 300 && progress > 0.65) {
     subscribeShown = true;
     window.removeEventListener('scroll', checkSubscribePopup);
     setTimeout(() => {
