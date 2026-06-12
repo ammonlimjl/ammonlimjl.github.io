@@ -25,7 +25,7 @@ const RULES = [
   { pattern: 'punggol-drone.jpg',                  width: 1600, quality: 78 },
   { pattern: 'bishan-drone.jpg',                   width: 1600, quality: 78 },
   // Active-listing hero photos (max ~340px card, 2x for retina = 680, give some headroom)
-  { pattern: 'Listings/*/hero.*',                  width: 1100, quality: 80, convertToJpg: true },
+  { pattern: 'listing-photos/*/hero.*',                  width: 1100, quality: 80, convertToJpg: true },
   // Newscard images (already smallish, mild re-encode + downscale)
   { pattern: 'Newscard/news-*.jpg',                width: 720,  quality: 78 },
   { pattern: 'Newscard/*.jpeg',                    width: 720,  quality: 78 },
