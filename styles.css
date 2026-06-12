@@ -2301,10 +2301,15 @@ footer {
 
 /* CTA band reused at the bottom of subpages */
 .page-cta-band {
-  background: var(--dark);
+  /* warm fade from the page cream down into the dark close */
+  background: linear-gradient(180deg,
+    var(--cream) 0,
+    #8a6a4f 90px,
+    #3A200E 170px,
+    var(--dark) 240px);
   color: var(--cream);
   text-align: center;
-  padding: 64px 24px;
+  padding: 200px 24px 72px;
 }
 .page-cta-band h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 800; margin-bottom: 12px; }
 .page-cta-band p  { color: rgba(250,248,243,0.75); max-width: 540px; margin: 0 auto 28px; font-size: 15px; line-height: 1.7; }
