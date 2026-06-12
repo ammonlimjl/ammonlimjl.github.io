@@ -2638,3 +2638,28 @@ html.anim .town-chart-svg path[pathLength] {
   background-color: #e3e6e0;
   background-position: center 32%;
 }
+
+/* ─── ART BAND BLENDING ─── */
+/* Watercolor bands melt into the page: image layers fade at the top and
+   bottom edges and take a slight cream wash; text stays crisp. */
+.parallax-band:has([data-bg^="art-"]) {
+  background: var(--cream);
+}
+.parallax-band:has([data-bg^="art-"]) .parallax-photo,
+.parallax-band:has([data-bg^="art-"]) .parallax-grain,
+.parallax-band:has([data-bg^="art-"]) .parallax-vignette {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 85%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 85%, transparent 100%);
+}
+.parallax-band:has([data-bg^="art-"]) .parallax-photo {
+  opacity: 0.94;
+}
+.parallax-band:has([data-bg^="art-"])::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--cream);
+  opacity: 0.12;
+  pointer-events: none;
+}
