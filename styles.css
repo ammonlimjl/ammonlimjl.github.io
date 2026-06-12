@@ -2685,11 +2685,7 @@ html.anim .town-chart-svg path[pathLength] {
 /* Faint paper grain over the whole page plus soft warm washes in the
    base background, so every section sits on the same sheet of paper. */
 body {
-  background:
-    radial-gradient(1100px 700px at 12% 4%, rgba(234, 88, 12, 0.035), transparent 60%),
-    radial-gradient(900px 650px at 88% 22%, rgba(37, 99, 235, 0.025), transparent 60%),
-    radial-gradient(1000px 800px at 50% 95%, rgba(180, 83, 9, 0.025), transparent 55%),
-    var(--cream);
+  background: var(--cream);
 }
 body::after {
   content: '';
