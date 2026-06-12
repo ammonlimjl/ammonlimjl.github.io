@@ -939,7 +939,7 @@ function setupTrendChart(container, months, townData) {
         .map((v, i) => (v === null ? null : [x(i), y(v)]))
         .filter(Boolean);
       if (pts.length < 2) continue;
-      paths += `<path d="M${pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L')}" fill="none" stroke="${s.color}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+      paths += `<path pathLength="1" d="M${pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L')}" fill="none" stroke="${s.color}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
       const last = pts[pts.length - 1];
       dots += `<circle cx="${last[0]}" cy="${last[1]}" r="4" fill="${s.color}"/>`;
       hoverDots += `<circle class="tc-hover-dot" data-key="${esc(s.key)}" r="4.5" fill="${s.color}" stroke="#fff" stroke-width="1.5" style="display:none" pointer-events="none"/>`;
@@ -1082,6 +1082,74 @@ window.handleContact = async function(e) {
 };
 
 
+/* ─── MOTION: scroll reveal + stat counters ────────────────────────────── */
+
+function initMotion() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('anim');
+
+  // Static elements that fade up as they enter the viewport. Dynamic grids
+  // (listings, news) are skipped: they render async and have their own motion.
+  const SEL = [
+    '.track-header', '.faq-header', '.val-header', '.coverage-header',
+    '.news-header', '.reviews-header', '.about-img-wrap', '.about-content',
+    '.hub-card', '.trait-card', '.town-fact', '.town-review', '.faq-item',
+    '.review-card', '.town-chart-card', '.contact-left', '.contact-right',
+    '.val-card', '.map-wrap', '.page-copy > *',
+  ].join(', ');
+
+  const io = new IntersectionObserver((entries) => {
+    for (const en of entries) {
+      if (!en.isIntersecting) continue;
+      io.unobserve(en.target);
+      en.target.classList.add('rv-in');
+    }
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+
+  $$(SEL).forEach(el => {
+    el.classList.add('rv');
+    // Stagger siblings so grids cascade instead of popping in at once
+    const idx = Array.from(el.parentElement?.children ?? []).indexOf(el);
+    el.style.setProperty('--rv-delay', Math.min((idx % 8) * 70, 420) + 'ms');
+    // Hand transition control back to the element's own styles afterwards
+    el.addEventListener('transitionend', function done(e) {
+      if (e.propertyName !== 'opacity') return;
+      el.classList.remove('rv', 'rv-in');
+      el.style.removeProperty('--rv-delay');
+      el.removeEventListener('transitionend', done);
+    });
+    io.observe(el);
+  });
+
+  // Hero stats count up ($30M+ → 0..30, 26 → 0..26, 4+ → 0..4)
+  const stats = $$('.stat-num');
+  if (stats.length) {
+    const cio = new IntersectionObserver((entries) => {
+      for (const en of entries) {
+        if (!en.isIntersecting) continue;
+        cio.unobserve(en.target);
+        countUp(en.target);
+      }
+    }, { threshold: 0.5 });
+    stats.forEach(el => cio.observe(el));
+  }
+
+  function countUp(el) {
+    const m = el.textContent.match(/^(\D*)(\d+)(.*)$/);
+    if (!m) return;
+    const target = Number(m[2]);
+    const dur = 1100, t0 = performance.now();
+    (function frame(now) {
+      const p = Math.min((now - t0) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = m[1] + Math.round(target * eased) + m[3];
+      if (p < 1) requestAnimationFrame(frame);
+    })(performance.now());
+  }
+}
+
+
 /* ─── BOOT ─────────────────────────────────────────────────────────────── */
 
 renderListings();
@@ -1090,3 +1158,4 @@ renderNews();
 renderCoverageMap();
 initValuationTool();
 renderTownPage();
+initMotion();

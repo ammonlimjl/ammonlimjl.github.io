@@ -2525,3 +2525,76 @@ footer {
 .tc-tip-row { display: flex; align-items: center; gap: 7px; white-space: nowrap; }
 .tc-tip-row strong { color: #fff; }
 .tc-tip-row em { opacity: 0.6; }
+
+/* ─── MOTION & POLISH ─── */
+/* All entrance animation is gated behind html.anim, added by JS only when
+   the user does not prefer reduced motion. No JS = everything visible. */
+
+/* Frosted sticky nav */
+nav {
+  background: rgba(250, 248, 243, 0.85);
+  backdrop-filter: blur(14px) saturate(1.5);
+  -webkit-backdrop-filter: blur(14px) saturate(1.5);
+}
+
+/* Sliding underline on nav links */
+.nav-links a { position: relative; }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 100%; bottom: -5px;
+  height: 2px;
+  background: var(--orange);
+  transition: right 0.22s ease;
+}
+.nav-links a:hover::after { right: 0; }
+
+/* Button lift */
+.btn-primary, .btn-cta, .btn-secondary, .btn-submit {
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+.btn-primary:hover, .btn-cta:hover, .btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px -12px rgba(234, 88, 12, 0.5);
+}
+.btn-secondary:hover { transform: translateY(-2px); }
+
+/* Scroll reveal */
+html.anim .rv {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  transition-delay: var(--rv-delay, 0ms);
+  will-change: opacity, transform;
+}
+html.anim .rv.rv-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero entrance (transform only, never hides the LCP content) */
+html.anim .hero-badge   { animation: rise 0.5s ease both; }
+html.anim .hero-h1      { animation: rise 0.55s 0.05s ease both; }
+html.anim .hero-sub     { animation: rise 0.55s 0.12s ease both; }
+html.anim .hero-cta     { animation: rise 0.55s 0.18s ease both; }
+html.anim .hero-stats   { animation: rise 0.55s 0.26s ease both; }
+html.anim .page-hero-inner { animation: rise 0.55s ease both; }
+@keyframes rise {
+  from { transform: translateY(16px); }
+  to   { transform: none; }
+}
+html.anim .hero-bg-img { animation: hero-settle 1.8s ease both; }
+@keyframes hero-settle {
+  from { transform: scale(1.045); }
+  to   { transform: none; }
+}
+
+/* Trend chart lines draw in (paths carry pathLength="1") */
+html.anim .town-chart-svg path[pathLength] {
+  stroke-dasharray: 1;
+  animation: tc-draw 1.2s 0.15s ease-out both;
+}
+@keyframes tc-draw {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
