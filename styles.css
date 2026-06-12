@@ -2249,9 +2249,12 @@ footer {
 
 /* ─── SUBPAGE HEADER (multi-page structure) ─── */
 .page-hero {
-  padding: 72px 24px 0;
+  padding: 84px 24px 76px;
   text-align: center;
   background: var(--cream);
+}
+@media (max-width: 600px) {
+  .page-hero { padding: 56px 20px 48px; }
 }
 .page-hero-inner { max-width: 860px; margin: 0 auto; }
 .page-hero h1 {
