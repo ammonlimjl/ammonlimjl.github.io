@@ -2601,3 +2601,17 @@ html.anim .town-chart-svg path[pathLength] {
   from { stroke-dashoffset: 1; }
   to   { stroke-dashoffset: 0; }
 }
+
+/* ─── WATERCOLOR ART BANDS ─── */
+.parallax-photo[data-bg="art-heartland-sunset"] {
+  background-image: url('art/heartland-sunset-watercolor.jpg');
+  background-color: #f3e2c8;
+}
+.parallax-photo[data-bg="art-waterway"] {
+  background-image: url('art/waterway-watercolor.jpg');
+  background-color: #e8eedf;
+}
+.parallax-photo[data-bg="art-oasis-bridges"] {
+  background-image: url('art/oasis-bridges-watercolor.jpg');
+  background-color: #eef0e4;
+}
