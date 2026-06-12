@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════════════════
-   Ammon Lim — Singapore HDB Specialist
+   Ammon Lim - Singapore HDB Specialist
    All client-side interactivity. Loaded with `defer`, runs after DOMContentLoaded.
    ════════════════════════════════════════════════════════════════════════ */
 
@@ -203,7 +203,7 @@ async function renderActiveListings() {
     return `
       <article class="active-card">
         <a class="active-card-photo" href="${esc(l.propertyGuruUrl)}" target="_blank" rel="noopener" aria-label="View ${esc(l.address)} on PropertyGuru">
-          <img class="active-card-img" src="${encodePath(l.hero)}" alt="${esc(l.address)} — ${esc(l.flatType)} HDB for sale" loading="lazy">
+          <img class="active-card-img" src="${encodePath(l.hero)}" alt="${esc(l.address)} ${esc(l.flatType)} HDB for sale" loading="lazy">
           <span class="active-card-status">FOR SALE</span>
           <div class="active-card-badges">${badges}</div>
           <div class="active-card-price-overlay">
@@ -331,7 +331,7 @@ function project(lng, lat) {
   return [x, y];
 }
 
-// Compute polygon centroid (for label placement) — averages all polygon vertices
+// Compute polygon centroid (for label placement) - averages all polygon vertices
 function polygonCentroid(rings) {
   let sx = 0, sy = 0, n = 0;
   for (const ring of rings) {
@@ -579,7 +579,7 @@ async function renderCoverageMap() {
   }
 
   svg.addEventListener('click', (e) => {
-    // Pill click takes priority — pills are at perimeter, easier to hit
+    // Pill click takes priority - pills are at perimeter, easier to hit
     const callout = e.target.closest('.map-region-callout');
     if (callout) {
       const id = callout.dataset.id;
@@ -694,7 +694,7 @@ function computeValuation() {
     result.innerHTML = `
       <div class="val-result-card">
         <div class="val-result-eyebrow">No data yet</div>
-        <div class="val-result-meta">No recent transactions for ${esc(VAL_STATE.town)} · ${esc(VAL_STATE.type)} in our window. WhatsApp me for a manual estimate — I'll pull HDB data adjusted for your specific block.</div>
+        <div class="val-result-meta">No recent transactions for ${esc(VAL_STATE.town)} · ${esc(VAL_STATE.type)} in our window. WhatsApp me for a manual estimate and I'll pull HDB data adjusted for your specific block.</div>
         <a class="map-detail-cta-btn" style="margin-top:14px;" href="${waUrl(`Hi Ammon, I'd like a valuation for ${VAL_STATE.town} ${VAL_STATE.type} (${VAL_STATE.floor}). The website didn't have data for this combo.`)}" target="_blank" rel="noopener">💬 WhatsApp Ammon for manual valuation</a>
       </div>`;
     return;
@@ -703,19 +703,19 @@ function computeValuation() {
   const lo = bucket.p25 * (1 + adj);
   const hi = bucket.p75 * (1 + adj);
   const mid = bucket.p50 * (1 + adj);
-  const stale = bucket.stale ? `<div class="val-result-stale">⚠ Using cached data — refresh hasn't run for this combo recently.</div>` : '';
+  const stale = bucket.stale ? `<div class="val-result-stale">⚠ Using cached data. Refresh hasn't run for this combo recently.</div>` : '';
   const countNote = bucket.count > 0 ? `Based on <strong>${bucket.count}</strong> recent transactions in ${esc(VAL_STATE.town)}` : `Based on prevailing market levels for ${esc(VAL_STATE.town)}`;
 
   result.hidden = false;
   result.innerHTML = `
     <div class="val-result-card">
       <div class="val-result-eyebrow">Indicative range · public HDB data</div>
-      <div class="val-result-range">${fmtPrice(lo)} — <em>${fmtPrice(hi)}</em></div>
+      <div class="val-result-range">${fmtPrice(lo)} – <em>${fmtPrice(hi)}</em></div>
       <div class="val-result-meta">${countNote} · adjusted for ${esc(VAL_STATE.floor)} floor.</div>
       ${stale}
       <div class="val-precise">
         <div class="val-precise-title">Want a precise number?</div>
-        <div class="val-precise-copy">A free, personalized valuation from me — adjusted for your floor, layout, condition, and current buyer demand. <strong>Reply within 2 hours.</strong></div>
+        <div class="val-precise-copy">A free, personalized valuation from me - adjusted for your floor, layout, condition, and current buyer demand. <strong>Reply within 2 hours.</strong></div>
         <form class="val-precise-form" id="val-precise-form" autocomplete="on">
           <input type="text"  class="val-input-dark" name="name"  placeholder="Your name" autocomplete="name" required>
           <input type="tel"   class="val-input-dark" name="phone" placeholder="WhatsApp number (e.g. 9123 4567)" autocomplete="tel" required>
@@ -756,11 +756,11 @@ function handleValuationLead(e) {
   const data = VAL_STATE.data;
   const bucket = data?.byTownAndType?.[VAL_STATE.town]?.[VAL_STATE.type];
   const range = bucket
-    ? `${fmtPrice(bucket.p25 * (1 + (data.floorAdjustment?.[VAL_STATE.floor] ?? 0)))} — ${fmtPrice(bucket.p75 * (1 + (data.floorAdjustment?.[VAL_STATE.floor] ?? 0)))}`
-    : 'no range — please advise';
+    ? `${fmtPrice(bucket.p25 * (1 + (data.floorAdjustment?.[VAL_STATE.floor] ?? 0)))} - ${fmtPrice(bucket.p75 * (1 + (data.floorAdjustment?.[VAL_STATE.floor] ?? 0)))}`
+    : 'no range, please advise';
 
   const message = [
-    `Hi Ammon — free HDB valuation request.`,
+    `Hi Ammon, free HDB valuation request.`,
     ``,
     `Name: ${name}`,
     `WhatsApp: ${phone}`,
@@ -782,7 +782,7 @@ function handleValuationLead(e) {
       <div class="val-result-card val-sent">
         <div class="val-sent-check">✓</div>
         <div class="val-result-eyebrow" style="color:#F97316;">Request prepared</div>
-        <div class="val-sent-title">Thanks, ${esc(name)} —<br>your WhatsApp is opening now.</div>
+        <div class="val-sent-title">Thanks, ${esc(name)}!<br>Your WhatsApp is opening now.</div>
         <div class="val-sent-meta">If WhatsApp didn't pop up, <a href="${waUrl(message)}" target="_blank" rel="noopener" style="color:#F97316;">tap here</a>. I'll reply within 2 hours.</div>
       </div>
     `;
@@ -881,7 +881,7 @@ async function renderTownPage() {
 
 
 // Interactive inline SVG line chart of monthly median prices (3R / 4R / 5R).
-// No chart library — hover/touch shows exact figures, legend toggles series.
+// No chart library - hover/touch shows exact figures, legend toggles series.
 const TC = { W: 760, H: 320, PAD_L: 56, PAD_R: 16, PAD_T: 18, PAD_B: 42 };
 const TC_MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
@@ -1070,12 +1070,12 @@ window.handleContact = async function(e) {
           <p class="sans" style="color:var(--muted);font-size:13px;line-height:1.6;">Thanks ${esc(name)}, I'll reply within 24 hours. For something urgent, <a href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank" rel="noopener" style="color:var(--orange);">WhatsApp me directly</a>.</p>
         </div>`;
     } else {
-      btn.textContent = "Send Message — I'll Reply Within 24hrs 👋";
+      btn.textContent = "Send Message · I'll Reply Within 24hrs 👋";
       btn.disabled = false;
       alert('Something went wrong. Please try again or WhatsApp me directly.');
     }
   } catch {
-    btn.textContent = "Send Message — I'll Reply Within 24hrs 👋";
+    btn.textContent = "Send Message · I'll Reply Within 24hrs 👋";
     btn.disabled = false;
     alert('Network error. Please check your connection and try again.');
   }
