@@ -2640,19 +2640,23 @@ html.anim .town-chart-svg path[pathLength] {
 }
 
 /* ─── ART BAND BLENDING ─── */
-/* Watercolor bands melt into the page: image layers fade at the top and
-   bottom edges and take a slight cream wash; text stays crisp. */
+/* Watercolor bands sit on the page like a wash on paper: the artwork
+   feathers out on every side, takes a cream tint, and the band text
+   switches to dark ink since it rests on the page colour. */
 .parallax-band:has([data-bg^="art-"]) {
   background: var(--cream);
+  height: 420px;
 }
 .parallax-band:has([data-bg^="art-"]) .parallax-photo,
-.parallax-band:has([data-bg^="art-"]) .parallax-grain,
-.parallax-band:has([data-bg^="art-"]) .parallax-vignette {
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 85%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 85%, transparent 100%);
+.parallax-band:has([data-bg^="art-"]) .parallax-grain {
+  -webkit-mask-image: radial-gradient(115% 85% at 50% 50%, #000 42%, transparent 97%);
+  mask-image: radial-gradient(115% 85% at 50% 50%, #000 42%, transparent 97%);
 }
 .parallax-band:has([data-bg^="art-"]) .parallax-photo {
-  opacity: 0.94;
+  opacity: 0.92;
+}
+.parallax-band:has([data-bg^="art-"]) .parallax-vignette {
+  display: none;
 }
 .parallax-band:has([data-bg^="art-"])::after {
   content: '';
@@ -2660,6 +2664,12 @@ html.anim .town-chart-svg path[pathLength] {
   inset: 0;
   z-index: 1;
   background: var(--cream);
-  opacity: 0.12;
+  opacity: 0.14;
   pointer-events: none;
+}
+.parallax-band:has([data-bg^="art-"]) .parallax-overlay {
+  color: var(--dark);
+}
+.parallax-band:has([data-bg^="art-"]) .parallax-label {
+  text-shadow: 0 1px 0 rgba(250, 248, 243, 0.6);
 }
