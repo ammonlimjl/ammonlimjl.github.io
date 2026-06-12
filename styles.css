@@ -341,8 +341,16 @@ nav {
 /* ─── SECTION WRAPPER ─── */
 .section { padding: 96px 64px; }
 .section-narrow { max-width: 1200px; margin: 0 auto; }
-.section-paper { background: #fff; }
-.section-soft { background: var(--cream-dark); }
+.section-paper {
+  background: linear-gradient(180deg,
+    var(--cream) 0, #fff 110px,
+    #fff calc(100% - 110px), var(--cream) 100%);
+}
+.section-soft {
+  background: linear-gradient(180deg,
+    var(--cream) 0, var(--cream-dark) 110px,
+    var(--cream-dark) calc(100% - 110px), var(--cream) 100%);
+}
 
 /* ─── ABOUT ─── */
 #about { background: var(--cream); border-top: 1px solid var(--border); }
@@ -2657,10 +2665,10 @@ html.anim .town-chart-svg path[pathLength] {
   pointer-events: none;
   /* every edge fades fully to the page colour; faint wash overall */
   background:
-    linear-gradient(to bottom, var(--cream) 0%, rgba(250, 248, 243, 0) 26%),
-    linear-gradient(to top, var(--cream) 0%, rgba(250, 248, 243, 0) 26%),
-    linear-gradient(to right, rgba(250, 248, 243, 0.95) 0%, rgba(250, 248, 243, 0) 16%),
-    linear-gradient(to left, rgba(250, 248, 243, 0.95) 0%, rgba(250, 248, 243, 0) 16%),
+    linear-gradient(to bottom, var(--cream) 0%, rgba(250, 248, 243, 0) 34%),
+    linear-gradient(to top, var(--cream) 0%, rgba(250, 248, 243, 0) 34%),
+    linear-gradient(to right, rgba(250, 248, 243, 0.95) 0%, rgba(250, 248, 243, 0) 22%),
+    linear-gradient(to left, rgba(250, 248, 243, 0.95) 0%, rgba(250, 248, 243, 0) 22%),
     rgba(250, 248, 243, 0.10);
 }
 .art-band .parallax-overlay { color: var(--dark); }
