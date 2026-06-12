@@ -2615,3 +2615,11 @@ html.anim .town-chart-svg path[pathLength] {
   background-image: url('art/oasis-bridges-watercolor.jpg');
   background-color: #eef0e4;
 }
+
+/* Readable chip behind art-band sub-lines */
+.parallax-sub-chip {
+  display: inline-block;
+  background: rgba(30, 18, 10, 0.55);
+  padding: 6px 14px;
+  border-radius: 8px;
+}
