@@ -2745,3 +2745,16 @@ body::after {
   background-image: url('art/home-heartland-park-watercolor.jpg');
   background-color: #e4ecd8;
 }
+
+/* Hero portrait feather: masked on the image itself so it scales and
+   settles together with the photo's entrance animation */
+.hero-bg-img {
+  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0, #000 14%);
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0, #000 14%);
+}
+@media (max-width: 768px) {
+  .hero-bg-img {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
