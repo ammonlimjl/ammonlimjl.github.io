@@ -2640,36 +2640,27 @@ html.anim .town-chart-svg path[pathLength] {
 }
 
 /* ─── ART BAND BLENDING ─── */
-/* Watercolor bands sit on the page like a wash on paper: the artwork
-   feathers out on every side, takes a cream tint, and the band text
-   switches to dark ink since it rests on the page colour. */
-.parallax-band:has([data-bg^="art-"]) {
+/* Watercolor bands sit on the page like a wash on paper: a cream
+   feather overlay fades the artwork out on every side (plain gradients,
+   works in every browser) and the band text uses dark ink. */
+.art-band {
   background: var(--cream);
   height: 420px;
 }
-.parallax-band:has([data-bg^="art-"]) .parallax-photo,
-.parallax-band:has([data-bg^="art-"]) .parallax-grain {
-  -webkit-mask-image: radial-gradient(115% 85% at 50% 50%, #000 42%, transparent 97%);
-  mask-image: radial-gradient(115% 85% at 50% 50%, #000 42%, transparent 97%);
-}
-.parallax-band:has([data-bg^="art-"]) .parallax-photo {
-  opacity: 0.92;
-}
-.parallax-band:has([data-bg^="art-"]) .parallax-vignette {
-  display: none;
-}
-.parallax-band:has([data-bg^="art-"])::after {
+.art-band .parallax-vignette { display: none; }
+.art-band .parallax-photo { opacity: 0.94; }
+.art-band::after {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: var(--cream);
-  opacity: 0.14;
   pointer-events: none;
+  background:
+    radial-gradient(115% 85% at 50% 50%,
+      rgba(250, 248, 243, 0.10) 38%,
+      rgba(250, 248, 243, 0.45) 72%,
+      rgba(250, 248, 243, 0.92) 94%,
+      var(--cream) 100%);
 }
-.parallax-band:has([data-bg^="art-"]) .parallax-overlay {
-  color: var(--dark);
-}
-.parallax-band:has([data-bg^="art-"]) .parallax-label {
-  text-shadow: 0 1px 0 rgba(250, 248, 243, 0.6);
-}
+.art-band .parallax-overlay { color: var(--dark); }
+.art-band .parallax-label { text-shadow: 0 1px 0 rgba(250, 248, 243, 0.6); }
