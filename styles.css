@@ -2432,3 +2432,60 @@ footer {
   transition: border-color 0.15s, color 0.15s, transform 0.15s;
 }
 .town-link-pill:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-1px); }
+
+/* ─── TOWN TREND CHART ─── */
+.town-chart-card {
+  max-width: 820px;
+  margin: 0 auto;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 26px 22px 16px;
+  box-shadow: var(--shadow-sm);
+}
+.town-chart-svg { width: 100%; height: auto; display: block; }
+.tc-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+.tc-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.tc-swatch {
+  width: 14px; height: 4px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+/* ─── TOWN REVIEWS STRIP (light cards, unlike the dark /reviews/ slider) ─── */
+.town-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 18px;
+  max-width: 920px;
+  margin: 36px auto 0;
+}
+.town-review {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 26px;
+  box-shadow: var(--shadow-sm);
+}
+.town-review-stars { color: var(--orange); font-size: 15px; letter-spacing: 2px; margin-bottom: 12px; }
+.town-review-text { font-size: 15px; line-height: 1.75; color: var(--text); margin-bottom: 16px; }
+.town-review-author {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.town-reviews-more { text-align: center; margin-top: 26px; }
