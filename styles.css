@@ -2749,8 +2749,8 @@ body::after {
 /* Hero portrait feather: masked on the image itself so it scales and
    settles together with the photo's entrance animation */
 .hero-bg-img {
-  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0, #000 14%);
-  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0, #000 14%);
+  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0, #000 38%);
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0, #000 38%);
 }
 @media (max-width: 768px) {
   .hero-bg-img {
