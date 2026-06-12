@@ -2678,3 +2678,26 @@ html.anim .town-chart-svg path[pathLength] {
 }
 .art-band .parallax-overlay { color: var(--dark); }
 .art-band .parallax-label { text-shadow: 0 1px 0 rgba(250, 248, 243, 0.6); }
+
+/* ─── WATERCOLOR PAPER BACKGROUND ─── */
+/* Faint paper grain over the whole page plus soft warm washes in the
+   base background, so every section sits on the same sheet of paper. */
+body {
+  background:
+    radial-gradient(1100px 700px at 12% 4%, rgba(234, 88, 12, 0.035), transparent 60%),
+    radial-gradient(900px 650px at 88% 22%, rgba(37, 99, 235, 0.025), transparent 60%),
+    radial-gradient(1000px 800px at 50% 95%, rgba(180, 83, 9, 0.025), transparent 55%),
+    var(--cream);
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.012) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(45deg, rgba(58, 32, 14, 0.014) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(58, 32, 14, 0.008) 0 2px, transparent 2px 5px);
+  opacity: 0.8;
+}
