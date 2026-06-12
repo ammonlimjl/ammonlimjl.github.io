@@ -916,64 +916,6 @@ window.handleContact = async function(e) {
 };
 
 
-/* ─── SUBSCRIBE POPUP ──────────────────────────────────────────────────── */
-
-let subscribeShown = false;
-function checkSubscribePopup() {
-  if (subscribeShown) return;
-  const doc = document.documentElement;
-  const progress = (window.scrollY + window.innerHeight) / doc.scrollHeight;
-  if (window.scrollY > 300 && progress > 0.65) {
-    subscribeShown = true;
-    window.removeEventListener('scroll', checkSubscribePopup);
-    setTimeout(() => {
-      const overlay = $('#subscribe-overlay');
-      if (overlay) overlay.style.display = 'flex';
-    }, 600);
-  }
-}
-window.addEventListener('scroll', checkSubscribePopup, { passive: true });
-checkSubscribePopup();
-
-window.closeSubscribe = function() {
-  const overlay = $('#subscribe-overlay');
-  if (overlay) overlay.style.display = 'none';
-};
-
-window.handleSubscribe = async function(e) {
-  e.preventDefault();
-  const form = e.target;
-  const email = form.querySelector('input[type="email"]').value;
-  const btn = form.querySelector('.subscribe-btn');
-  btn.textContent = 'Sending…';
-  btn.disabled = true;
-  try {
-    const res = await fetch(FORMSPREE_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, _subject: 'New newsletter subscriber' }),
-    });
-    if (res.ok) {
-      $('.subscribe-modal').innerHTML = `
-        <div style="padding:20px 0;">
-          <div style="font-size:52px;margin-bottom:14px;">✅</div>
-          <h3 style="font-size:22px;font-weight:800;margin-bottom:10px;color:var(--text);">You're in!</h3>
-          <p class="sans" style="color:var(--muted);font-size:13px;line-height:1.6;">Monthly HDB market reports headed to<br><strong>${esc(email)}</strong></p>
-          <button onclick="closeSubscribe()" style="margin-top:24px;background:var(--orange);color:#fff;border:none;padding:12px 36px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;">Close</button>
-        </div>`;
-    } else {
-      btn.textContent = "Subscribe — It's Free";
-      btn.disabled = false;
-      alert('Something went wrong. Please try again.');
-    }
-  } catch {
-    btn.textContent = "Subscribe — It's Free";
-    btn.disabled = false;
-    alert('Network error.');
-  }
-};
-
-
 /* ─── BOOT ─────────────────────────────────────────────────────────────── */
 
 renderListings();

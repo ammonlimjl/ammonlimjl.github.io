@@ -273,21 +273,6 @@
   </a>
 </div>
 
-<!-- ─── EMAIL SUBSCRIBE POPUP ─── -->
-<div id="subscribe-overlay" class="subscribe-overlay" style="display:none;" onclick="if(event.target===this)closeSubscribe()">
-  <div class="subscribe-modal">
-    <button class="subscribe-close" onclick="closeSubscribe()" aria-label="Close">✕</button>
-    <div class="subscribe-icon" aria-hidden="true">📬</div>
-    <h3 class="subscribe-title">Stay Ahead of the HDB Market</h3>
-    <p class="subscribe-desc sans">Get my monthly HDB market report. Town-by-town pricing, BTO launches, policy changes, distilled in 5 minutes. Free.</p>
-    <form class="subscribe-form" onsubmit="handleSubscribe(event)">
-      <input type="email" class="subscribe-input" placeholder="Your email address" required autocomplete="email">
-      <button type="submit" class="subscribe-btn sans">Subscribe · It's Free</button>
-    </form>
-    <p class="subscribe-note sans">No spam. Unsubscribe anytime.</p>
-  </div>
-</div>
-
 <script src="/app.js" defer></script>
 </body>
 </html>
