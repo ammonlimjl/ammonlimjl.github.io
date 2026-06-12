@@ -836,10 +836,10 @@ async function renderTownPage() {
       const data = await loadJSON('/data/town-trends.json');
       const townData = data.byTown?.[town];
       if (townData) {
-        chartEl.innerHTML = buildTrendChart(data.months, townData);
+        setupTrendChart(chartEl, data.months, townData);
         const stamp = $('#town-chart-stamp');
         if (stamp && data._meta?.lastUpdated) {
-          stamp.textContent = 'Monthly medians from data.gov.sg · refreshed ' + data._meta.lastUpdated;
+          stamp.textContent = 'Monthly medians from data.gov.sg · refreshed ' + data._meta.lastUpdated + ' · hover the chart for exact figures';
         }
       } else {
         chartEl.closest('section')?.remove();
@@ -880,69 +880,151 @@ async function renderTownPage() {
 }
 
 
-// Inline SVG line chart of monthly median prices (3R / 4R / 5R).
-// No chart library — keeps pages fast.
-function buildTrendChart(months, townData) {
-  const SERIES = [
+// Interactive inline SVG line chart of monthly median prices (3R / 4R / 5R).
+// No chart library — hover/touch shows exact figures, legend toggles series.
+const TC = { W: 760, H: 320, PAD_L: 56, PAD_R: 16, PAD_T: 18, PAD_B: 42 };
+const TC_MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function tcMonthLabel(m) {
+  const [yr, mo] = m.split('-');
+  return TC_MON[Number(mo) - 1] + ' ' + yr.slice(2);
+}
+
+function setupTrendChart(container, months, townData) {
+  const ALL_SERIES = [
     { key: '3-Room', color: '#2563EB' },
     { key: '4-Room', color: '#EA580C' },
     { key: '5-Room', color: '#16A34A' },
   ].filter(s => townData[s.key]);
+  if (!ALL_SERIES.length) return;
 
-  const W = 760, H = 320, PAD_L = 56, PAD_R = 16, PAD_T = 18, PAD_B = 42;
+  const hidden = new Set();
+  const { W, H, PAD_L, PAD_R, PAD_T, PAD_B } = TC;
   const plotW = W - PAD_L - PAD_R, plotH = H - PAD_T - PAD_B;
-
-  const allVals = SERIES.flatMap(s => townData[s.key].p50.filter(v => v !== null));
-  if (!allVals.length) return '';
-  let yMin = Math.min(...allVals), yMax = Math.max(...allVals);
-  const span = Math.max(yMax - yMin, 40);
-  yMin = Math.floor((yMin - span * 0.1) / 25) * 25;
-  yMax = Math.ceil((yMax + span * 0.1) / 25) * 25;
-
   const x = i => PAD_L + (i / (months.length - 1)) * plotW;
-  const y = v => PAD_T + (1 - (v - yMin) / (yMax - yMin)) * plotH;
+  let yMin = 0, yMax = 1; // set per render (depends on visible series)
 
-  // y gridlines: 5 ticks
-  let grid = '', yLabels = '';
-  for (let t = 0; t <= 4; t++) {
-    const v = yMin + ((yMax - yMin) * t) / 4;
-    const yy = y(v);
-    grid += `<line x1="${PAD_L}" y1="${yy}" x2="${W - PAD_R}" y2="${yy}" stroke="#E8E0D6" stroke-width="1"/>`;
-    yLabels += `<text x="${PAD_L - 8}" y="${yy + 4}" text-anchor="end" font-size="11" fill="#7A7065">${fmtPrice(v)}</text>`;
+  function visibleSeries() {
+    const vis = ALL_SERIES.filter(s => !hidden.has(s.key));
+    return vis.length ? vis : ALL_SERIES; // never allow an empty chart
   }
 
-  // x labels: ~6 evenly spaced months, formatted "Jan 25"
-  const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  let xLabels = '';
-  const step = Math.max(1, Math.round((months.length - 1) / 5));
-  for (let i = 0; i < months.length; i += step) {
-    const [yr, mo] = months[i].split('-');
-    xLabels += `<text x="${x(i)}" y="${H - PAD_B + 18}" text-anchor="middle" font-size="11" fill="#7A7065">${MON[Number(mo) - 1]} ${yr.slice(2)}</text>`;
+  function render() {
+    const SERIES = visibleSeries();
+    const allVals = SERIES.flatMap(s => townData[s.key].p50.filter(v => v !== null));
+    if (!allVals.length) return;
+    yMin = Math.min(...allVals); yMax = Math.max(...allVals);
+    const span = Math.max(yMax - yMin, 40);
+    yMin = Math.floor((yMin - span * 0.1) / 25) * 25;
+    yMax = Math.ceil((yMax + span * 0.1) / 25) * 25;
+    const y = v => PAD_T + (1 - (v - yMin) / (yMax - yMin)) * plotH;
+
+    let grid = '', yLabels = '';
+    for (let t = 0; t <= 4; t++) {
+      const v = yMin + ((yMax - yMin) * t) / 4;
+      const yy = y(v);
+      grid += `<line x1="${PAD_L}" y1="${yy}" x2="${W - PAD_R}" y2="${yy}" stroke="#E8E0D6" stroke-width="1"/>`;
+      yLabels += `<text x="${PAD_L - 8}" y="${yy + 4}" text-anchor="end" font-size="11" fill="#7A7065">${fmtPrice(v)}</text>`;
+    }
+
+    let xLabels = '';
+    const step = Math.max(1, Math.round((months.length - 1) / 5));
+    for (let i = 0; i < months.length; i += step) {
+      xLabels += `<text x="${x(i)}" y="${H - PAD_B + 18}" text-anchor="middle" font-size="11" fill="#7A7065">${tcMonthLabel(months[i])}</text>`;
+    }
+
+    let paths = '', dots = '', hoverDots = '';
+    for (const s of SERIES) {
+      const pts = townData[s.key].p50
+        .map((v, i) => (v === null ? null : [x(i), y(v)]))
+        .filter(Boolean);
+      if (pts.length < 2) continue;
+      paths += `<path d="M${pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L')}" fill="none" stroke="${s.color}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+      const last = pts[pts.length - 1];
+      dots += `<circle cx="${last[0]}" cy="${last[1]}" r="4" fill="${s.color}"/>`;
+      hoverDots += `<circle class="tc-hover-dot" data-key="${esc(s.key)}" r="4.5" fill="${s.color}" stroke="#fff" stroke-width="1.5" style="display:none" pointer-events="none"/>`;
+    }
+
+    const legend = ALL_SERIES.map(s => {
+      const vals = townData[s.key].p50.filter(v => v !== null);
+      const latest = vals[vals.length - 1];
+      const off = hidden.has(s.key);
+      return `<button type="button" class="tc-legend-item sans${off ? ' is-off' : ''}" data-key="${esc(s.key)}" aria-pressed="${!off}" title="Show/hide ${esc(s.key)}"><span class="tc-swatch" style="background:${s.color}"></span>${esc(s.key)} · ${fmtPrice(latest)}</button>`;
+    }).join('');
+
+    container.innerHTML = `
+      <div class="tc-legend">${legend}</div>
+      <div class="tc-wrap">
+        <svg class="town-chart-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Monthly median resale price trend by flat type" font-family="system-ui,-apple-system,sans-serif">
+          ${grid}${yLabels}${xLabels}${paths}${dots}
+          <line class="tc-guide" y1="${PAD_T}" y2="${H - PAD_B}" stroke="#1E120A" stroke-width="1" stroke-dasharray="3,3" opacity="0" pointer-events="none"/>
+          ${hoverDots}
+          <rect x="${PAD_L}" y="${PAD_T}" width="${plotW}" height="${plotH}" fill="transparent"/>
+        </svg>
+        <div class="tc-tooltip sans" hidden></div>
+      </div>`;
+    wire();
   }
 
-  // series paths (skip null months)
-  let paths = '', dots = '';
-  for (const s of SERIES) {
-    const pts = townData[s.key].p50
-      .map((v, i) => (v === null ? null : [x(i), y(v)]))
-      .filter(Boolean);
-    if (pts.length < 2) continue;
-    paths += `<path d="M${pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L')}" fill="none" stroke="${s.color}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
-    const last = pts[pts.length - 1];
-    dots += `<circle cx="${last[0]}" cy="${last[1]}" r="4" fill="${s.color}"/>`;
+  function wire() {
+    const svg = container.querySelector('svg');
+    const tooltip = container.querySelector('.tc-tooltip');
+    const guide = container.querySelector('.tc-guide');
+    const wrap = container.querySelector('.tc-wrap');
+    const SERIES = visibleSeries();
+    const y = v => PAD_T + (1 - (v - yMin) / (yMax - yMin)) * plotH;
+
+    container.querySelectorAll('.tc-legend-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.key;
+        if (hidden.has(key)) hidden.delete(key);
+        else if (visibleSeries().length > 1) hidden.add(key); // keep at least one line
+        render();
+      });
+    });
+
+    function showAt(clientX) {
+      const rect = svg.getBoundingClientRect();
+      const sx = ((clientX - rect.left) / rect.width) * W;
+      const i = Math.max(0, Math.min(months.length - 1,
+        Math.round(((sx - PAD_L) / plotW) * (months.length - 1))));
+      const gx = x(i);
+      guide.setAttribute('x1', gx); guide.setAttribute('x2', gx);
+      guide.setAttribute('opacity', '0.45');
+
+      const rows = SERIES.map(s => {
+        const v = townData[s.key].p50[i];
+        const n = townData[s.key].count[i];
+        const dot = container.querySelector(`.tc-hover-dot[data-key="${s.key}"]`);
+        if (dot) {
+          if (v === null) { dot.style.display = 'none'; }
+          else { dot.style.display = ''; dot.setAttribute('cx', gx); dot.setAttribute('cy', y(v)); }
+        }
+        const val = v === null ? '<em>no sales</em>' : `<strong>${fmtPrice(v)}</strong> · ${n} sold`;
+        return `<div class="tc-tip-row"><span class="tc-swatch" style="background:${s.color}"></span>${esc(s.key)}: ${val}</div>`;
+      }).join('');
+      tooltip.innerHTML = `<div class="tc-tip-month">${tcMonthLabel(months[i])}</div>${rows}`;
+      tooltip.hidden = false;
+
+      // place tooltip near the guide line, flipping side past the midpoint
+      const px = (gx / W) * rect.width;
+      const left = px < rect.width / 2 ? px + 14 : px - tooltip.offsetWidth - 14;
+      tooltip.style.left = Math.max(0, Math.min(left, rect.width - tooltip.offsetWidth)) + 'px';
+      tooltip.style.top = '14px';
+    }
+
+    function hide() {
+      tooltip.hidden = true;
+      guide.setAttribute('opacity', '0');
+      container.querySelectorAll('.tc-hover-dot').forEach(d => { d.style.display = 'none'; });
+    }
+
+    wrap.addEventListener('pointermove', e => showAt(e.clientX));
+    wrap.addEventListener('pointerdown', e => showAt(e.clientX));
+    wrap.addEventListener('pointerleave', hide);
   }
 
-  const legend = SERIES.map(s => {
-    const vals = townData[s.key].p50.filter(v => v !== null);
-    const latest = vals[vals.length - 1];
-    return `<span class="tc-legend-item sans"><span class="tc-swatch" style="background:${s.color}"></span>${esc(s.key)} · ${fmtPrice(latest)}</span>`;
-  }).join('');
-
-  return `
-    <div class="tc-legend">${legend}</div>
-    <svg class="town-chart-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Monthly median resale price trend by flat type" font-family="system-ui,-apple-system,sans-serif">
-      ${grid}${yLabels}${xLabels}${paths}${dots}
-    </svg>`;
+  render();
 }
 
 

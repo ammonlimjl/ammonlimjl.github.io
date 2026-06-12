@@ -2489,3 +2489,39 @@ footer {
   color: var(--muted);
 }
 .town-reviews-more { text-align: center; margin-top: 26px; }
+
+/* ─── INTERACTIVE CHART EXTRAS ─── */
+.tc-wrap { position: relative; }
+.tc-legend-item {
+  border: 1px solid var(--border);
+  background: var(--white);
+  border-radius: 999px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, opacity 0.15s;
+}
+.tc-legend-item:hover { border-color: var(--orange); }
+.tc-legend-item.is-off { opacity: 0.38; }
+.tc-legend-item.is-off .tc-swatch { background: var(--muted) !important; }
+.tc-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--dark);
+  color: var(--cream);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  box-shadow: var(--shadow-lg);
+  min-width: 180px;
+  z-index: 5;
+}
+.tc-tip-month {
+  font-weight: 800;
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: var(--orange-light);
+}
+.tc-tip-row { display: flex; align-items: center; gap: 7px; white-space: nowrap; }
+.tc-tip-row strong { color: #fff; }
+.tc-tip-row em { opacity: 0.6; }
