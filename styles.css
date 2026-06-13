@@ -1972,9 +1972,9 @@ footer {
   .hero-right {
     position: relative;
     width: 100%;
-    height: 48vh;
-    min-height: 320px;
-    max-height: 460px;
+    height: 42vh;
+    min-height: 300px;
+    max-height: 420px;
     flex-shrink: 0;
     order: 1;
   }
@@ -2005,7 +2005,7 @@ footer {
     order: 2;
   }
   .hero-h1 {
-    font-size: 38px;
+    font-size: clamp(31px, 8.6vw, 40px);
     letter-spacing: -0.02em;
     color: var(--text);
   }
@@ -2017,11 +2017,9 @@ footer {
     max-width: 100%;
   }
   .hero-sub strong { color: var(--text); }
-  .hero-badge {
-    background: var(--orange-pale);
-    border-color: var(--orange-light);
-    color: var(--orange);
-  }
+  /* Photo carries the 'Singapore HDB Specialist' stamp already; drop the
+     duplicate pill so the content goes straight to the headline. */
+  .hero-badge { display: none; }
   .hero-cta { flex-direction: column; gap: 8px; }
   .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
   .hero-stats {
@@ -2066,7 +2064,7 @@ footer {
   .trait-title { font-size: 13px; }
 
   /* ─── PARALLAX BANDS ─── */
-  .parallax-band { height: 240px; }
+  .parallax-band { height: 340px; }
   .parallax-overlay { padding: 22px 20px; }
   .parallax-label { font-size: 36px; }
   .parallax-sub { font-size: 13px; }
@@ -2152,17 +2150,9 @@ footer {
   }
 
   /* ─── WHATSAPP FLOAT — collapse to icon, lift above sticky bar ─── */
-  .wa-float {
-    border-radius: 50%;
-    width: 54px;
-    height: 54px;
-    padding: 0;
-    justify-content: center;
-    bottom: calc(72px + 16px);
-    right: 16px;
-  }
-  .wa-float span { display: none; }
-  .wa-icon { width: 34px; height: 34px; font-size: 20px; background: transparent; }
+  /* Floating WhatsApp pill removed on mobile: the sticky bottom bar already
+     carries Call / WhatsApp / Free Valuation. One persistent CTA, not three. */
+  .wa-float { display: none; }
 
   /* ─── STICKY MOBILE CTA BAR (visible) ─── */
   .stickybar { display: grid; }
@@ -2749,4 +2739,21 @@ body::after {
     -webkit-mask-image: linear-gradient(to bottom, #000 58%, rgba(0,0,0,0) 100%);
     mask-image: linear-gradient(to bottom, #000 58%, rgba(0,0,0,0) 100%);
   }
+}
+
+
+/* ─── CAROUSEL SWIPE FEEL ─── */
+/* Manual carousels snap gently so swipes land cleanly (proximity, not
+   mandatory, so free scrolling still works). Auto-scrolling track record
+   is intentionally excluded. */
+.active-listings-grid,
+.news-scroll,
+.reviews-scroll {
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+.active-card,
+.news-card,
+.review-card {
+  scroll-snap-align: start;
 }
