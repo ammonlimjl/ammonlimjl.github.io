@@ -2064,7 +2064,7 @@ footer {
   .trait-title { font-size: 13px; }
 
   /* ─── PARALLAX BANDS ─── */
-  .parallax-band { height: 340px; }
+  .parallax-band, .art-band { height: 380px; }
   .parallax-overlay { padding: 22px 20px; }
   .parallax-label { font-size: 36px; }
   .parallax-sub { font-size: 13px; }
