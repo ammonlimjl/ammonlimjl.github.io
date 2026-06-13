@@ -1980,9 +1980,7 @@ footer {
   }
   .hero-bg-img { object-position: center 30%; }
   .hero-img-overlay {
-    background:
-      linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 22%),
-      linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.55) 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 26%);
   }
 
   /* Editorial overlay only on mobile (where photo is the focal hero block) */
@@ -1998,14 +1996,7 @@ footer {
     top: 18px;
     left: 20px;
   }
-  .hero-credit-strip {
-    position: absolute;
-    bottom: 16px;
-    left: 20px;
-    right: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
+  .hero-credit-strip { display: none; }
   .hero-left {
     position: relative;
     background: var(--cream);
@@ -2753,8 +2744,9 @@ body::after {
   mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0, #000 38%);
 }
 @media (max-width: 768px) {
+  /* Photo banner dissolves downward into the cream content below it */
   .hero-bg-img {
-    -webkit-mask-image: none;
-    mask-image: none;
+    -webkit-mask-image: linear-gradient(to bottom, #000 58%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(to bottom, #000 58%, rgba(0,0,0,0) 100%);
   }
 }
