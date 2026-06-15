@@ -2195,23 +2195,57 @@ footer {
     background: var(--cream);
     z-index: 99;
     flex-direction: column;
-    padding: 28px 20px;
+    padding: 22px 20px 96px;
     overflow-y: auto;
   }
   .mobile-drawer.open { display: flex; }
-  .mobile-drawer a {
+  .mobile-drawer .drawer-link {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 16.5px;
+    font-weight: 600;
     color: var(--text);
     text-decoration: none;
-    padding: 16px 0;
+    padding: 13px 2px;
     border-bottom: 1px solid var(--border);
     display: block;
     transition: color 0.15s;
   }
-  .mobile-drawer a:hover { color: var(--orange); }
-  .mobile-drawer a:last-child { border-bottom: none; }
+  .mobile-drawer .drawer-link:active { color: var(--orange); }
+
+  /* Drawer hierarchy: section labels + primary service cards */
+  .drawer-section-label {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 12px;
+  }
+  .drawer-section-label:not(:first-child) { margin-top: 26px; margin-bottom: 6px; }
+  .drawer-actions { display: flex; flex-direction: column; gap: 10px; }
+  .drawer-action {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 13px 14px;
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+  }
+  .drawer-action:active { border-color: var(--orange-light); }
+  .drawer-action-ico {
+    width: 42px; height: 42px; border-radius: 11px;
+    background: var(--orange-pale);
+    display: flex; align-items: center; justify-content: center; flex: none;
+  }
+  .drawer-action-ico .ico { width: 22px; height: 22px; color: var(--orange); }
+  .drawer-action-txt { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+  .drawer-action-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-weight: 800; font-size: 16px; color: var(--text); }
+  .drawer-action-sub { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .drawer-action-arrow { color: var(--orange); font-size: 18px; font-weight: 700; flex: none; }
   .mobile-drawer .drawer-cta {
     margin-top: 28px;
     background: var(--orange);

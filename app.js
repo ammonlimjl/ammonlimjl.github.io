@@ -53,7 +53,7 @@ hamburgerBtn?.addEventListener('click', () => {
   hamburgerBtn.classList.toggle('open', isOpen);
   document.body.style.overflow = isOpen ? 'hidden' : '';
 });
-$$('.drawer-link').forEach(link => link.addEventListener('click', closeDrawer));
+$$('.drawer-link, .drawer-action').forEach(link => link.addEventListener('click', closeDrawer));
 
 function updateNav() {
   const isMobile = window.innerWidth <= 768;
