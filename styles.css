@@ -2802,3 +2802,10 @@ body::after {
 .contact-method-icon[style*="blue-pale"] .ico { color: var(--blue); }
 .trustbar-icon .ico { width: 14px; height: 14px; color: var(--dark-mid); vertical-align: -2px; }
 .stickybar-btn .ico { width: 17px; height: 17px; vertical-align: -3px; }
+
+
+/* Punggol town-page art bands */
+.parallax-photo[data-bg="art-pg-waterway-dusk"]  { background-image: url('art/punggol-waterway-dusk.jpg');  background-color: #e9d9c2; }
+.parallax-photo[data-bg="art-pg-sphere-sunset"]  { background-image: url('art/punggol-sphere-sunset.jpg');  background-color: #ecc89a; }
+.parallax-photo[data-bg="art-pg-green-terraces"] { background-image: url('art/punggol-green-terraces.jpg'); background-color: #cfe0c2; }
+.parallax-photo[data-bg="art-pg-boardwalk"]      { background-image: url('art/punggol-boardwalk.jpg');      background-color: #cfe0c2; }
