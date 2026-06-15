@@ -2425,59 +2425,41 @@ footer {
 .town-facts {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  max-width: 980px;
+  gap: 12px;
+  max-width: 940px;
   margin: 0 auto;
-  counter-reset: fact;
 }
 .town-fact {
-  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
   background: var(--white);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 28px 24px 24px;
+  border-radius: 14px;
+  padding: 15px 17px;
   box-shadow: var(--shadow-sm);
-  overflow: hidden;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  transition: border-color 0.16s ease, transform 0.16s ease;
 }
-.town-fact:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--orange-light);
-}
-.town-fact::before {
-  counter-increment: fact;
-  content: counter(fact, decimal-leading-zero);
-  position: absolute;
-  top: 8px;
-  right: 20px;
-  font-family: 'Georgia', 'Times New Roman', serif;
-  font-weight: 800;
-  font-size: 56px;
-  color: var(--orange);
-  opacity: 0.12;
-  line-height: 1;
-  pointer-events: none;
-}
+.town-fact:hover { border-color: var(--orange-light); transform: translateY(-2px); }
 .town-fact-ico {
   display: inline-flex;
-  width: 38px; height: 38px;
-  border-radius: 10px;
+  width: 34px; height: 34px;
+  border-radius: 9px;
   background: var(--orange-pale);
   align-items: center; justify-content: center;
-  margin-bottom: 14px;
+  flex: none;
 }
-.town-fact-ico .ico { width: 20px; height: 20px; color: var(--orange); }
+.town-fact-ico .ico { width: 18px; height: 18px; color: var(--orange); }
+.town-fact-text { flex: 1; min-width: 0; }
 .town-fact-title {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-weight: 800;
-  font-size: 16px;
-  margin-bottom: 8px;
-  padding-right: 38px;
+  font-size: 14.5px;
+  margin-bottom: 3px;
 }
-.town-fact-body { font-size: 14.5px; line-height: 1.7; color: var(--text); }
+.town-fact-body { font-size: 13px; line-height: 1.5; color: var(--muted); }
 .town-fact-body a { color: var(--orange); }
-@media (max-width: 700px) {
+@media (max-width: 640px) {
   .town-facts { grid-template-columns: 1fr; }
 }
 
