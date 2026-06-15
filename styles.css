@@ -2757,3 +2757,14 @@ body::after {
 .review-card {
   scroll-snap-align: start;
 }
+
+
+/* ─── LINE ICONS (replacing emoji) ─── */
+.ico { flex: none; }
+.trait-icon .ico { width: 26px; height: 26px; color: var(--orange); display: block; }
+.hub-card-icon .ico { width: 30px; height: 30px; color: var(--orange); display: block; }
+.contact-method-icon .ico { width: 20px; height: 20px; color: var(--orange); }
+.contact-method-icon.blue-icon .ico,
+.contact-method-icon[style*="blue-pale"] .ico { color: var(--blue); }
+.trustbar-icon .ico { width: 14px; height: 14px; color: var(--dark-mid); vertical-align: -2px; }
+.stickybar-btn .ico { width: 17px; height: 17px; vertical-align: -3px; }

@@ -232,7 +232,7 @@ async function renderActiveListings() {
             <span class="active-card-spec"><span class="num">${l.sqft}</span> <span class="lbl">sqft</span></span>
           </div>
           <div class="active-card-cta">
-            <a class="active-card-btn active-card-btn-primary" href="${waUrl(waText)}" target="_blank" rel="noopener">💬 WhatsApp</a>
+            <a class="active-card-btn active-card-btn-primary" href="${waUrl(waText)}" target="_blank" rel="noopener">WhatsApp</a>
             <a class="active-card-btn active-card-btn-secondary" href="${esc(l.propertyGuruUrl)}" target="_blank" rel="noopener">View Listing →</a>
           </div>
         </div>
@@ -577,7 +577,7 @@ async function renderCoverageMap() {
       ${schools}
       <div class="map-detail-cta">
         <a class="map-detail-cta-btn" href="/valuation/?town=${encodeURIComponent(r.valuationTown || '')}">
-          ⚡ Get full valuation for ${esc(shortName)}
+          Get full valuation for ${esc(shortName)}
         </a>
       </div>
     `;
@@ -705,7 +705,7 @@ function computeValuation() {
       <div class="val-result-card">
         <div class="val-result-eyebrow">No data yet</div>
         <div class="val-result-meta">No recent transactions for ${esc(VAL_STATE.town)} · ${esc(VAL_STATE.type)} in our window. WhatsApp me for a manual estimate and I'll pull HDB data adjusted for your specific block.</div>
-        <a class="map-detail-cta-btn" style="margin-top:14px;" href="${waUrl(`Hi Ammon, I'd like a valuation for ${VAL_STATE.town} ${VAL_STATE.type} (${VAL_STATE.floor}). The website didn't have data for this combo.`)}" target="_blank" rel="noopener">💬 WhatsApp Ammon for manual valuation</a>
+        <a class="map-detail-cta-btn" style="margin-top:14px;" href="${waUrl(`Hi Ammon, I'd like a valuation for ${VAL_STATE.town} ${VAL_STATE.type} (${VAL_STATE.floor}). The website didn't have data for this combo.`)}" target="_blank" rel="noopener">WhatsApp Ammon for manual valuation</a>
       </div>`;
     return;
   }
@@ -732,7 +732,7 @@ function computeValuation() {
           <input type="text"  class="val-input-dark" name="block" placeholder="Block & street (e.g. 220B Sumang Walk)" required>
           <!-- honeypot -->
           <input type="text" name="company" tabindex="-1" autocomplete="off" class="hp-field" aria-hidden="true">
-          <button type="submit" class="btn-primary val-precise-cta">💬 Get Precise Valuation via WhatsApp →</button>
+          <button type="submit" class="btn-primary val-precise-cta">Get Precise Valuation via WhatsApp →</button>
         </form>
         <div class="val-precise-trust sans">✓ Private &amp; not shared · No spam, no pressure</div>
       </div>
@@ -1080,12 +1080,12 @@ window.handleContact = async function(e) {
           <p class="sans" style="color:var(--muted);font-size:13px;line-height:1.6;">Thanks ${esc(name)}, I'll reply within 24 hours. For something urgent, <a href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank" rel="noopener" style="color:var(--orange);">WhatsApp me directly</a>.</p>
         </div>`;
     } else {
-      btn.textContent = "Send Message · I'll Reply Within 24hrs 👋";
+      btn.textContent = "Send Message · I'll Reply Within 24hrs";
       btn.disabled = false;
       alert('Something went wrong. Please try again or WhatsApp me directly.');
     }
   } catch {
-    btn.textContent = "Send Message · I'll Reply Within 24hrs 👋";
+    btn.textContent = "Send Message · I'll Reply Within 24hrs";
     btn.disabled = false;
     alert('Network error. Please check your connection and try again.');
   }
