@@ -245,6 +245,61 @@
       "deal": "SOLD",
       "achievementLabel": "SOLD IN",
       "achievementValue": "< 1 MONTH"
+    },
+    {
+      "id": "bukit-batok-169",
+      "photo": "Track Records/169-bukit-batok.jpg",
+      "alt": "169 Bukit Batok 4-room HDB bought with zero COV",
+      "town": "Bukit Batok",
+      "block": "Blk 169",
+      "flatType": "4-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
+    },
+    {
+      "id": "woodlands-302a",
+      "photo": "Track Records/302a-woodlands.jpg",
+      "alt": "302A Woodlands 3-room HDB bought with zero COV",
+      "town": "Woodlands",
+      "block": "Blk 302A",
+      "flatType": "3-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
+    },
+    {
+      "id": "punggol-413c",
+      "photo": "Track Records/413c-punggol.jpg",
+      "alt": "413C Punggol 3-room HDB bought with zero COV",
+      "town": "Punggol",
+      "block": "Blk 413C",
+      "flatType": "3-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
+    },
+    {
+      "id": "jurong-west-477",
+      "photo": "Track Records/477-jurong-west.jpg",
+      "alt": "477 Jurong West 3-room HDB bought with zero COV",
+      "town": "Jurong West",
+      "block": "Blk 477",
+      "flatType": "3-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
+    },
+    {
+      "id": "bukit-batok-523",
+      "photo": "Track Records/523-bukit-batok.jpg",
+      "alt": "523 Bukit Batok 3-room HDB bought with zero COV",
+      "town": "Bukit Batok",
+      "block": "Blk 523",
+      "flatType": "3-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
     }
   ]
 }
