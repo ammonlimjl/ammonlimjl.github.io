@@ -863,7 +863,8 @@ async function renderTownPage() {
     try {
       const data = await loadJSON('/data/listings.json');
       const cases = data.cases.filter(c => c.town === town);
-      if (!cases.length) {
+      if (cases.length < 3) {
+        // Too few to fill a row; the reviews section carries the social proof here.
         $('#town-cases-section')?.remove();
       } else {
         casesEl.innerHTML = cases.map(c => `
@@ -884,6 +885,7 @@ async function renderTownPage() {
             </div>
           </article>
         `).join('');
+        setupActiveListingsDrag(casesEl);
       }
     } catch (e) { console.warn('Town cases load failed', e); }
   }
