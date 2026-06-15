@@ -124,6 +124,127 @@
       "deal": "BOUGHT",
       "achievementLabel": "BOUGHT WITH",
       "achievementValue": "ZERO COV"
+    },
+    {
+      "id": "punggol-104a",
+      "photo": "Track Records/104a-punggol.jpg",
+      "alt": "104A Punggol 4-room HDB bought with zero COV",
+      "town": "Punggol",
+      "block": "Blk 104A",
+      "flatType": "4-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
+    },
+    {
+      "id": "punggol-171a",
+      "photo": "Track Records/171a-punggol.jpg",
+      "alt": "171A Punggol 5-room HDB sold at a record price in the cluster",
+      "town": "Punggol",
+      "block": "Blk 171A",
+      "flatType": "5-Room HDB",
+      "deal": "SOLD",
+      "achievementLabel": "SOLD AT",
+      "achievementValue": "RECORD PRICE"
+    },
+    {
+      "id": "tampines-285",
+      "photo": "Track Records/285-tampines.jpg",
+      "alt": "285 Tampines 4-room HDB bought with zero COV",
+      "town": "Tampines",
+      "block": "Blk 285",
+      "flatType": "4-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
+    },
+    {
+      "id": "sengkang-304b",
+      "photo": "Track Records/304b-sengkang.jpg",
+      "alt": "304B Sengkang 5-room HDB bought with zero COV",
+      "town": "Sengkang",
+      "block": "Blk 304B",
+      "flatType": "5-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
+    },
+    {
+      "id": "sengkang-326a",
+      "photo": "Track Records/326a-sengkang.jpg",
+      "alt": "326A Sengkang 4-room HDB bought with zero COV",
+      "town": "Sengkang",
+      "block": "Blk 326A",
+      "flatType": "4-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
+    },
+    {
+      "id": "sengkang-330a",
+      "photo": "Track Records/330a-sengkang.jpg",
+      "alt": "330A Sengkang 4-room HDB bought with zero COV",
+      "town": "Sengkang",
+      "block": "Blk 330A",
+      "flatType": "4-Room HDB",
+      "deal": "BOUGHT",
+      "achievementLabel": "BOUGHT WITH",
+      "achievementValue": "ZERO COV"
+    },
+    {
+      "id": "punggol-406c",
+      "photo": "Track Records/406c-punggol.jpg",
+      "alt": "406C Punggol 4-room HDB sold in under 2 months",
+      "town": "Punggol",
+      "block": "Blk 406C",
+      "flatType": "4-Room HDB",
+      "deal": "SOLD",
+      "achievementLabel": "SOLD IN",
+      "achievementValue": "< 2 MONTHS"
+    },
+    {
+      "id": "ang-mo-kio-415",
+      "photo": "Track Records/415-ang-mo-kio.jpg",
+      "alt": "415 Ang Mo Kio 4-room HDB sold in 1 viewing",
+      "town": "Ang Mo Kio",
+      "block": "Blk 415",
+      "flatType": "4-Room HDB",
+      "deal": "SOLD",
+      "achievementLabel": "SOLD IN",
+      "achievementValue": "1 VIEWING"
+    },
+    {
+      "id": "sengkang-435a",
+      "photo": "Track Records/435a-sengkang.jpg",
+      "alt": "435A Sengkang 4-room HDB sold in 1 viewing",
+      "town": "Sengkang",
+      "block": "Blk 435A",
+      "flatType": "4-Room HDB",
+      "deal": "SOLD",
+      "achievementLabel": "SOLD IN",
+      "achievementValue": "1 VIEWING"
+    },
+    {
+      "id": "punggol-659a",
+      "photo": "Track Records/659a-punggol.jpg",
+      "alt": "659A Punggol 5-room HDB sold in 1 viewing",
+      "town": "Punggol",
+      "block": "Blk 659A",
+      "flatType": "5-Room HDB",
+      "deal": "SOLD",
+      "achievementLabel": "SOLD IN",
+      "achievementValue": "1 VIEWING"
+    },
+    {
+      "id": "bedok-66",
+      "photo": "Track Records/66-bedok.jpg",
+      "alt": "66 Bedok 5-room HDB sold in under 1 month",
+      "town": "Bedok",
+      "block": "Blk 66",
+      "flatType": "5-Room HDB",
+      "deal": "SOLD",
+      "achievementLabel": "SOLD IN",
+      "achievementValue": "< 1 MONTH"
     }
   ]
 }
