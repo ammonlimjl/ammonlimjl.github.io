@@ -13,7 +13,7 @@
 <!-- Nice link preview when shared in DMs (text only, no external image load) -->
 <meta property="og:type" content="article">
 <meta property="og:title" content="What can you actually afford?">
-<meta property="og:description" content="A quick estimate of your HDB budget. Then I help you firm up the real number.">
+<meta property="og:description" content="A quick estimate of your HDB budget. Then I help you work out the real number.">
 <meta property="og:locale" content="en_SG">
 
 <!-- Lightweight inline favicon (navy square, amber A) -->
@@ -109,7 +109,7 @@
     position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
     color: var(--muted); font-weight: 600; pointer-events: none;
   }
-  .money input { padding-left: 30px; }
+  .money input.in { padding-left: 32px; }
 
   input.in {
     width: 100%; font-family: 'Inter', sans-serif; font-size: 17px; color: var(--ink);
@@ -208,7 +208,7 @@
     <div class="wrap">
       <span class="eyebrow">Ammon Lim &middot; HDB Resale Specialist</span>
       <h1>What can you <span class="hl">actually</span> afford?</h1>
-      <p class="sub">A quick estimate of your HDB budget. Pop in a few numbers, then I will help you firm up the real figure.</p>
+      <p class="sub">A quick estimate of your HDB budget. Pop in a few numbers, then I will help you work out the real figure.</p>
     </div>
   </header>
 
@@ -293,7 +293,7 @@
           <div class="wa-wrap">
             <a class="wa" id="resultWa" href="#" aria-label="Message Ammon on WhatsApp with my estimate">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-              Firm it up with me on WhatsApp
+              Work it out with me on WhatsApp
             </a>
           </div>
           <button type="button" class="recalc" id="recalcBtn">Edit my numbers</button>
@@ -412,11 +412,11 @@
     var msrPct = Math.round(MSR * 100);
     $('breakdown').innerHTML =
       row('Supportable home loan', '~' + sgd(loan)) +
-      assume('Based on ' + msrPct + '% of your income going to the instalment, at ' + ratePct + '% over ' + tenureYears + ' years. Assumption, adjust with Ammon.') +
+      assume('Based on ' + msrPct + '% of your income going to the instalment, at ' + ratePct + '% over ' + tenureYears + ' years. Assumption, adjust with me.') +
       row('CPF OA you entered', '+' + sgd(cpf)) +
       row('Cash you entered', '+' + sgd(cash)) +
       row('Less fees and stamp duty buffer', '- ' + sgd(FEES_BUFFER)) +
-      assume('A flat set-aside for stamp duty, legal and other costs. Assumption, adjust with Ammon.') +
+      assume('A flat set-aside for stamp duty, legal and other costs. Assumption, adjust with me.') +
       '<li class="total"><span>Estimated budget</span><strong>' + rangeStr + '</strong></li>';
 
     // First-timer grants: point them to me, do not print a dollar figure
@@ -435,8 +435,8 @@
 
     // WhatsApp handoff, answers prefilled (first-timers also ask about grants)
     var ask = ft === 'Yes'
-      ? 'Can you help me firm up the real number and the grants I qualify for?'
-      : 'Can you help me firm up the real number?';
+      ? 'Can you help me work out the real number and the grants I qualify for?'
+      : 'Can you help me work out the real number?';
     var message = 'Hi Ammon, I used your affordability check. It estimated a budget of around ' + rangeStr +
       '. I\'m a ' + buyer + ', first-timer: ' + ft + '. ' + ask;
     $('resultWa').setAttribute('href', 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(message));
