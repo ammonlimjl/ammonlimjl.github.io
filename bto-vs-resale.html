@@ -7,13 +7,13 @@
 <!-- Unlisted page: keep it out of search results -->
 <meta name="robots" content="noindex, nofollow">
 
-<title>BTO or Resale? The Honest Breakdown | Ammon Lim</title>
-<meta name="description" content="A straight BTO vs resale comparison for first-time HDB buyers, from Ammon Lim, an HDB resale specialist in Singapore.">
+<title>BTO or Resale? Take the Quiz | Ammon Lim</title>
+<meta name="description" content="A quick BTO vs resale quiz and honest comparison for first-time HDB buyers, from Ammon Lim, an HDB resale specialist in Singapore.">
 
 <!-- Nice link preview when shared in DMs (text only, no external image load) -->
 <meta property="og:type" content="article">
-<meta property="og:title" content="BTO or resale? Here's the honest breakdown.">
-<meta property="og:description" content="The same comparison I walk my clients through. Cost, waiting time, choice of unit and grants, laid out plainly.">
+<meta property="og:title" content="BTO or resale, which suits you?">
+<meta property="og:description" content="Five quick questions, then the honest comparison I walk my clients through.">
 <meta property="og:locale" content="en_SG">
 
 <!-- Lightweight inline favicon (navy square, amber A) -->
@@ -60,7 +60,7 @@
   .wrap { width: 100%; max-width: 720px; margin: 0 auto; padding: 0 20px; }
 
   /* ---------- Hero ---------- */
-  .hero { padding: 48px 0 8px; text-align: center; }
+  .hero { padding: 44px 0 6px; text-align: center; }
   .eyebrow {
     display: inline-block;
     font-size: 12px;
@@ -101,19 +101,123 @@
   .wa:active { transform: translateY(0); }
   .wa:focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
   .wa svg { width: 22px; height: 22px; flex: none; }
-  .wa-wrap { text-align: center; margin: 26px 0; }
+  .wa-wrap { text-align: center; margin: 24px 0 4px; }
 
-  /* ---------- Comparison ---------- */
-  .compare { background: var(--bluegrey); padding: 36px 0 40px; margin-top: 18px; }
-  .compare .lede {
-    text-align: center;
+  /* ---------- Quiz ---------- */
+  .quiz { padding: 28px 0 10px; }
+  .quiz-intro { text-align: center; margin-bottom: 22px; }
+  .quiz-intro h2 { font-size: clamp(22px, 5.6vw, 30px); }
+  .quiz-intro p { color: var(--muted); margin-top: 8px; font-size: 16px; }
+
+  .quiz-card {
+    background: var(--white);
+    border: 1px solid #E3EAF2;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px 22px 22px;
+  }
+  .quiz-top { margin-bottom: 18px; }
+  .quiz-step {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
     color: var(--muted);
-    font-weight: 500;
-    margin-bottom: 24px;
+  }
+  .quiz-bar {
+    margin-top: 9px;
+    height: 7px;
+    background: var(--bluegrey);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .quiz-bar span {
+    display: block;
+    height: 100%;
+    width: 20%;
+    background: var(--amber);
+    border-radius: 100px;
+    transition: width 0.28s ease;
+  }
+  .quiz-q { font-family: 'Poppins', sans-serif; color: var(--navy); font-size: clamp(18px, 4.6vw, 22px); font-weight: 600; margin-bottom: 16px; }
+  .quiz-note { font-size: 13px; color: var(--muted); margin: -6px 0 16px; }
+
+  .quiz-options { display: grid; gap: 10px; }
+  .quiz-opt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: var(--ink);
+    background: #F6F8FB;
+    border: 2px solid #DDE6EF;
+    border-radius: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .quiz-opt:hover { border-color: var(--amber); }
+  .quiz-opt:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }
+  .quiz-opt .dot {
+    flex: none;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid #C3D0DE;
+    transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  }
+  .quiz-opt[aria-checked="true"] { border-color: var(--amber); background: rgba(242, 162, 48, 0.12); }
+  .quiz-opt[aria-checked="true"] .dot { border-color: var(--amber); background: var(--amber); box-shadow: inset 0 0 0 3px var(--white); }
+
+  .quiz-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 20px; }
+  .quiz-back {
+    background: none; border: none;
+    font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 15px;
+    color: var(--muted); cursor: pointer; padding: 10px 6px;
+  }
+  .quiz-back:hover { color: var(--navy); }
+  .quiz-back:disabled { opacity: 0; pointer-events: none; }
+  .quiz-next {
+    background: var(--navy); color: var(--white); border: none;
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 16px;
+    border-radius: 100px; padding: 13px 26px; cursor: pointer; min-height: 48px;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+  .quiz-next:disabled { opacity: 0.38; cursor: not-allowed; }
+  .quiz-next:not(:disabled):hover { transform: translateY(-1px); }
+  .quiz-next:focus-visible, .quiz-back:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; border-radius: 8px; }
+
+  /* ---------- Quiz result ---------- */
+  .quiz-result { text-align: center; }
+  .quiz-result .badge {
+    display: inline-block;
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber);
+    margin-bottom: 10px;
+  }
+  .quiz-result h2 { font-size: clamp(22px, 5.6vw, 28px); margin-bottom: 12px; }
+  .quiz-result p { color: var(--ink); max-width: 30em; margin: 0 auto; }
+  .quiz-result .retake {
+    display: inline-block; margin-top: 8px;
+    background: none; border: none; cursor: pointer;
+    font-family: 'Inter', sans-serif; font-size: 14px; color: var(--muted);
+    text-decoration: underline;
+  }
+  .quiz-result .retake:hover { color: var(--navy); }
+
+  /* ---------- Divider before supporting detail ---------- */
+  .detail-intro { text-align: center; padding: 30px 0 0; }
+  .detail-intro .small {
+    font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
   }
 
-  .criteria { display: grid; gap: 16px; }
+  /* ---------- Comparison ---------- */
+  .compare { background: var(--bluegrey); padding: 30px 0 40px; margin-top: 16px; }
+  .compare .lede { text-align: center; color: var(--muted); font-weight: 500; margin-bottom: 24px; }
 
+  .criteria { display: grid; gap: 16px; }
   .criterion {
     background: var(--white);
     border-radius: var(--radius);
@@ -121,55 +225,30 @@
     padding: 20px 20px 22px;
   }
   .criterion > h3 {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    font-size: 18px; font-weight: 600; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
   }
   .criterion > h3 .n {
-    flex: none;
-    width: 26px; height: 26px;
-    border-radius: 8px;
-    background: var(--bluegrey);
-    color: var(--navy);
-    font-size: 13px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    flex: none; width: 26px; height: 26px; border-radius: 8px;
+    background: var(--bluegrey); color: var(--navy); font-size: 13px;
+    display: inline-flex; align-items: center; justify-content: center;
   }
 
   .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .panel {
-    background: #F6F8FB;
-    border: 1px solid #DDE6EF;
-    border-radius: 12px;
-    padding: 14px 15px 16px;
-  }
+  .panel { background: #F6F8FB; border: 1px solid #DDE6EF; border-radius: 12px; padding: 14px 15px 16px; }
   .panel .tag {
     display: inline-block;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border-radius: 100px;
-    margin-bottom: 9px;
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 100px; margin-bottom: 9px;
   }
   .panel.bto .tag { background: var(--navy); color: var(--white); }
   .panel.resale .tag { background: var(--amber); color: var(--navy); }
   .panel p { font-size: 15px; color: var(--ink); }
 
   .note {
-    margin-top: 13px;
-    font-size: 14px;
-    color: var(--navy);
-    background: rgba(242, 162, 48, 0.16);
-    border-radius: 10px;
-    padding: 9px 13px;
-    font-weight: 500;
+    margin-top: 13px; font-size: 14px; color: var(--navy);
+    background: rgba(242, 162, 48, 0.16); border-radius: 10px; padding: 9px 13px; font-weight: 500;
   }
 
   /* ---------- So which one ---------- */
@@ -184,12 +263,14 @@
   .closing .sub { color: #C9D6E5; max-width: 26em; margin: 0 auto 26px; font-size: 16px; }
 
   /* ---------- Footer ---------- */
-  footer { text-align: center; padding: 26px 0 40px; color: var(--muted); font-size: 13px; }
+  footer { text-align: center; padding: 26px 0 40px; color: var(--muted); font-size: 13px; line-height: 1.8; }
   footer strong { color: var(--navy); font-family: 'Poppins', sans-serif; }
+  footer a { color: var(--muted); text-decoration: underline; }
+  footer a:hover { color: var(--navy); }
 
   @media (max-width: 560px) {
     .panels { grid-template-columns: 1fr; }
-    .hero { padding: 36px 0 4px; }
+    .hero { padding: 34px 0 2px; }
   }
 </style>
 </head>
@@ -201,15 +282,52 @@
     <div class="wrap">
       <span class="eyebrow">Ammon Lim &middot; HDB Resale Specialist</span>
       <h1>BTO or resale?<br>Here's the <span class="hl">honest</span> breakdown.</h1>
-      <p class="sub">I'm Ammon, an HDB resale specialist. This is the same comparison I walk my clients through, no spin.</p>
+      <p class="sub">I'm Ammon, an HDB resale specialist. Take the quick quiz below, then see the full comparison I walk my clients through.</p>
     </div>
   </header>
 
-  <div class="wa-wrap wrap">
-    <a class="wa" href="https://wa.me/6580989441?text=Hi%20Ammon%2C%20I%20saw%20your%20BTO%20vs%20resale%20breakdown.%20My%20timeline%20is%20" aria-label="Message Ammon on WhatsApp">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Message me on WhatsApp
-    </a>
+  <!-- ---------- Quiz ---------- -->
+  <section class="quiz" id="quiz" aria-label="BTO or resale quiz">
+    <div class="wrap">
+      <div class="quiz-intro">
+        <h2>BTO or resale, which suits you?</h2>
+        <p>Five quick questions. An honest nudge, then we talk it through.</p>
+      </div>
+
+      <div class="quiz-card" id="quizCard">
+        <div class="quiz-top">
+          <span class="quiz-step" id="quizStep">Question 1 of 5</span>
+          <div class="quiz-bar" aria-hidden="true"><span id="quizBarFill"></span></div>
+        </div>
+
+        <div class="quiz-q" id="quizQuestion"></div>
+        <p class="quiz-note" id="quizNote" style="display:none"></p>
+        <div class="quiz-options" id="quizOptions" role="radiogroup" aria-labelledby="quizQuestion"></div>
+
+        <div class="quiz-nav">
+          <button type="button" class="quiz-back" id="quizBack" disabled>Back</button>
+          <button type="button" class="quiz-next" id="quizNext" disabled>Next</button>
+        </div>
+      </div>
+
+      <div class="quiz-result" id="quizResult" hidden tabindex="-1">
+        <span class="badge">Your result</span>
+        <h2 id="quizResultHeading"></h2>
+        <p id="quizResultBody"></p>
+        <div class="wa-wrap">
+          <a class="wa" id="quizWa" href="#" aria-label="Message Ammon on WhatsApp with my quiz answers">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Message me on WhatsApp
+          </a>
+        </div>
+        <button type="button" class="retake" id="quizRetake">Retake the quiz</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Supporting detail intro ---------- -->
+  <div class="detail-intro wrap">
+    <span class="small">The full comparison</span>
   </div>
 
   <!-- ---------- Comparison ---------- -->
@@ -289,7 +407,7 @@
     </div>
   </section>
 
-  <!-- ---------- Closing CTA ---------- -->
+  <!-- ---------- Closing CTA (standalone button for anyone who skipped the quiz) ---------- -->
   <section class="closing">
     <div class="wrap">
       <h2>Your situation is different from the next person's.</h2>
@@ -304,10 +422,159 @@
   <footer>
     <div class="wrap">
       <strong>Ammon Lim</strong><br>
-      HDB resale specialist, Singapore &middot; CEA Reg. R065633I
+      HDB resale specialist, Singapore &middot; CEA Reg. R065633I &middot; <a href="https://www.ammonlim.com">ammonlim.com</a>
     </div>
   </footer>
 </main>
+
+<script>
+(function () {
+  var QUESTIONS = [
+    {
+      q: "When do you need to move in?",
+      options: [
+        { text: "Within 12 months", bto: 0, resale: 2 },
+        { text: "1 to 2 years", bto: 0, resale: 1 },
+        { text: "I can wait 3 years or more", bto: 2, resale: 0 }
+      ]
+    },
+    {
+      q: "Are you open to balloting a few times, with no guarantee you get a flat?",
+      options: [
+        { text: "Yes, I can be patient", bto: 2, resale: 0 },
+        { text: "No, I want certainty", bto: 0, resale: 2 },
+        { text: "Not sure", bto: 0, resale: 0 }
+      ]
+    },
+    {
+      q: "How much do you care about choosing your exact unit, floor and facing?",
+      options: [
+        { text: "A lot, I want to choose", bto: 0, resale: 2 },
+        { text: "Somewhat", bto: 0, resale: 0 },
+        { text: "I don't mind what I'm allocated", bto: 2, resale: 0 }
+      ]
+    },
+    {
+      q: "What matters more to you right now?",
+      options: [
+        { text: "The lowest possible price", bto: 2, resale: 0 },
+        { text: "Certainty and speed", bto: 0, resale: 2 }
+      ]
+    },
+    {
+      q: "Are you a first-time buyer?",
+      note: "This does not affect the result, it just helps me personalise my reply.",
+      score: false,
+      options: [
+        { text: "Yes, first-timer" },
+        { text: "No" },
+        { text: "Not sure" }
+      ]
+    }
+  ];
+
+  var total = QUESTIONS.length;
+  var answers = new Array(total).fill(null);
+  var cur = 0;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var stepEl = $('quizStep'), barEl = $('quizBarFill'), qEl = $('quizQuestion'),
+      noteEl = $('quizNote'), optsEl = $('quizOptions'),
+      backBtn = $('quizBack'), nextBtn = $('quizNext'),
+      cardEl = $('quizCard'), resultEl = $('quizResult');
+
+  function render() {
+    var Q = QUESTIONS[cur];
+    stepEl.textContent = 'Question ' + (cur + 1) + ' of ' + total;
+    barEl.style.width = ((cur + 1) / total * 100) + '%';
+    qEl.textContent = Q.q;
+    if (Q.note) { noteEl.textContent = Q.note; noteEl.style.display = 'block'; }
+    else { noteEl.style.display = 'none'; }
+
+    optsEl.innerHTML = '';
+    Q.options.forEach(function (o, idx) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'quiz-opt';
+      b.setAttribute('role', 'radio');
+      b.setAttribute('aria-checked', answers[cur] === idx ? 'true' : 'false');
+      var dot = document.createElement('span');
+      dot.className = 'dot';
+      dot.setAttribute('aria-hidden', 'true');
+      var label = document.createElement('span');
+      label.textContent = o.text;
+      b.appendChild(dot);
+      b.appendChild(label);
+      b.addEventListener('click', function () { answers[cur] = idx; render(); });
+      optsEl.appendChild(b);
+    });
+
+    backBtn.disabled = cur === 0;
+    nextBtn.disabled = answers[cur] === null;
+    nextBtn.textContent = cur === total - 1 ? 'See my result' : 'Next';
+  }
+
+  backBtn.addEventListener('click', function () { if (cur > 0) { cur--; render(); } });
+
+  nextBtn.addEventListener('click', function () {
+    if (answers[cur] === null) return;
+    if (cur < total - 1) { cur++; render(); }
+    else showResult();
+  });
+
+  $('quizRetake').addEventListener('click', function () {
+    for (var i = 0; i < total; i++) answers[i] = null;
+    cur = 0;
+    resultEl.hidden = true;
+    cardEl.hidden = false;
+    render();
+    $('quiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  function showResult() {
+    var bto = 0, resale = 0;
+    QUESTIONS.forEach(function (Q, i) {
+      if (Q.score === false) return;
+      var o = Q.options[answers[i]];
+      bto += o.bto || 0;
+      resale += o.resale || 0;
+    });
+
+    var label, heading, body;
+    if (resale > bto) {
+      label = 'Resale looks like the better fit';
+      heading = 'Resale looks like the better fit for you.';
+      body = 'Your answers lean towards moving sooner and having more say over the actual flat. Resale gives you both, and as a first-timer the grants can soften the higher price. It is worth checking the numbers for your own situation.';
+    } else if (bto > resale) {
+      label = 'BTO looks like the better fit';
+      heading = 'BTO looks like the better fit for you.';
+      body = 'You have time on your side and price is your priority. If you can wait and the ballot goes your way, BTO is hard to beat on cost. Just go in with your eyes open on the timeline.';
+    } else {
+      label = 'Right in between';
+      heading = "You're right in between, this is exactly the kind of situation worth talking through.";
+      body = 'Your answers do not point clearly one way, which is common. It usually comes down to the details like your exact timeline and budget, so let us work it out together.';
+    }
+
+    var q1 = QUESTIONS[0].options[answers[0]].text;
+    var q3 = QUESTIONS[2].options[answers[2]].text;
+    var q5 = QUESTIONS[4].options[answers[4]].text;
+
+    var msg = 'Hi Ammon, I did your BTO vs resale quiz. Result: ' + label +
+      '. My timeline is ' + q1 + ', and on choosing my own unit I said ' + q3 +
+      '. First-timer: ' + q5 + '. Can we talk?';
+
+    $('quizResultHeading').textContent = heading;
+    $('quizResultBody').textContent = body;
+    $('quizWa').setAttribute('href', 'https://wa.me/6580989441?text=' + encodeURIComponent(msg));
+
+    cardEl.hidden = true;
+    resultEl.hidden = false;
+    resultEl.focus();
+  }
+
+  render();
+})();
+</script>
 
 </body>
 </html>
