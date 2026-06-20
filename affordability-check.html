@@ -303,7 +303,7 @@
   </section>
 
   <!-- ---------- Closing reassurance ---------- -->
-  <section class="closing">
+  <section class="closing" id="closing">
     <div class="wrap">
       <h2>The real number is worth getting right.</h2>
       <p class="sub">Send me your figures and I will work out what you can properly afford, grants included.</p>
@@ -442,6 +442,7 @@
     $('resultWa').setAttribute('href', 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(message));
 
     resultEl.hidden = false;
+    $('closing').hidden = true;
     resultEl.focus();
     resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
@@ -451,6 +452,7 @@
 
   $('recalcBtn').addEventListener('click', function () {
     resultEl.hidden = true;
+    $('closing').hidden = false;
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
     $('income').focus();
   });
