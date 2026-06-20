@@ -176,7 +176,7 @@
   <!-- ---------- Hero ---------- -->
   <header class="hero">
     <div class="wrap">
-      <span class="eyebrow">Ammon Lim &middot; HDB Resale Specialist</span>
+      <span class="eyebrow">Ammon Lim &middot; Specialising in HDB Resale</span>
       <h1>Are you <span class="hl">ready</span> to buy a resale flat?</h1>
       <p class="sub">A quick, friendly self-check. Six questions to see where you stand, then I will guide you on the next steps.</p>
     </div>
@@ -185,7 +185,7 @@
   <!-- ---------- Quiz ---------- -->
   <section class="quiz" id="quiz" aria-label="Resale readiness check">
     <div class="wrap">
-      <div class="quiz-intro">
+      <div class="quiz-intro" id="quizIntro">
         <h2>Where are you at?</h2>
         <p>There are no wrong answers here. It just shows what to look into next.</p>
       </div>
@@ -224,7 +224,7 @@
   <footer>
     <div class="wrap">
       <strong>Ammon Lim</strong><br>
-      HDB resale specialist, Singapore &middot; CEA Reg. R065633I &middot; <a href="https://www.ammonlim.com">ammonlim.com</a>
+      Specialising in HDB resale, Singapore &middot; CEA Reg. R065633I &middot; <a href="https://www.ammonlim.com">ammonlim.com</a>
     </div>
   </footer>
 </main>
@@ -308,6 +308,8 @@
 
   nextBtn.addEventListener('click', function () {
     if (answers[cur] === null) return;
+    // Citizenship is the foundation: if neither buyer is SC or PR, flag it now
+    if (cur === 0 && answers[0] === 2) { showCitizenship(); return; }
     if (cur < total - 1) { cur++; render(); }
     else showResult();
   });
@@ -317,6 +319,7 @@
     cur = 0;
     resultEl.hidden = true;
     cardEl.hidden = false;
+    $('quizIntro').hidden = false;
     render();
     $('quiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
@@ -360,6 +363,19 @@
       '. Things I still need to sort: ' + flagText + '. Can you guide me on the next steps?';
     $('quizWa').setAttribute('href', 'https://wa.me/6580989441?text=' + encodeURIComponent(message));
 
+    $('quizIntro').hidden = true;
+    cardEl.hidden = true;
+    resultEl.hidden = false;
+    resultEl.focus();
+  }
+
+  function showCitizenship() {
+    $('quizResultHeading').textContent = "Let's start with the basics.";
+    $('quizResultBody').textContent = 'Buying an HDB flat needs at least one Singapore Citizen or PR in the application. If that is not the case yet, that is the first thing to sort, and there may be paths worth exploring. Let me point you the right way.';
+    $('quizSteps').innerHTML = '<div class="steps"><h3>Worth confirming first:</h3><ul><li>your citizenship or PR eligibility to buy an HDB flat</li></ul></div>';
+    var message = 'Hi Ammon, I did your readiness check. I need to sort out the citizenship or PR requirement to buy an HDB flat. Can you advise me on my options?';
+    $('quizWa').setAttribute('href', 'https://wa.me/6580989441?text=' + encodeURIComponent(message));
+    $('quizIntro').hidden = true;
     cardEl.hidden = true;
     resultEl.hidden = false;
     resultEl.focus();
