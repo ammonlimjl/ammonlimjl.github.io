@@ -544,7 +544,11 @@
     if (resale > bto) {
       label = 'Resale looks like the better fit';
       heading = 'Resale looks like the better fit for you.';
-      body = 'Your answers lean towards moving sooner and having more say over the actual flat. Resale gives you both, and as a first-timer the grants can soften the higher price. It is worth checking the numbers for your own situation.';
+      var grantLine;
+      if (answers[4] === 0) grantLine = ' As a first-timer, the grants can soften the higher price.';
+      else if (answers[4] === 2) grantLine = ' If you turn out to qualify as a first-timer, grants can soften the higher price, so it is worth checking.';
+      else grantLine = '';
+      body = 'Your answers lean towards moving sooner and having more say over the actual flat. Resale gives you both.' + grantLine + ' It is worth checking the numbers for your own situation.';
     } else if (bto > resale) {
       label = 'BTO looks like the better fit';
       heading = 'BTO looks like the better fit for you.';
