@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en-SG">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Unlisted page: keep it out of search results -->
+<meta name="robots" content="noindex, nofollow">
+
+<title>Are You Ready to Buy a Resale Flat? | Ammon Lim</title>
+<meta name="description" content="A quick readiness self-check for first-time HDB resale buyers, from Ammon Lim, an HDB resale specialist in Singapore. A guide, not an eligibility ruling.">
+
+<!-- Nice link preview when shared in DMs (text only, no external image load) -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Are you ready to buy a resale flat?">
+<meta property="og:description" content="Six quick questions, a friendly readiness check, then I guide you on the next steps.">
+<meta property="og:locale" content="en_SG">
+
+<!-- Lightweight inline favicon (navy square, amber A) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2318375D'/%3E%3Ctext x='50' y='71' font-family='Poppins,Arial,sans-serif' font-size='60' font-weight='700' text-anchor='middle' fill='%23F2A230'%3EA%3C/text%3E%3C/svg%3E">
+
+<!-- ============================================================= -->
+<!-- META (FACEBOOK) PIXEL: paste your full pixel snippet below.    -->
+<!-- Replace this entire comment block with the code from           -->
+<!-- Meta Events Manager. Do not add a pixel ID anywhere else.       -->
+<!-- ============================================================= -->
+
+<!-- Fonts: the only external resource on this page -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #18375D;
+    --amber: #F2A230;
+    --bluegrey: #E8EDF3;
+    --ink: #1F2D3D;
+    --muted: #5A6B7B;
+    --white: #FFFFFF;
+    --radius: 16px;
+    --shadow: 0 10px 30px -12px rgba(24, 55, 93, 0.22);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--white);
+    line-height: 1.65;
+    font-size: 17px;
+  }
+
+  h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--navy); line-height: 1.2; }
+
+  .wrap { width: 100%; max-width: 660px; margin: 0 auto; padding: 0 20px; }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 44px 0 6px; text-align: center; }
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.09em;
+    text-transform: uppercase; color: var(--amber); margin-bottom: 16px;
+  }
+  .hero h1 { font-size: clamp(28px, 7vw, 40px); font-weight: 700; }
+  .hero h1 .hl { color: var(--amber); }
+  .hero p.sub { color: var(--muted); font-size: clamp(15px, 4vw, 18px); max-width: 30em; margin: 16px auto 0; }
+
+  /* ---------- WhatsApp button ---------- */
+  .wa {
+    display: inline-flex; align-items: center; justify-content: center; gap: 11px;
+    background: var(--amber); color: var(--navy);
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 17px;
+    text-decoration: none; padding: 16px 26px; border-radius: 100px;
+    box-shadow: var(--shadow); min-height: 56px;
+    transition: transform 0.16s ease, box-shadow 0.16s ease;
+  }
+  .wa:hover { transform: translateY(-2px); box-shadow: 0 16px 34px -12px rgba(242, 162, 48, 0.6); }
+  .wa:active { transform: translateY(0); }
+  .wa:focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
+  .wa svg { width: 22px; height: 22px; flex: none; }
+  .wa-wrap { text-align: center; margin: 22px 0 4px; }
+
+  /* ---------- Quiz ---------- */
+  .quiz { padding: 28px 0 14px; }
+  .quiz-intro { text-align: center; margin-bottom: 22px; }
+  .quiz-intro h2 { font-size: clamp(22px, 5.6vw, 30px); }
+  .quiz-intro p { color: var(--muted); margin-top: 8px; font-size: 16px; }
+
+  .quiz-card {
+    background: var(--white); border: 1px solid #E3EAF2;
+    border-radius: var(--radius); box-shadow: var(--shadow);
+    padding: 24px 22px 22px;
+  }
+  .quiz-top { margin-bottom: 18px; }
+  .quiz-step { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .quiz-bar { margin-top: 9px; height: 7px; background: var(--bluegrey); border-radius: 100px; overflow: hidden; }
+  .quiz-bar span { display: block; height: 100%; width: 16.66%; background: var(--amber); border-radius: 100px; transition: width 0.28s ease; }
+
+  .quiz-q { font-family: 'Poppins', sans-serif; color: var(--navy); font-size: clamp(18px, 4.6vw, 22px); font-weight: 600; margin-bottom: 16px; }
+
+  .quiz-options { display: grid; gap: 10px; }
+  .quiz-opt {
+    display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
+    font-family: 'Inter', sans-serif; font-size: 16px; color: var(--ink);
+    background: #F6F8FB; border: 2px solid #DDE6EF; border-radius: 12px; padding: 14px 16px; cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .quiz-opt:hover { border-color: var(--amber); }
+  .quiz-opt:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }
+  .quiz-opt .dot {
+    flex: none; width: 20px; height: 20px; border-radius: 50%; border: 2px solid #C3D0DE;
+    transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  }
+  .quiz-opt[aria-checked="true"] { border-color: var(--amber); background: rgba(242, 162, 48, 0.12); }
+  .quiz-opt[aria-checked="true"] .dot { border-color: var(--amber); background: var(--amber); box-shadow: inset 0 0 0 3px var(--white); }
+
+  .quiz-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 20px; }
+  .quiz-back {
+    background: none; border: none; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 15px;
+    color: var(--muted); cursor: pointer; padding: 10px 6px;
+  }
+  .quiz-back:hover { color: var(--navy); }
+  .quiz-back:disabled { opacity: 0; pointer-events: none; }
+  .quiz-next {
+    background: var(--navy); color: var(--white); border: none;
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 16px;
+    border-radius: 100px; padding: 13px 26px; cursor: pointer; min-height: 48px;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+  .quiz-next:disabled { opacity: 0.38; cursor: not-allowed; }
+  .quiz-next:not(:disabled):hover { transform: translateY(-1px); }
+  .quiz-next:focus-visible, .quiz-back:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; border-radius: 8px; }
+
+  /* ---------- Result ---------- */
+  .quiz-result { text-align: center; }
+  .quiz-result .badge {
+    display: inline-block; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); margin-bottom: 10px;
+  }
+  .quiz-result h2 { font-size: clamp(22px, 5.6vw, 28px); margin-bottom: 12px; }
+  .quiz-result p.lead { color: var(--ink); max-width: 30em; margin: 0 auto; }
+
+  .steps { text-align: left; background: var(--bluegrey); border-radius: 12px; padding: 16px 18px; margin: 20px 0 4px; }
+  .steps h3 { font-size: 15px; margin-bottom: 10px; }
+  .steps ul { list-style: none; }
+  .steps li { position: relative; padding-left: 26px; font-size: 14.5px; color: var(--navy); margin-bottom: 8px; }
+  .steps li:last-child { margin-bottom: 0; }
+  .steps li::before {
+    content: ''; position: absolute; left: 0; top: 5px; width: 13px; height: 13px;
+    border-radius: 50%; border: 2px solid var(--amber); background: rgba(242, 162, 48, 0.25);
+  }
+  .steps.clear { background: rgba(242, 162, 48, 0.12); }
+  .steps.clear p { font-size: 15px; color: var(--navy); }
+
+  .quiz-result .retake {
+    display: inline-block; margin-top: 8px; background: none; border: none; cursor: pointer;
+    font-family: 'Inter', sans-serif; font-size: 14px; color: var(--muted); text-decoration: underline;
+  }
+  .quiz-result .retake:hover { color: var(--navy); }
+
+  /* ---------- Footer ---------- */
+  footer { text-align: center; padding: 30px 0 40px; color: var(--muted); font-size: 13px; line-height: 1.8; }
+  footer strong { color: var(--navy); font-family: 'Poppins', sans-serif; }
+  footer a { color: var(--muted); text-decoration: underline; }
+  footer a:hover { color: var(--navy); }
+
+  @media (max-width: 460px) { .hero { padding: 34px 0 2px; } }
+</style>
+</head>
+<body>
+
+<main>
+  <!-- ---------- Hero ---------- -->
+  <header class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Ammon Lim &middot; HDB Resale Specialist</span>
+      <h1>Are you <span class="hl">ready</span> to buy a resale flat?</h1>
+      <p class="sub">A quick, friendly self-check. Six questions to see where you stand, then I will guide you on the next steps.</p>
+    </div>
+  </header>
+
+  <!-- ---------- Quiz ---------- -->
+  <section class="quiz" id="quiz" aria-label="Resale readiness check">
+    <div class="wrap">
+      <div class="quiz-intro">
+        <h2>Where are you at?</h2>
+        <p>There are no wrong answers here. It just shows what to look into next.</p>
+      </div>
+
+      <div class="quiz-card" id="quizCard">
+        <div class="quiz-top">
+          <span class="quiz-step" id="quizStep">Question 1 of 6</span>
+          <div class="quiz-bar" aria-hidden="true"><span id="quizBarFill"></span></div>
+        </div>
+
+        <div class="quiz-q" id="quizQuestion"></div>
+        <div class="quiz-options" id="quizOptions" role="radiogroup" aria-labelledby="quizQuestion"></div>
+
+        <div class="quiz-nav">
+          <button type="button" class="quiz-back" id="quizBack" disabled>Back</button>
+          <button type="button" class="quiz-next" id="quizNext" disabled>Next</button>
+        </div>
+      </div>
+
+      <div class="quiz-result" id="quizResult" hidden tabindex="-1">
+        <span class="badge">Your readiness</span>
+        <h2 id="quizResultHeading"></h2>
+        <p class="lead" id="quizResultBody"></p>
+        <div id="quizSteps"></div>
+        <div class="wa-wrap">
+          <a class="wa" id="quizWa" href="#" aria-label="Message Ammon on WhatsApp about my next steps">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Get my next steps with Ammon
+          </a>
+        </div>
+        <button type="button" class="retake" id="quizRetake">Retake the check</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <strong>Ammon Lim</strong><br>
+      HDB resale specialist, Singapore &middot; CEA Reg. R065633I &middot; <a href="https://www.ammonlim.com">ammonlim.com</a>
+    </div>
+  </footer>
+</main>
+
+<script>
+(function () {
+  // Each option scores by position: first = 2 (ready), second = 1, third = 0 (not yet).
+  // "flag" is the friendly next-step shown when the third option is chosen.
+  var QUESTIONS = [
+    {
+      q: "Is at least one buyer a Singapore Citizen or PR?",
+      flag: "your citizenship or PR eligibility",
+      options: ["Yes, Singapore Citizen", "Yes, PR", "No, or not sure"]
+    },
+    {
+      q: "Is this your first time buying an HDB flat or taking a housing subsidy?",
+      flag: "whether you count as a first-timer",
+      options: ["Yes, first-timer", "No, I have owned or taken a subsidy before", "Not sure"]
+    },
+    {
+      q: "Have you applied for your HFE letter yet? (HDB Flat Eligibility, the first official step)",
+      flag: "your HFE letter",
+      options: ["Done it", "In progress", "Haven't started, or what's that"]
+    },
+    {
+      q: "If you currently own any property, have you met the MOP or planned the sale?",
+      flag: "your current property or MOP",
+      options: ["I don't own any property", "Yes, sorted", "Not yet, or not sure"]
+    },
+    {
+      q: "Roughly how much have you set aside for the down payment and the upfront costs?",
+      flag: "your down payment and upfront costs",
+      options: ["A comfortable amount", "A little, still building it", "Haven't worked it out yet"]
+    },
+    {
+      q: "Have you settled on an area and flat size?",
+      flag: "your preferred area and flat size",
+      options: ["Yes, I know what I want", "Roughly", "Still figuring it out"]
+    }
+  ];
+
+  var total = QUESTIONS.length;
+  var answers = new Array(total).fill(null);
+  var cur = 0;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var stepEl = $('quizStep'), barEl = $('quizBarFill'), qEl = $('quizQuestion'),
+      optsEl = $('quizOptions'), backBtn = $('quizBack'), nextBtn = $('quizNext'),
+      cardEl = $('quizCard'), resultEl = $('quizResult');
+
+  function render() {
+    var Q = QUESTIONS[cur];
+    stepEl.textContent = 'Question ' + (cur + 1) + ' of ' + total;
+    barEl.style.width = ((cur + 1) / total * 100) + '%';
+    qEl.textContent = Q.q;
+
+    optsEl.innerHTML = '';
+    Q.options.forEach(function (text, idx) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'quiz-opt';
+      b.setAttribute('role', 'radio');
+      b.setAttribute('aria-checked', answers[cur] === idx ? 'true' : 'false');
+      var dot = document.createElement('span');
+      dot.className = 'dot';
+      dot.setAttribute('aria-hidden', 'true');
+      var label = document.createElement('span');
+      label.textContent = text;
+      b.appendChild(dot);
+      b.appendChild(label);
+      b.addEventListener('click', function () { answers[cur] = idx; render(); });
+      optsEl.appendChild(b);
+    });
+
+    backBtn.disabled = cur === 0;
+    nextBtn.disabled = answers[cur] === null;
+    nextBtn.textContent = cur === total - 1 ? 'See my result' : 'Next';
+  }
+
+  backBtn.addEventListener('click', function () { if (cur > 0) { cur--; render(); } });
+
+  nextBtn.addEventListener('click', function () {
+    if (answers[cur] === null) return;
+    if (cur < total - 1) { cur++; render(); }
+    else showResult();
+  });
+
+  $('quizRetake').addEventListener('click', function () {
+    for (var i = 0; i < total; i++) answers[i] = null;
+    cur = 0;
+    resultEl.hidden = true;
+    cardEl.hidden = false;
+    render();
+    $('quiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  function showResult() {
+    var score = 0, flags = [];
+    QUESTIONS.forEach(function (Q, i) {
+      score += 2 - answers[i];           // first option 2, middle 1, last 0
+      if (answers[i] === 2) flags.push(Q.flag);
+    });
+
+    var band, heading, body;
+    if (score >= 9) {
+      band = 'In good shape to start';
+      heading = "You're in good shape to start.";
+      body = 'You have the big pieces in place. Let us talk through the finer points and start looking properly.';
+    } else if (score >= 5) {
+      band = 'Almost there';
+      heading = "You're almost there, a couple of things to line up.";
+      body = 'You are closer than you think. A few things to line up and you will be ready, and I can help with each one.';
+    } else {
+      band = 'Early days';
+      heading = "Early days, and that's perfectly fine.";
+      body = 'This is the best time to get guided, before any costly missteps. We will go through it together, step by step.';
+    }
+
+    $('quizResultHeading').textContent = heading;
+    $('quizResultBody').textContent = body;
+
+    var stepsHtml;
+    if (flags.length) {
+      var items = flags.map(function (f) { return '<li>' + f + '</li>'; }).join('');
+      stepsHtml = '<div class="steps"><h3>A few things worth lining up:</h3><ul>' + items + '</ul></div>';
+    } else {
+      stepsHtml = '<div class="steps clear"><p>Nothing major flagged. You are in a good spot to move.</p></div>';
+    }
+    $('quizSteps').innerHTML = stepsHtml;
+
+    var flagText = flags.length ? flags.join(', ') : 'none really';
+    var message = 'Hi Ammon, I did your readiness check. Result: ' + band +
+      '. Things I still need to sort: ' + flagText + '. Can you guide me on the next steps?';
+    $('quizWa').setAttribute('href', 'https://wa.me/6580989441?text=' + encodeURIComponent(message));
+
+    cardEl.hidden = true;
+    resultEl.hidden = false;
+    resultEl.focus();
+  }
+
+  render();
+})();
+</script>
+
+</body>
+</html>
