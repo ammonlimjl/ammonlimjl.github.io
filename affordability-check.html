@@ -164,6 +164,13 @@
   }
   .disclaimer strong { font-family: 'Poppins', sans-serif; }
 
+  .grants-note {
+    background: rgba(242, 162, 48, 0.14); border: 1px solid rgba(242, 162, 48, 0.45);
+    border-radius: 12px; padding: 14px 16px; text-align: left;
+    font-size: 14px; color: var(--navy); margin: 0 0 18px;
+  }
+  .grants-note strong { font-family: 'Poppins', sans-serif; }
+
   .bd { list-style: none; text-align: left; border-top: 1px solid #E3EAF2; margin-top: 4px; }
   .bd li { display: flex; justify-content: space-between; gap: 14px; padding: 11px 2px; border-bottom: 1px solid #EEF2F7; font-size: 15px; }
   .bd li strong { font-family: 'Poppins', sans-serif; color: var(--navy); white-space: nowrap; }
@@ -218,13 +225,13 @@
           <label for="income">Gross monthly household income (SGD)</label>
           <div class="money">
             <span class="pfx" aria-hidden="true">$</span>
-            <input class="in" id="income" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 7,000">
+            <input class="in" id="income" type="text" inputmode="numeric" autocomplete="off" placeholder="7,000">
           </div>
         </div>
 
         <div class="field">
           <label for="age">Your age</label>
-          <input class="in" id="age" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 34">
+          <input class="in" id="age" type="text" inputmode="numeric" autocomplete="off" placeholder="34">
           <span class="hint">Used to estimate your loan tenure (up to age 65).</span>
         </div>
 
@@ -232,7 +239,7 @@
           <label for="cpf">CPF OA savings for the flat (SGD)</label>
           <div class="money">
             <span class="pfx" aria-hidden="true">$</span>
-            <input class="in" id="cpf" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 40,000">
+            <input class="in" id="cpf" type="text" inputmode="numeric" autocomplete="off" placeholder="40,000">
           </div>
           <span class="hint">Enter 0 if you are not using CPF.</span>
         </div>
@@ -241,7 +248,7 @@
           <label for="cash">Cash savings for the flat (SGD)</label>
           <div class="money">
             <span class="pfx" aria-hidden="true">$</span>
-            <input class="in" id="cash" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 20,000">
+            <input class="in" id="cash" type="text" inputmode="numeric" autocomplete="off" placeholder="20,000">
           </div>
           <span class="hint">Enter 0 if you are not using cash.</span>
         </div>
@@ -280,6 +287,8 @@
           </div>
 
           <ul class="bd" id="breakdown"></ul>
+
+          <div class="grants-note" id="grantsNote" hidden></div>
 
           <div class="wa-wrap">
             <a class="wa" id="resultWa" href="#" aria-label="Message Ammon on WhatsApp with my estimate">
@@ -410,11 +419,26 @@
       assume('A flat set-aside for stamp duty, legal and other costs. Assumption, adjust with Ammon.') +
       '<li class="total"><span>Estimated budget</span><strong>' + rangeStr + '</strong></li>';
 
-    // WhatsApp handoff, answers prefilled
+    // First-timer grants: point them to me, do not print a dollar figure
     var buyer = segValue('buyerSeg');
     var ft = segValue('ftSeg');
+    var grantsEl = $('grantsNote');
+    if (ft === 'Yes') {
+      grantsEl.innerHTML = '<strong>One more thing:</strong> as a first-timer, you may qualify for grants on a resale flat, which can lift this budget further. Message me and I will work out your exact grant amount.';
+      grantsEl.hidden = false;
+    } else if (ft === 'Not sure') {
+      grantsEl.innerHTML = '<strong>One more thing:</strong> if you turn out to be a first-timer, you may qualify for grants that lift this budget. Message me and I will check what you are entitled to.';
+      grantsEl.hidden = false;
+    } else {
+      grantsEl.hidden = true;
+    }
+
+    // WhatsApp handoff, answers prefilled (first-timers also ask about grants)
+    var ask = ft === 'Yes'
+      ? 'Can you help me firm up the real number and the grants I qualify for?'
+      : 'Can you help me firm up the real number?';
     var message = 'Hi Ammon, I used your affordability check. It estimated a budget of around ' + rangeStr +
-      '. I\'m a ' + buyer + ', first-timer: ' + ft + '. Can you help me firm up the real number?';
+      '. I\'m a ' + buyer + ', first-timer: ' + ft + '. ' + ask;
     $('resultWa').setAttribute('href', 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(message));
 
     resultEl.hidden = false;
