@@ -1141,3 +1141,22 @@ if (briefForm) {
   }));
   updateBrief();
 }
+
+// Reveal the mobile enquiry bar only after the opening actions have passed.
+const stickyBar = document.querySelector('#stickybar');
+const openingActions = document.querySelector('#home .hero-cta, .buyer-page .hero .actions, .page-hero');
+if (stickyBar && openingActions) {
+  let stickyFramePending = false;
+  function updateStickyBar() {
+    stickyBar.hidden = openingActions.getBoundingClientRect().bottom > 64;
+    stickyFramePending = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!stickyFramePending) {
+      stickyFramePending = true;
+      requestAnimationFrame(updateStickyBar);
+    }
+  }, {passive:true});
+  window.addEventListener('resize', updateStickyBar);
+  updateStickyBar();
+}

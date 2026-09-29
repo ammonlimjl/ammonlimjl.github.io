@@ -14,3 +14,17 @@ nav{height:80px;padding:0 max(24px,calc((100vw - 1120px)/2));gap:24px;background
 @media(max-width:768px){body{padding-bottom:78px}nav{height:64px;padding:0 20px}.nav-links{display:none}.hamburger{min-width:44px;min-height:44px}.mobile-drawer{top:64px;background:var(--cream)}.drawer-action{border-radius:4px}.drawer-action-title{font-weight:500}.drawer-action-ico{border-radius:4px}.section{padding:48px 20px}.page-hero{padding:40px 20px}.page-hero h1{font-size:38px;margin:20px 0}.page-hero .page-hero-sub{font-size:16px}#home{display:flex;flex-direction:column;gap:28px;margin:0;padding:36px 20px}.hero-left{order:0;padding:0}.hero-h1{font-size:40px}.hero-right{order:1;width:100%;min-height:0;height:370px;flex:none}.hero-bg-img{height:100%;object-position:center 22%}.hero-stats{display:flex;border-radius:0;background:none;border:0;border-top:1px solid var(--border);gap:28px;padding-top:20px;margin-top:24px}.hero-stats>div{padding:0;text-align:left;border:0}.hero-cta{flex-direction:row}.stat-num{font-size:25px}.stat-label{font-size:10px}.about-grid{gap:30px}.about-img{max-height:400px}.about-p{font-size:16px}.traits-grid{grid-template-columns:1fr 1fr}.trait-title{font-size:15px}.listings-grid,.active-listings-grid,.town-cases-grid{grid-template-columns:1fr;gap:24px}.listing-img{height:240px}.town-facts{grid-template-columns:1fr}.contact-grid{gap:32px}.page-cta-band{padding:48px 20px}.footer-top{gap:32px}.footer-desc{font-size:14px}.wa-float{display:none}.stickybar{position:fixed;display:flex;bottom:0;left:0;right:0;z-index:90;gap:10px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:var(--cream);border-top:1px solid var(--border);box-shadow:none}.stickybar-btn{flex:1;min-height:46px;font:600 13px/1.4 Arial,sans-serif;border:1px solid var(--border);border-radius:4px;color:var(--text);display:flex;align-items:center;justify-content:center;text-decoration:none}.stickybar-btn-primary{background:var(--orange);color:white;border-color:var(--orange)}.buyer-page .pad{padding:44px 20px}.buyer-page .hero{grid-template-columns:1fr;gap:32px}.buyer-page h1{font-size:40px}.shortlist{padding:24px 20px}.benefits,.process,.buyer-page .quote{grid-template-columns:1fr;gap:30px}.benefits{gap:28px}.benefits article+article{padding-top:24px;border-top:1px solid var(--border)}.buyer-page .contact{display:block}.buyer-page .contact .button{margin-top:24px}.buyer-page blockquote{font-size:23px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 .page-copy a.btn-primary{color:#fff}
+
+/* A more personal mobile opening, with the portrait before the supporting copy. */
+@media (max-width:768px) {
+  #home {gap:18px;padding:28px 20px 36px}
+  #home .hero-left {display:contents}
+  #home .hero-badge {display:none}
+  #home .hero-h1 {order:0;font-size:36px;margin:0;line-height:1.12}
+  #home .hero-right {order:1;height:240px;border-radius:6px}
+  #home .hero-bg-img {object-position:center 38%}
+  #home .hero-sub {order:2;font-size:16px;line-height:1.6;margin:0}
+  #home .hero-cta {order:3;width:100%;margin:0;gap:10px}
+  #home .hero-cta a {min-height:48px;padding:12px 18px;font-size:15px}
+  #home .hero-stats {order:4;width:100%;margin:6px 0 0;padding-top:18px;justify-content:space-between}
+}
