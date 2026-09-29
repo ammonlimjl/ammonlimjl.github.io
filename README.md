@@ -93,3 +93,13 @@ Then update the `photo` / `image` paths in `data/listings.json` and `data/news.j
 ---
 
 Last rebuild: 2026-05-09
+
+## Design refresh (2026)
+
+`refresh.css` defines the shared warm-white, charcoal and terracotta design on all 16 main pages. `tools-refresh.css` carries the same palette into the three unlisted calculators/quizzes, without changing their calculations. Keep both after the component styles.
+
+The buyer page has a two-step shortlist form. It builds a WhatsApp message locally; the visitor must send it in WhatsApp. No form answers are stored or submitted by the website. Contact and newsletter forms retain the existing Formspree endpoint.
+
+Run `python3 scripts/check-site.py` to check the main pages' local links/assets, fragments, headings, canonical URLs and structured data. Run `node --check app.js` for JavaScript syntax. Preview with `python3 -m http.server 8768`.
+
+Before publishing, review desktop and mobile layouts, the shortlist back/next steps, valuation results, town data, and mobile menu. Do not send test enquiries to production. The existing GitHub Pages publishing branch is `main`; changes on a review branch do not update the public website.

@@ -45,12 +45,16 @@ const navCta = $('#nav-cta');
 
 function closeDrawer() {
   hamburgerBtn?.classList.remove('open');
+  hamburgerBtn?.setAttribute('aria-expanded', 'false');
+  hamburgerBtn?.setAttribute('aria-label', 'Open menu');
   mobileDrawer?.classList.remove('open');
   document.body.style.overflow = '';
 }
 hamburgerBtn?.addEventListener('click', () => {
   const isOpen = mobileDrawer.classList.toggle('open');
   hamburgerBtn.classList.toggle('open', isOpen);
+  hamburgerBtn.setAttribute('aria-expanded', String(isOpen));
+  hamburgerBtn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
   document.body.style.overflow = isOpen ? 'hidden' : '';
 });
 $$('.drawer-link, .drawer-action').forEach(link => link.addEventListener('click', closeDrawer));
@@ -94,7 +98,8 @@ async function renderListings() {
   try { data = await loadJSON('/data/listings.json'); }
   catch (e) { console.warn('Listings load failed', e); return; }
 
-  grid.innerHTML = data.cases.map(c => `
+  const cases = grid.dataset.limit ? data.cases.slice(0, Number(grid.dataset.limit)) : data.cases;
+  grid.innerHTML = cases.map(c => `
     <article class="listing-card">
       <div class="listing-img">
         <img class="listing-img-bg" src="${encodePath(c.photo)}" alt="${esc(c.alt || '')}" loading="lazy">
@@ -113,90 +118,8 @@ async function renderListings() {
     </article>
   `).join('');
 
-  setupListingsScroll(grid);
+
 }
-
-function setupListingsScroll(el) {
-  // Double for seamless infinite loop
-  Array.from(el.children).forEach(card => {
-    const clone = card.cloneNode(true);
-    clone.setAttribute('aria-hidden', 'true');
-    el.appendChild(clone);
-  });
-
-  let paused = false;
-  let arrowAnimating = false;
-  let prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function checkLoop() {
-    const half = el.scrollWidth / 2;
-    if (el.scrollLeft >= half) {
-      el.style.scrollBehavior = 'auto';
-      el.scrollLeft -= half;
-      void el.offsetLeft;
-    } else if (el.scrollLeft < 0) {
-      el.style.scrollBehavior = 'auto';
-      el.scrollLeft += half;
-      void el.offsetLeft;
-    }
-  }
-
-  // Keep the position in a JS accumulator and assign it each frame.
-  // Reading scrollLeft back every frame can round-trip to the same value
-  // and freeze the crawl (browser quantises scroll positions).
-  let pos = null;
-  function step() {
-    if (!paused && !arrowAnimating && !prefersReduced) {
-      if (pos === null) pos = el.scrollLeft;
-      pos += 0.6;
-      const half = el.scrollWidth / 2;
-      if (half > 0 && pos >= half) pos -= half;
-      el.style.scrollBehavior = 'auto';
-      el.scrollLeft = pos;
-    } else {
-      pos = null; // resync after user interaction
-    }
-    requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-
-  el.addEventListener('mouseenter', () => { paused = true; });
-  el.addEventListener('mouseleave', () => { paused = false; });
-  el.addEventListener('touchstart', () => { paused = true; }, { passive: true });
-  el.addEventListener('touchend',   () => { setTimeout(() => { checkLoop(); paused = false; }, 400); });
-  el.addEventListener('scroll', checkLoop, { passive: true });
-
-  let isDown = false, startX, startScroll;
-  el.addEventListener('mousedown', e => {
-    isDown = true; paused = true;
-    el.style.scrollBehavior = 'auto';
-    startX = e.pageX; startScroll = el.scrollLeft;
-  });
-  window.addEventListener('mouseup', () => { if (isDown) { isDown = false; paused = false; } });
-  el.addEventListener('mousemove', e => {
-    if (!isDown) return;
-    e.preventDefault();
-    el.scrollLeft = startScroll - (e.pageX - startX);
-    checkLoop();
-  });
-
-  window.listingsScroll = function(dir) {
-    if (arrowAnimating) return;
-    arrowAnimating = true; paused = true;
-    const from = el.scrollLeft, to = from + dir * 320;
-    const dur = 380, t0 = performance.now();
-    const ease = t => t < 0.5 ? 2*t*t : -1 + (4 - 2*t)*t;
-    (function frame(now) {
-      const p = Math.min((now - t0) / dur, 1);
-      el.style.scrollBehavior = 'auto';
-      el.scrollLeft = from + (to - from) * ease(p);
-      checkLoop();
-      if (p < 1) requestAnimationFrame(frame);
-      else { arrowAnimating = false; paused = false; }
-    })(performance.now());
-  };
-}
-
 
 /* ─── ACTIVE LISTINGS: render from JSON ─────────────────────────────────── */
 
@@ -240,7 +163,7 @@ async function renderActiveListings() {
     `;
   }).join('');
 
-  setupActiveListingsDrag(grid);
+
 }
 
 function setupActiveListingsDrag(el) {
@@ -724,7 +647,7 @@ function computeValuation() {
       <div class="val-result-meta">${countNote} · adjusted for ${esc(VAL_STATE.floor)} floor.</div>
       ${stale}
       <div class="val-precise">
-        <div class="val-precise-title">Want a precise number?</div>
+        <div class="val-precise-title">Want to discuss your flat?</div>
         <div class="val-precise-copy">A free, personalized valuation from me - adjusted for your floor, layout, condition, and current buyer demand. <strong>Reply within 2 hours.</strong></div>
         <form class="val-precise-form" id="val-precise-form" autocomplete="on">
           <input type="text"  class="val-input-dark" name="name"  placeholder="Your name" autocomplete="name" required>
@@ -732,7 +655,7 @@ function computeValuation() {
           <input type="text"  class="val-input-dark" name="block" placeholder="Block & street (e.g. 220B Sumang Walk)" required>
           <!-- honeypot -->
           <input type="text" name="company" tabindex="-1" autocomplete="off" class="hp-field" aria-hidden="true">
-          <button type="submit" class="btn-primary val-precise-cta">Get Precise Valuation via WhatsApp →</button>
+          <button type="submit" class="btn-primary val-precise-cta">Ask me about your flat on WhatsApp →</button>
         </form>
         <div class="val-precise-trust sans">✓ Private &amp; not shared · No spam, no pressure</div>
       </div>
@@ -885,7 +808,7 @@ async function renderTownPage() {
             </div>
           </article>
         `).join('');
-        setupActiveListingsDrag(casesEl);
+
       }
     } catch (e) { console.warn('Town cases load failed', e); }
   }
@@ -1059,7 +982,7 @@ window.handleContact = async function(e) {
   }
   sessionStorage.setItem('contact_last', String(now));
 
-  const name    = form.name.value.trim();
+  const name    = form.elements.namedItem('name').value.trim();
   const area    = form.area.value.trim();
   const message = form.message.value.trim();
   const email   = form.email.value.trim();
@@ -1170,4 +1093,51 @@ renderNews();
 renderCoverageMap();
 initValuationTool();
 renderTownPage();
-initMotion();
+
+
+// Keep keyboard focus inside the open mobile menu, with Escape to dismiss.
+document.addEventListener('keydown', e => {
+  if (!mobileDrawer?.classList.contains('open')) return;
+  if (e.key === 'Escape') { closeDrawer(); hamburgerBtn.focus(); }
+  if (e.key === 'Tab') {
+    const links = [...mobileDrawer.querySelectorAll('a[href]')];
+    const last = links[links.length - 1];
+    if (e.shiftKey && document.activeElement === hamburgerBtn) { e.preventDefault(); last?.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); hamburgerBtn.focus(); }
+  }
+});
+document.querySelectorAll('.nav-links a, .drawer-link').forEach(link => {
+  if (link.getAttribute('href') === location.pathname) link.setAttribute('aria-current', 'page');
+});
+
+// The visitor reviews and sends this message in WhatsApp; no answers are stored.
+const briefForm = document.querySelector('[data-brief-form]');
+if (briefForm) {
+  const sendLink = briefForm.querySelector('[data-send-brief]');
+  function updateBrief() {
+    const values = Object.fromEntries(new FormData(briefForm));
+    const rows = [['Budget', values.budget.trim() || 'Not sure yet'],
+      ['Preferred town / area', values.town.trim() || 'Flexible'],
+      ['Flat type', values.type.trim() || 'Open to options'],
+      ['Move-in timeline', values.timeline], ['HFE letter', values.hfe], ['Home to sell', values.selling]];
+    sendLink.href = waUrl(['Hi Ammon, I’m looking to buy an HDB and would like your help shortlisting suitable flats.', '',
+      ...rows.map(([label, value]) => label + ': ' + value), '', 'Please get back to me when you can. Thank you!'].join('\n'));
+  }
+  function showBriefStage(n) {
+    briefForm.querySelectorAll('[data-form-stage]').forEach(stage => { stage.hidden = stage.dataset.formStage !== String(n); });
+    document.querySelector('.step-count').textContent = n === 1 ? 'Your next home' : 'Your plans';
+    document.querySelector('.shortlist h3').textContent = n === 1 ? 'What are you looking for?' : 'A little more about your plans';
+    briefForm.querySelector(`[data-form-stage="${n}"] input, [data-form-stage="${n}"] select`)?.focus({preventScroll:true});
+    updateBrief();
+  }
+  briefForm.addEventListener('input', updateBrief);
+  briefForm.addEventListener('change', updateBrief);
+  briefForm.addEventListener('submit', e => { e.preventDefault(); if (!briefForm.querySelector('[data-form-stage="1"]').hidden) showBriefStage(2); });
+  briefForm.querySelector('[data-next]').addEventListener('click', () => showBriefStage(2));
+  briefForm.querySelector('[data-back]').addEventListener('click', () => showBriefStage(1));
+  document.querySelectorAll('[data-scroll-form]').forEach(button => button.addEventListener('click', () => {
+    document.querySelector('#shortlist').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+    briefForm.querySelector('[data-form-stage]:not([hidden]) input, [data-form-stage]:not([hidden]) select')?.focus({preventScroll:true});
+  }));
+  updateBrief();
+}
