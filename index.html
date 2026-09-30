@@ -199,6 +199,13 @@
 </script>
 
 <link rel="stylesheet" href="/refresh.css?v=20260930c">
+<style>
+#home .credential-cards {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;border:0;padding:0;}
+#home .credential-cards>div {padding:18px 14px;background:#eeeee7;border:1px solid #e2e3da;border-radius:8px;}
+#home .credential-cards .stat-num {font:600 21px/1.25 Arial,sans-serif;color:#a74b2a;}
+#home .credential-cards .stat-label {font:13px/1.6 Arial,sans-serif;letter-spacing:0;text-transform:none;margin-top:8px;}
+@media(max-width:768px){#home .credential-cards {gap:8px;}#home .credential-cards>div {padding:14px 10px;}#home .credential-cards .stat-num {font-size:18px;}#home .credential-cards .stat-label {font-size:12px;line-height:1.5;}}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -258,21 +265,12 @@
       <a href="/valuation/" class="btn-primary sans">Get a Price Estimate →</a>
       <a href="/buy-hdb/" class="btn-secondary sans">Find My Next Home</a>
     </div>
-    <div class="hero-stats">
-      <div>
-        <div class="stat-num">S$36M+</div>
-        <div class="stat-label sans">Transaction Volume</div>
-      </div>
-      <div>
-        <div class="stat-num">Top 1.4%*</div>
-        <div class="stat-label sans">HDB Resale · Estimated</div>
-      </div>
-      <div>
-        <div class="stat-num">4+</div>
-        <div class="stat-label sans">Years Exp.</div>
-      </div>
+    <div class="hero-stats credential-cards">
+      <div><div class="stat-num">Top 1.4%*</div><div class="stat-label sans">of 38,564 agents by HDB resale deals</div></div>
+      <div><div class="stat-num">SEA Superstar</div><div class="stat-label sans">Award 2025, plus 12 monthly achiever awards</div></div>
+      <div><div class="stat-num">S$36M+</div><div class="stat-label sans">in HDB transactions</div></div>
     </div>
-    <p class="sans" style="order:5;font-size:12px;line-height:1.5;color:#626c62;margin:12px 0 0;max-width:560px">*Ammon’s estimate based on his CEA registry analysis: 33 HDB resale transactions over three years, compared with 38,564 registered agents, including those with no HDB transactions. This is not an official CEA ranking.</p>
+    <p class="sans" style="order:5;font-size:12px;line-height:1.5;color:#626c62;margin:12px 0 0;max-width:560px">*Estimated from CEA’s public transaction records, September 2023 to August 2026: 33 HDB resale transactions, compared with 38,564 registered agents, including those with no HDB transactions. Not an official CEA ranking.</p>
   </div>
   <div class="hero-right">
     <img class="hero-bg-img" src="ammon-lim-profile-2026.jpg" alt="Ammon Lim, Singapore HDB specialist" fetchpriority="high" width="591" height="591">
