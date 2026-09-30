@@ -200,11 +200,15 @@
 
 <link rel="stylesheet" href="/refresh.css?v=20260930c">
 <style>
-#home .credential-cards {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;border:0;padding:0;}
-#home .credential-cards>div {padding:18px 14px;background:#eeeee7;border:1px solid #e2e3da;border-radius:8px;}
-#home .credential-cards .stat-num {font:600 21px/1.25 Arial,sans-serif;color:#a74b2a;}
-#home .credential-cards .stat-label {font:13px/1.6 Arial,sans-serif;letter-spacing:0;text-transform:none;margin-top:8px;}
-@media(max-width:768px){#home .credential-cards {gap:8px;}#home .credential-cards>div {padding:14px 10px;}#home .credential-cards .stat-num {font-size:18px;}#home .credential-cards .stat-label {font-size:12px;line-height:1.5;}}
+#home .credential-cards {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;border:0;padding:0;margin-top:28px;}
+#home .credential-cards>div {padding:20px 14px;background:#eeeee7;border:1px solid #e2e3da;border-radius:8px;text-align:center;}
+#home .credential-cards .stat-num {display:flex;align-items:center;justify-content:center;min-height:48px;font:600 21px/1.2 Arial,sans-serif;color:#a74b2a;}
+#home .credential-cards .stat-label {display:grid;grid-template-rows:20px auto;font:13px/1.5 Arial,sans-serif;letter-spacing:0;text-transform:none;margin-top:8px;}
+#home .credential-cards .stat-detail {display:block;font-size:11px;margin-top:4px;color:#626c62;}
+#home .credential-cards .ranking-link {color:inherit;text-decoration:none;}
+#home .credential-cards .ranking-link:hover {text-decoration:underline;}
+#ranking-note {font:12px/1.6 Arial,sans-serif;color:#626c62;margin:0;padding:20px 0 0;scroll-margin-top:100px;}
+@media(max-width:768px){#home .credential-cards {gap:8px;}#home .credential-cards>div {padding:16px 8px;}#home .credential-cards .stat-num {font-size:18px;min-height:44px;}#home .credential-cards .stat-label {font-size:12px;grid-template-rows:36px auto;}#home .credential-cards .stat-detail {font-size:10px;}}
 </style>
 </head>
 <body>
@@ -266,11 +270,11 @@
       <a href="/buy-hdb/" class="btn-secondary sans">Find My Next Home</a>
     </div>
     <div class="hero-stats credential-cards">
-      <div><div class="stat-num">Top 1.4%*</div><div class="stat-label sans">of 38,564 agents by HDB resale deals</div></div>
-      <div><div class="stat-num">SEA Superstar</div><div class="stat-label sans">Award 2025, plus 12 monthly achiever awards</div></div>
-      <div><div class="stat-num">S$36M+</div><div class="stat-label sans">in HDB transactions</div></div>
+      <div><div class="stat-num"><a class="ranking-link" href="#ranking-note" aria-label="Top 1.4 percent, see ranking methodology">Top 1.4%*</a></div><div class="stat-label sans">HDB resale ranking<span class="stat-detail">Estimated · Singapore</span></div></div>
+      <div><div class="stat-num">SEA Superstar</div><div class="stat-label sans">Award 2025<span class="stat-detail">12 monthly achiever awards</span></div></div>
+      <div><div class="stat-num">S$36M+</div><div class="stat-label sans">HDB transactions<span class="stat-detail">Total transaction volume</span></div></div>
     </div>
-    <p class="sans" style="order:5;font-size:12px;line-height:1.5;color:#626c62;margin:12px 0 0;max-width:560px">*Estimated from CEA’s public transaction records, September 2023 to August 2026: 33 HDB resale transactions, compared with 38,564 registered agents, including those with no HDB transactions. Not an official CEA ranking.</p>
+
   </div>
   <div class="hero-right">
     <img class="hero-bg-img" src="ammon-lim-profile-2026.jpg" alt="Ammon Lim, Singapore HDB specialist" fetchpriority="high" width="591" height="591">
@@ -579,6 +583,7 @@
       </ul>
     </div>
   </div>
+  <p id="ranking-note">*Estimated from CEA’s public transaction records, September 2023 to August 2026: 33 HDB resale transactions, compared with 38,564 registered agents, including those with no HDB transactions. Not an official CEA ranking.</p>
   <div class="footer-bottom">
     <div class="footer-copy">© 2026 Ammon Lim · Singapore HDB Specialist. All rights reserved.</div>
     <div class="footer-legal">CEA Registration R065633I · Singapore Estate Agency Pte Ltd · L3009643J</div>
