@@ -67,6 +67,17 @@
 .update-source a{font-weight:700;text-underline-offset:4px}
 .updates-note{font:14px/1.6 Arial,sans-serif;color:#596256;margin:24px 0 0}
 @media(max-width:640px){.updates-grid{grid-template-columns:1fr;gap:16px}.update-card{padding:24px}.update-card h2,.update-card:first-child h2{font-size:26px}.news-edition{display:block}.news-edition p{margin-bottom:4px}.update-source{font-size:13px}}
+
+/* Editorial photos retain their own captions and accessible descriptions. */
+.update-card{padding:0;overflow:hidden}
+.update-figure{margin:0;background:#eeeee6}
+.update-figure img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+.update-figure figcaption{padding:10px 20px;font:12px/1.5 Arial,sans-serif;color:#566053}
+.update-copy{padding:28px;display:flex;flex:1;flex-direction:column;min-width:0}
+.update-card:first-child{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:start}
+.update-card:first-child .update-copy{height:100%;box-sizing:border-box}
+.update-card:first-child h2{font-size:30px}
+@media(max-width:640px){.update-card:first-child{display:flex}.update-copy{padding:24px}.update-card:first-child h2{font-size:26px}}
 </style>
 </head>
 <body>
@@ -134,34 +145,49 @@
     <div class="updates-grid">
       <!-- NEWS-CARDS:START -->
       <article class="update-card" id="construction-automation-2027">
+        <figure class="update-figure"><img src="/Newscard/BTO%20Construction.jpeg" alt="Residential towers under construction with cranes" width="720" height="540" loading="lazy" decoding="async"><figcaption>Illustrative construction photo · Stacked</figcaption></figure>
+        <div class="update-copy">
         <div class="update-meta"><span class="update-topic">BTO construction</span><time datetime="2026-09-24">24 September 2026</time></div>
         <h2>More automation planned for BTO construction from 2027</h2>
         <p>HDB plans to introduce smart passenger and material hoists at about half of BTO sites tendered from 2027, and expand trials of floor-screeding robots to at least four more projects. These are planned construction improvements, rather than a change to the completion date of every existing project.</p>
         <div class="update-source"><span>Source: HDB</span><a href="https://www.hdb.gov.sg/hdb-pulse/news/2026/hdb-scales-up-automation-and-standardisation-to-boost-construction-productivity" target="_blank" rel="noopener" aria-label="Read the HDB article: More automation planned for BTO construction from 2027 (opens in a new tab)">Read on HDB ↗</a></div>
+        </div>
       </article>
       <article class="update-card" id="income-ceilings-august-2026">
+        <figure class="update-figure"><img src="/bishan-drone.jpg" alt="HDB blocks beside Bishan-Ang Mo Kio Park" width="1600" height="1068" loading="lazy" decoding="async"><figcaption>HDB homes in Bishan · Illustrative photo</figcaption></figure>
+        <div class="update-copy">
         <div class="update-meta"><span class="update-topic">Buying eligibility</span><time datetime="2026-08-22">22 August 2026</time></div>
         <h2>Higher income ceilings for eligible HDB buyers</h2>
         <p>For HFE applications from 24 August 2026, the monthly household income ceiling rises to S$16,000 for eligible families buying a new subsidised flat, buying resale with the CPF Housing Grant, or taking an HDB loan. The corresponding ceiling for eligible singles aged 35 and above buying a subsidised flat or taking an HDB loan rises to S$8,000.</p>
         <div class="update-source"><span>Source: HDB</span><a href="https://www.hdb.gov.sg/hdb-pulse/news/2026/increase-in-income-ceilings-and-greater-support-for-families-with-children" target="_blank" rel="noopener" aria-label="Read the HDB article: Higher income ceilings for eligible HDB buyers (opens in a new tab)">Read on HDB ↗</a></div>
+        </div>
       </article>
       <article class="update-card" id="november-bto-2026">
+        <figure class="update-figure"><img src="/Newscard/June%20BTO.jpg" alt="Visitors looking at a model of a housing estate" width="720" height="540" loading="lazy" decoding="async"><figcaption>Housing display · Not a November project rendering</figcaption></figure>
+        <div class="update-copy">
         <div class="update-meta"><span class="update-topic">Upcoming BTO</span><time datetime="2026-08-22">22 August 2026</time></div>
         <h2>Next BTO launch moves to November 2026</h2>
         <p>The next sales exercise has moved from October to November. HDB plans to offer about 7,960 flats across Bedok, Geylang, Sembawang, Tengah, Toa Payoh and Yishun, including Community Care Apartments in Toa Payoh. Buyers need a valid HFE letter when applying.</p>
         <div class="update-source"><span>Source: HDB</span><a href="https://www.hdb.gov.sg/hdb-pulse/news/2026/increase-in-income-ceilings-and-greater-support-for-families-with-children" target="_blank" rel="noopener" aria-label="Read the HDB article: Next BTO launch moves to November 2026 (opens in a new tab)">Read on HDB ↗</a></div>
+        </div>
       </article>
       <article class="update-card" id="private-owners-wait-out-2026">
+        <figure class="update-figure"><img src="/listing-photos/659a-punggol-east/hero.jpg" alt="Living and dining area of a Punggol HDB flat" width="1100" height="825" loading="lazy" decoding="async"><figcaption>Punggol HDB interior · Illustrative photo</figcaption></figure>
+        <div class="update-copy">
         <div class="update-meta"><span class="update-topic">Moving to HDB</span><time datetime="2026-07-27">27 July 2026</time></div>
         <h2>15-month wait removed for certain private-property owners</h2>
         <p>Private-property owners and former owners no longer face the 15-month wait when buying a non-subsidised HDB resale flat without an HDB loan. An HFE letter is still required. The separate 30-month wait for subsidised purchases or an HDB loan remains, so the financing route matters.</p>
         <div class="update-source"><span>Source: HDB</span><a href="https://www.hdb.gov.sg/hdb-pulse/news/2026/removal-of-the-15-month-wait-out-period-for-private-residential-property-owners" target="_blank" rel="noopener" aria-label="Read the HDB article: 15-month wait removed for certain private-property owners (opens in a new tab)">Read on HDB ↗</a></div>
+        </div>
       </article>
       <article class="update-card" id="q2-resale-prices-2026">
+        <figure class="update-figure"><img src="/punggol-drone.jpg" alt="Punggol HDB blocks and elevated LRT tracks" width="1600" height="1999" loading="lazy" decoding="async"><figcaption>HDB homes in Punggol · Illustrative photo</figcaption></figure>
+        <div class="update-copy">
         <div class="update-meta"><span class="update-topic">Resale market</span><time datetime="2026-07-23">23 July 2026</time></div>
         <h2>HDB resale prices fell 0.3% in Q2 2026</h2>
         <p>HDB’s resale price index declined 0.3% in the second quarter, following a 0.1% fall in the first quarter. This is a market-wide measure: the price of an individual flat still depends on its location, remaining lease, condition and comparable transactions.</p>
         <div class="update-source"><span>Source: HDB</span><a href="https://www.hdb.gov.sg/hdb-pulse/news/2026/2nd-quarter-2026-public-housing-data-and-upcoming-flat-supply" target="_blank" rel="noopener" aria-label="Read the HDB article: HDB resale prices fell 0.3% in Q2 2026 (opens in a new tab)">Read on HDB ↗</a></div>
+        </div>
       </article>
       <!-- NEWS-CARDS:END -->
     </div>

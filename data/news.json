@@ -12,7 +12,12 @@
       "title": "More automation planned for BTO construction from 2027",
       "excerpt": "HDB plans to introduce smart passenger and material hoists at about half of BTO sites tendered from 2027, and expand trials of floor-screeding robots to at least four more projects. These are planned construction improvements, rather than a change to the completion date of every existing project.",
       "source": "HDB",
-      "sourceUrl": "https://www.hdb.gov.sg/hdb-pulse/news/2026/hdb-scales-up-automation-and-standardisation-to-boost-construction-productivity"
+      "sourceUrl": "https://www.hdb.gov.sg/hdb-pulse/news/2026/hdb-scales-up-automation-and-standardisation-to-boost-construction-productivity",
+      "image": "/Newscard/BTO%20Construction.jpeg",
+      "imageAlt": "Residential towers under construction with cranes",
+      "imageCaption": "Illustrative construction photo · Stacked",
+      "imageWidth": "720",
+      "imageHeight": "540"
     },
     {
       "id": "income-ceilings-august-2026",
@@ -22,7 +27,12 @@
       "title": "Higher income ceilings for eligible HDB buyers",
       "excerpt": "For HFE applications from 24 August 2026, the monthly household income ceiling rises to S$16,000 for eligible families buying a new subsidised flat, buying resale with the CPF Housing Grant, or taking an HDB loan. The corresponding ceiling for eligible singles aged 35 and above buying a subsidised flat or taking an HDB loan rises to S$8,000.",
       "source": "HDB",
-      "sourceUrl": "https://www.hdb.gov.sg/hdb-pulse/news/2026/increase-in-income-ceilings-and-greater-support-for-families-with-children"
+      "sourceUrl": "https://www.hdb.gov.sg/hdb-pulse/news/2026/increase-in-income-ceilings-and-greater-support-for-families-with-children",
+      "image": "/bishan-drone.jpg",
+      "imageAlt": "HDB blocks beside Bishan-Ang Mo Kio Park",
+      "imageCaption": "HDB homes in Bishan · Illustrative photo",
+      "imageWidth": "1600",
+      "imageHeight": "1068"
     },
     {
       "id": "november-bto-2026",
@@ -32,7 +42,12 @@
       "title": "Next BTO launch moves to November 2026",
       "excerpt": "The next sales exercise has moved from October to November. HDB plans to offer about 7,960 flats across Bedok, Geylang, Sembawang, Tengah, Toa Payoh and Yishun, including Community Care Apartments in Toa Payoh. Buyers need a valid HFE letter when applying.",
       "source": "HDB",
-      "sourceUrl": "https://www.hdb.gov.sg/hdb-pulse/news/2026/increase-in-income-ceilings-and-greater-support-for-families-with-children"
+      "sourceUrl": "https://www.hdb.gov.sg/hdb-pulse/news/2026/increase-in-income-ceilings-and-greater-support-for-families-with-children",
+      "image": "/Newscard/June%20BTO.jpg",
+      "imageAlt": "Visitors looking at a model of a housing estate",
+      "imageCaption": "Housing display · Not a November project rendering",
+      "imageWidth": "720",
+      "imageHeight": "540"
     },
     {
       "id": "private-owners-wait-out-2026",
@@ -42,7 +57,12 @@
       "title": "15-month wait removed for certain private-property owners",
       "excerpt": "Private-property owners and former owners no longer face the 15-month wait when buying a non-subsidised HDB resale flat without an HDB loan. An HFE letter is still required. The separate 30-month wait for subsidised purchases or an HDB loan remains, so the financing route matters.",
       "source": "HDB",
-      "sourceUrl": "https://www.hdb.gov.sg/hdb-pulse/news/2026/removal-of-the-15-month-wait-out-period-for-private-residential-property-owners"
+      "sourceUrl": "https://www.hdb.gov.sg/hdb-pulse/news/2026/removal-of-the-15-month-wait-out-period-for-private-residential-property-owners",
+      "image": "/listing-photos/659a-punggol-east/hero.jpg",
+      "imageAlt": "Living and dining area of a Punggol HDB flat",
+      "imageCaption": "Punggol HDB interior · Illustrative photo",
+      "imageWidth": "1100",
+      "imageHeight": "825"
     },
     {
       "id": "q2-resale-prices-2026",
@@ -52,7 +72,12 @@
       "title": "HDB resale prices fell 0.3% in Q2 2026",
       "excerpt": "HDB’s resale price index declined 0.3% in the second quarter, following a 0.1% fall in the first quarter. This is a market-wide measure: the price of an individual flat still depends on its location, remaining lease, condition and comparable transactions.",
       "source": "HDB",
-      "sourceUrl": "https://www.hdb.gov.sg/hdb-pulse/news/2026/2nd-quarter-2026-public-housing-data-and-upcoming-flat-supply"
+      "sourceUrl": "https://www.hdb.gov.sg/hdb-pulse/news/2026/2nd-quarter-2026-public-housing-data-and-upcoming-flat-supply",
+      "image": "/punggol-drone.jpg",
+      "imageAlt": "Punggol HDB blocks and elevated LRT tracks",
+      "imageCaption": "HDB homes in Punggol · Illustrative photo",
+      "imageWidth": "1600",
+      "imageHeight": "1999"
     }
   ]
 }
