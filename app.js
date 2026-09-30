@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════════════════
-   Ammon Lim - Singapore HDB Specialist
+   Ammon Lim - Singapore Property Agent
    All client-side interactivity. Loaded with `defer`, runs after DOMContentLoaded.
    ════════════════════════════════════════════════════════════════════════ */
 

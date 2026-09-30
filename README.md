@@ -1,6 +1,6 @@
-# ammonlim.com — Singapore HDB Specialist
+# ammonlim.com — Singapore Property Agent
 
-Static site for **Ammon Lim**, Singapore's HDB specialist. Designed for GitHub Pages.
+Static site for **Ammon Lim**, Specialising in HDB resale. Designed for GitHub Pages.
 
 ## Structure
 
@@ -59,7 +59,7 @@ All four files are pure JSON. The site reloads new data on the next page load �
 - [ ] Submit `sitemap.xml` to **Google Search Console** (search.google.com/search-console). Property: `https://ammonlim.com/`. Sitemap path: `/sitemap.xml`.
 - [ ] Submit to **Bing Webmaster Tools** (bing.com/webmasters).
 - [ ] Verify the **RealEstateAgent** + **FAQ** structured data via [search.google.com/test/rich-results](https://search.google.com/test/rich-results).
-- [ ] Create / claim **Google Business Profile** as "Ammon Lim · HDB Specialist". Add ammonlim.com, your CEA license, photos.
+- [ ] Create / claim **Google Business Profile** as "Ammon Lim · Property Agent". Add ammonlim.com, your CEA license, photos.
 - [ ] Get featured on **PropertyGuru** and **99.co** with backlinks pointing to ammonlim.com.
 - [ ] Replace the placeholder `og-image.jpg` reference in `index.html` with a real 1200×630 social-share image.
 - [ ] Add a `favicon.ico` / `apple-touch-icon.png` (currently using an inline SVG fallback).
