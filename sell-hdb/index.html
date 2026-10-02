@@ -98,6 +98,24 @@
 <link rel="stylesheet" href="/refresh.css?v=20260930c">
 <link rel="stylesheet" href="/analytics.css?v=20261002a">
 <script src="/analytics.js?v=20261002a" defer></script>
+<style>.buyer-credentials{max-width:1120px;margin:0 auto 48px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding:0 24px}
+.buyer-credentials article{background:#eeeee7;border:1px solid #e2e3da;border-radius:8px;padding:24px;text-align:center}
+.buyer-credentials strong{display:block;color:#a74b2a;font:600 26px/1.25 Arial,sans-serif;margin-bottom:10px}
+.buyer-credentials strong a{color:inherit;text-decoration:none}
+.buyer-credentials p{font:14px/1.5 Arial,sans-serif;margin:0;color:#566053}
+.buyer-credentials small{display:block;font:12px/1.5 Arial,sans-serif;margin-top:6px;color:#626c62}
+#seller-ranking-note{font:12px/1.6 Arial,sans-serif;color:#626c62;margin-top:24px;scroll-margin-top:100px}
+@media(max-width:640px){.buyer-credentials{gap:8px;padding:0 20px;margin-bottom:32px}.buyer-credentials article{padding:16px 8px}.buyer-credentials strong{font-size:18px;min-height:46px;display:flex;align-items:center;justify-content:center}.buyer-credentials p{font-size:12px}.buyer-credentials small{font-size:11px}}
+
+.buyer-hero .buyer-credentials{margin:24px 0;padding:0;gap:10px}
+.buyer-hero .buyer-credentials article{padding:18px 10px}
+.buyer-hero .buyer-credentials strong{font-size:21px;min-height:52px;display:flex;align-items:center;justify-content:center}
+.buyer-hero .buyer-credentials p{font-size:13px}
+@media(max-width:640px){.buyer-hero .buyer-credentials{gap:8px}.buyer-hero .buyer-credentials article{padding:16px 8px}.buyer-hero .buyer-credentials strong{font-size:18px;min-height:46px}.buyer-hero .buyer-credentials p{font-size:12px}.buyer-hero .buyer-credentials small{font-size:10px}}
+
+.seller-page .hero{min-height:0}.seller-page .actions{display:flex;flex-wrap:wrap;gap:12px}.seller-page .seller-link{font-size:13px;display:inline-block;margin-top:16px}.seller-page .shortlist h2{font-size:27px;margin-bottom:16px}.seller-page .seller-note{margin-top:24px}.seller-page .quote blockquote{font-size:21px;line-height:1.65}
+</style>
+<script src="/sell-hdb/seller.js?v=20261002a" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -147,21 +165,54 @@
 </div>
 
 <!-- ─── PAGE HEADER ─── -->
-<main id="main-content">
-<header class="page-hero">
-  <div class="page-hero-inner">
-    <div class="breadcrumbs"><a href="/">Home</a><span class="crumb-sep">›</span>Sell Your HDB</div>
-    <h1>Thinking of selling your HDB?</h1>
-    <p class="page-hero-sub">I’ll help you work out a sensible asking price, prepare your flat for marketing and manage the viewings, offers and paperwork. We’ll plan the sale around your next move.</p>
+<main class="buyer-page seller-page" id="main-content">
+<section class="hero buyer-hero pad">
+  <div>
+    <div class="eyebrow">Selling your HDB with Ammon</div>
+    <h1>Let’s get your home ready <em>for its next owner.</em></h1>
+    <p class="intro">Thinking of selling? I’ll help you work out what your flat could sell for, bring out its best in the listing and negotiate with buyers. We’ll plan the sale around what comes next for you.</p>
+    <section class="buyer-credentials" aria-label="Ammon’s track record">
+<article><strong><a href="#seller-ranking-note">Top 1.4%*</a></strong><p>By HDB resale deals</p><small>Estimated · Singapore</small></article>
+<article><strong>SEA Superstar</strong><p>Award 2025</p><small>12 monthly achiever awards</small></article>
+<article><strong>S$36M+</strong><p>HDB transactions</p><small>Total transaction volume</small></article>
+</section>
+    <div class="actions"><a class="button primary" href="#sale-enquiry">Let’s Talk About Your Sale ↗</a></div>
+    <a class="seller-link" href="/valuation/">Just exploring? Get an instant price estimate →</a>
+    <div class="buyer-avatar"><img src="/ammon-lim-profile-hires.jpg" alt="Ammon Lim" width="1100" height="1100"><div><strong>Candid advice, from our first chat to handover.</strong><br>Ammon Lim · CEA R065633I</div></div>
   </div>
-</header>
+  <section id="sale-enquiry" class="shortlist" aria-labelledby="sale-form-title">
+    <div class="step-count">Your home</div><h2 id="sale-form-title">What are you planning to sell?</h2>
+    <p>Tell me a little about your flat. We can start with the price and take it from there.</p>
+    <form data-seller-form>
+      <label>Block and street<input name="address" placeholder="e.g. Blk 538 Hougang Avenue 8" maxlength="200" autocomplete="street-address"></label>
+      <label>Flat type<select name="type"><option value="Not sure yet">Select your flat type</option><option>2-room</option><option>3-room</option><option>4-room</option><option>5-room</option><option>Executive / maisonette</option><option>Other</option></select></label>
+      <label>When are you thinking of selling?<select name="timeline"><option>Just exploring</option><option>Within 3 months</option><option>3–6 months</option><option>6–12 months</option><option>Flexible</option></select></label>
+      <a class="button primary" data-send-sale href="https://wa.me/6580989441?text=Hi%20Ammon%2C%20I%27m%20thinking%20of%20selling%20my%20HDB." target="_blank" rel="noopener noreferrer">Send My Details to Ammon ↗</a>
+      <p class="note">Opens WhatsApp with your answers. Tap send there and I’ll reply. No obligation. <a href="/privacy-policy/">Privacy Policy</a>.</p>
+      <noscript><p>You can send your block, flat type and timeline directly on WhatsApp.</p></noscript>
+    </form>
+  </section>
+</section>
+<section class="section marketing pad">
+  <div class="eyebrow">What I’ll help you with</div><h2>A sale that works for you, and a plan for what’s next.</h2>
+  <div class="benefits">
+    <article><span class="number">01 / PRICE</span><h3>Know where your flat stands</h3><p>I’ll compare recent sales and competing listings, then look at your flat’s condition, floor and layout. You’ll know how we arrived at the asking price.</p></article>
+    <article><span class="number">02 / MARKETING</span><h3>Give buyers a reason to view</h3><p>We’ll get your home ready for photographs and highlight what makes it worth a visit. I’ll handle the listing, enquiries and viewing arrangements.</p></article>
+    <article><span class="number">03 / YOUR NEXT MOVE</span><h3>Work out what you’ll walk away with</h3><p>We’ll go through your estimated proceeds and moving plans before you commit. If you’re buying too, we’ll plan both transactions together.</p></article>
+  </div>
+</section>
+<section class="section pad"><div class="process">
+  <div class="process-intro"><div class="eyebrow">The selling process</div><h2>What happens when you sell with me?</h2><p>You’ll know what’s happening, what needs your decision and what I’m taking care of.</p><a class="text-button" href="#sale-enquiry">Tell me about your flat ↗</a><p class="note seller-note">Buying your next home too? <a href="/buy-hdb/">See how I can help with the search.</a></p></div>
+  <div>
+    <article class="step"><span class="number">01</span><div><h3>We start with your plans</h3><p>We’ll talk about why you’re selling, your timeline and where you want to move. I’ll help you check what needs to be ready before listing.</p></div></article>
+    <article class="step"><span class="number">02</span><div><h3>We agree on the price and approach</h3><p>I’ll explain the comparable sales, estimated proceeds and marketing plan. We’ll agree on the service and fees before getting started.</p></div></article>
+    <article class="step"><span class="number">03</span><div><h3>I bring your home to market</h3><p>I’ll help prepare the flat for photographs, put the listing together and arrange viewings around your availability. You’ll hear the feedback from buyers.</p></div></article>
+    <article class="step"><span class="number">04</span><div><h3>We consider each offer properly</h3><p>I’ll negotiate on your behalf and explain the price, terms and timing of each offer. You decide which offer works for you.</p></div></article>
+    <article class="step"><span class="number">05</span><div><h3>I guide you through to handover</h3><p>I’ll help with the OTP, resale application and deadlines, and coordinate the final inspection and handover with you.</p></div></article>
+  </div>
+</div></section>
+<section class="section quote pad"><div><div class="eyebrow">A buyer at one of my listings</div><h2>How I work with the people on both sides of a sale.</h2><a class="text-button" href="/reviews/">Read more client reviews ↗</a></div><div><p class="stars" aria-label="5 stars">★★★★★</p><blockquote>“Even though Ammon was the seller's agent, he went out of his way to help me as a first-time buyer. He took the time to explain the process, answer my questions, and make sure everything went smoothly. His <strong>professionalism, patience, and willingness to go the extra mile</strong> made a huge difference.”</blockquote><cite>PropertyGuru · Buyer at one of Ammon’s listings</cite></div></section>
 
-
-
-
-
-<section class="section"><div class="section-narrow"><div class="page-copy"><h2>Let’s start with your plans</h2><p>You may already have your next home in mind, or you may simply want to know what your flat could sell for. I’ll look at recent transactions and your flat’s condition with you, then explain the options.</p><p>If you’re buying as well, we’ll work through both timelines before putting your home on the market.</p><a class="btn-primary" href="/valuation/">Get a Price Estimate →</a></div></div></section><section class="section section-soft"><div class="section-narrow"><div class="track-header"><div class="section-label">Selling with me</div><h2 class="track-h2">How I’ll help you sell your flat</h2></div><div class="town-facts"><article class="town-fact"><div><div class="section-label">01</div><h3 class="town-fact-title">We work out the price</h3><p class="town-fact-body">I’ll compare recent sales and competing listings, look at your flat’s condition and explain my suggested asking range.</p></div></article><article class="town-fact"><div><div class="section-label">02</div><h3 class="town-fact-title">We plan your next move</h3><p class="town-fact-body">We’ll check your sale eligibility, estimated proceeds and when you need to move. If you’re buying too, we’ll plan the two transactions together.</p></div></article><article class="town-fact"><div><div class="section-label">03</div><h3 class="town-fact-title">I prepare the listing</h3><p class="town-fact-body">I’ll help you get your home ready for photographs and put together the listing and marketing plan.</p></div></article><article class="town-fact"><div><div class="section-label">04</div><h3 class="town-fact-title">I handle viewings and offers</h3><p class="town-fact-body">I’ll arrange viewings with you, follow up with interested buyers and explain each offer so you can decide how to respond.</p></div></article><article class="town-fact"><div><div class="section-label">05</div><h3 class="town-fact-title">We work through the paperwork</h3><p class="town-fact-body">I’ll explain the OTP and resale application steps, track the deadlines and keep you updated.</p></div></article><article class="town-fact"><div><div class="section-label">06</div><h3 class="town-fact-title">We prepare for handover</h3><p class="town-fact-body">We’ll arrange the final inspection and handover. HDB’s completion appointment is generally about eight weeks after it accepts the resale application.</p></div></article></div></div></section>
-<!-- ─── FAQ ─── -->
 <section class="section">
   <div class="section-narrow">
     <div class="faq-header">
@@ -193,53 +244,8 @@
   </div>
 </section>
 
-<!-- ─── WHAT CLIENTS SAY ─── -->
-<section class="section section-paper">
-  <div class="section-narrow">
-    <div class="track-header">
-      <div class="section-label">Client Stories</div>
-      <h2 class="track-h2">What Clients <em class="italic-accent">Say</em></h2>
-      <p class="track-sub sans">Rated 5.0 on PropertyGuru by buyers and sellers. CEA registered, R065633I.</p>
-    </div>
-    <div class="town-reviews-grid">
-      <div class="town-review">
-        <div class="town-review-stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <p class="town-review-text">"Even though Ammon was the seller's agent, he went out of his way to help me as a first-time buyer. He took the time to explain the process, answer my questions, and make sure everything went smoothly. His professionalism, patience, and willingness to go the extra mile made a huge difference."</p>
-        <div class="town-review-author">PropertyGuru · Buyer at one of Ammon's listings</div>
-      </div>
-      <div class="town-review">
-        <div class="town-review-stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <p class="town-review-text">"My agent is knowledgeable and is efficient in his work."</p>
-        <div class="town-review-author">PropertyGuru · Verified Client</div>
-      </div>
-    </div>
-    <div class="town-reviews-more">
-      <a href="/reviews/" class="btn-secondary sans">Read all my reviews →</a>
-    </div>
-  </div>
-</section>
 
-<!-- ─── CROSS LINKS ─── -->
-<section class="section section-soft" style="padding-top:56px; padding-bottom:56px;">
-  <div class="section-narrow" style="text-align:center;">
-    <div class="section-label">Before You Decide</div>
-    <div class="town-links">
-      <a class="town-link-pill" href="/track-record/">See My Closed Deals</a>
-      <a class="town-link-pill" href="/reviews/">Read Client Reviews</a>
-      <a class="town-link-pill" href="/towns/">Your Town's Market Guide</a>
-      <a class="town-link-pill" href="/buy-hdb/">Buying Your Next Home?</a>
-    </div>
-  </div>
-</section>
-
-<!-- ─── CTA BAND ─── -->
-<section class="page-cta-band">
-  <h2>Thinking of selling?</h2>
-  <p>Tell me your block and I'll give you an honest read on price, timing, and whether now is actually the right moment. Free, no obligation.</p>
-  <a href="https://wa.me/6580989441?text=Hi%20Ammon%2C%20I%27m%20thinking%20of%20selling%20my%20HDB" class="btn-primary sans" target="_blank" rel="noopener">WhatsApp Ammon →</a>
-</section>
-
-<!-- ─── FOOTER ─── -->
+<section class="section contact pad"><div><h2>Let’s talk about your flat.</h2><p>You don’t need to have everything decided. We can work through the options together.</p></div><a class="button primary" href="#sale-enquiry">Let’s Talk About Your Sale ↗</a></section>
 </main>
 <footer>
   <div class="footer-top">
@@ -293,6 +299,7 @@
     <div class="footer-copy">© 2026 Ammon Lim · Singapore Property Agent. All rights reserved.</div>
     <div class="footer-legal">CEA Registration R065633I · Singapore Estate Agency Pte Ltd · L3009643J</div>
   </div>
+<p id="seller-ranking-note">*Estimated from CEA’s public transaction records, September 2023 to August 2026: 33 HDB resale transactions, compared with 38,564 registered agents, including those with no HDB transactions. Not an official CEA ranking.</p>
 </footer>
 
 <!-- ─── WHATSAPP FLOAT ─── -->
@@ -307,7 +314,7 @@
 </a>
 
 <!-- ─── STICKY MOBILE CTA BAR ─── -->
-<div class="stickybar" id="stickybar" hidden><a href="https://wa.me/6580989441" class="stickybar-btn" target="_blank" rel="noopener">WhatsApp Me</a><a href="/valuation/" class="stickybar-btn stickybar-btn-primary">Get a Price Estimate</a></div>
+<div class="stickybar" id="stickybar" hidden><a href="https://wa.me/6580989441" class="stickybar-btn" target="_blank" rel="noopener">WhatsApp Me</a><a href="#sale-enquiry" class="stickybar-btn stickybar-btn-primary">Plan My Sale</a></div>
 
 <script src="/app.js?v=20260930b" defer></script>
 </body>
