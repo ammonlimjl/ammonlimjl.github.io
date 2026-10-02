@@ -16,3 +16,26 @@ if (sellerForm) {
   sellerForm.addEventListener('submit', event => event.preventDefault());
   updateSaleEnquiry();
 }
+
+// Keep the floating contact button out of the seller enquiry area.
+const saleEnquiry = document.querySelector('#sale-enquiry');
+const sellerWhatsApp = document.querySelector('.wa-float');
+if (saleEnquiry && sellerWhatsApp) {
+  let scheduled = false;
+  function updateSellerWhatsApp() {
+    const navBottom = document.querySelector('nav')?.getBoundingClientRect().bottom || 0;
+    sellerWhatsApp.hidden = saleEnquiry.getBoundingClientRect().bottom > navBottom;
+    scheduled = false;
+  }
+  function scheduleSellerWhatsApp() {
+    if (!scheduled) {
+      scheduled = true;
+      requestAnimationFrame(updateSellerWhatsApp);
+    }
+  }
+  window.addEventListener('scroll', scheduleSellerWhatsApp, {passive: true});
+  window.addEventListener('resize', scheduleSellerWhatsApp);
+  window.addEventListener('pageshow', scheduleSellerWhatsApp);
+  new ResizeObserver(scheduleSellerWhatsApp).observe(saleEnquiry);
+  updateSellerWhatsApp();
+}
