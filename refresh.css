@@ -38,3 +38,24 @@ nav{height:80px;padding:0 max(24px,calc((100vw - 1120px)/2));gap:24px;background
 .about-content .about-h2 {margin:0}
 .about-content .about-p {line-height:1.6;letter-spacing:normal;word-spacing:normal;margin:0}
 .about-content .trait-desc {line-height:1.55;letter-spacing:normal;word-spacing:normal}
+
+/* Forest palette shared across the site. */
+:root{--forest:#26372d;--forest-hover:#344d3d;--sage:#edf1e9;--forest-light:#d5dfd0;--dark:#26372d;--dark-mid:#344d3d;--cream-dark:#edf1e9}
+.btn-primary,.btn-cta,.btn-submit,.button.primary,.stickybar-btn-primary{background:var(--forest);border-color:var(--forest);color:#fff}
+.btn-primary:hover,.btn-cta:hover,.btn-submit:hover,.button.primary:hover,.stickybar-btn-primary:hover{background:var(--forest-hover);border-color:var(--forest-hover)}
+nav .nav-links a[aria-current=page]{color:var(--forest);text-decoration:underline;text-underline-offset:6px;text-decoration-color:var(--orange)}
+.page-cta-band,.buyer-page .contact{background:var(--forest);color:var(--cream);border-color:var(--forest)}
+.page-cta-band h2,.buyer-page .contact h2{color:var(--cream)}
+.page-cta-band p,.buyer-page .contact p{color:var(--forest-light)}
+.page-cta-band .btn-primary,.buyer-page .contact .button.primary{background:var(--cream);border-color:var(--cream);color:var(--forest)}
+.page-cta-band .btn-primary:hover,.buyer-page .contact .button.primary:hover{background:var(--forest-light);border-color:var(--forest-light)}
+footer{background:var(--forest);color:var(--cream);border-color:#506053}
+footer .footer-logo,footer .footer-col-title{color:var(--cream)}
+footer .footer-logo span{color:#e6b191}
+footer .footer-desc,footer .footer-copy,footer .footer-legal,footer .footer-links a,footer p,footer cite{color:var(--forest-light)}
+footer .footer-links a:hover,footer a:hover{color:#fff}
+footer .footer-bottom{border-color:#506053}
+footer .footer-badge{background:#344d3d;color:var(--cream);border-color:#506053}
+footer a,footer button{color:var(--forest-light)}
+footer a:focus-visible,footer button:focus-visible,.page-cta-band a:focus-visible,.buyer-page .contact a:focus-visible{outline-color:#e6b191}
+footer #ranking-note,footer #buyer-ranking-note,footer #seller-ranking-note,footer .analytics-preferences{color:var(--forest-light)}
