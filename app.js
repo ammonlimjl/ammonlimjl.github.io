@@ -1118,26 +1118,16 @@ if (briefForm) {
     const values = Object.fromEntries(new FormData(briefForm));
     const rows = [['Budget', values.budget.trim() || 'Not sure yet'],
       ['Preferred town / area', values.town.trim() || 'Flexible'],
-      ['Flat type', values.type.trim() || 'Open to options'],
-      ['Move-in timeline', values.timeline], ['HFE letter', values.hfe], ['Home to sell', values.selling]];
-    sendLink.href = waUrl(['Hi Ammon, I’m looking to buy an HDB and would like your help shortlisting suitable flats.', '',
+      ['Flat type', values.type.trim() || 'Open to options']];
+    sendLink.href = waUrl(['Hi Ammon, I’m looking to buy an HDB and would like to discuss my options.', '',
       ...rows.map(([label, value]) => label + ': ' + value), '', 'Please get back to me when you can. Thank you!'].join('\n'));
-  }
-  function showBriefStage(n) {
-    briefForm.querySelectorAll('[data-form-stage]').forEach(stage => { stage.hidden = stage.dataset.formStage !== String(n); });
-    document.querySelector('.step-count').textContent = n === 1 ? 'Your next home' : 'Your plans';
-    document.querySelector('.shortlist h3').textContent = n === 1 ? 'What are you looking for?' : 'A little more about your plans';
-    briefForm.querySelector(`[data-form-stage="${n}"] input, [data-form-stage="${n}"] select`)?.focus({preventScroll:true});
-    updateBrief();
   }
   briefForm.addEventListener('input', updateBrief);
   briefForm.addEventListener('change', updateBrief);
-  briefForm.addEventListener('submit', e => { e.preventDefault(); if (!briefForm.querySelector('[data-form-stage="1"]').hidden) showBriefStage(2); });
-  briefForm.querySelector('[data-next]').addEventListener('click', () => showBriefStage(2));
-  briefForm.querySelector('[data-back]').addEventListener('click', () => showBriefStage(1));
+  briefForm.addEventListener('submit', e => { e.preventDefault(); updateBrief(); sendLink.click(); });
   document.querySelectorAll('[data-scroll-form]').forEach(button => button.addEventListener('click', () => {
     document.querySelector('#shortlist').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
-    briefForm.querySelector('[data-form-stage]:not([hidden]) input, [data-form-stage]:not([hidden]) select')?.focus({preventScroll:true});
+    briefForm.querySelector('input')?.focus({preventScroll:true});
   }));
   updateBrief();
 }
