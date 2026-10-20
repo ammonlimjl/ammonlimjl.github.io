@@ -224,12 +224,13 @@
 </style>
 <link rel="stylesheet" href="/analytics.css?v=20261002a">
 <script src="/analytics.js?v=20261020a" defer></script>
+<link rel="stylesheet" href="/home-refresh.css?v=20261020">
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
 
 <!-- ─── NAV ─── -->
-<nav aria-label="Main navigation"><a href="/" class="nav-logo">Ammon <span>Lim</span></a><ul class="nav-links"><li><a href="/sell-hdb/">Selling</a></li><li><a href="/buy-hdb/">Buying</a></li><li><a href="/listings/">Homes for sale</a></li><li><a href="/news/">News</a></li><li><a href="/reviews/">Reviews</a></li><li><a href="/#about">About me</a></li><li><a href="/start-in-real-estate/">Join Me</a></li></ul><a href="/contact/" class="btn-cta sans" id="nav-cta">Let’s talk</a><button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button></nav>
+<nav aria-label="Main navigation"><a href="/" class="nav-logo">Ammon <span>Lim</span></a><ul class="nav-links"><li><a href="/sell-hdb/">Selling</a></li><li><a href="/buy-hdb/">Buying</a></li><li><a href="/news/">News</a></li><li><a href="/reviews/">Reviews</a></li><li><a href="/#about">About me</a></li><li><a href="/start-in-real-estate/">Join Me</a></li></ul><a href="/contact/" class="btn-cta sans" id="nav-cta">Let’s talk</a><button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button></nav>
 
 <!-- ─── MOBILE DRAWER ─── -->
 <div class="mobile-drawer" id="mobile-drawer">
@@ -261,12 +262,12 @@
     </a>
   </div>
   <div class="drawer-section-label">Explore</div>
-  <a href="/listings/" class="drawer-link">Active Listings</a>
   <a href="/coverage/" class="drawer-link">Coverage Map</a>
   <a href="/track-record/" class="drawer-link">Track Record</a>
   <a href="/reviews/" class="drawer-link">Reviews</a>
   <a href="/news/" class="drawer-link">HDB News</a>
   <a href="/faq/" class="drawer-link">FAQ</a>
+  <a href="/help/" class="drawer-link">Search &amp; Help</a>
   <a href="/#about" class="drawer-link">About Ammon</a>
   <a href="/start-in-real-estate/" class="drawer-link">Join Me</a>
   <a href="/contact/" class="drawer-cta drawer-link">Get In Touch</a>
@@ -320,15 +321,7 @@
 <section id="about" class="section">
   <div class="section-narrow">
     <div class="about-grid">
-      <div class="about-img-wrap">
-        <img class="about-img" src="ammon-lim-profile-hires.jpg" alt="Ammon Lim, Singapore HDB property agent" loading="lazy" width="1100" height="1100">
-        <div class="about-badge">
-          <span class="dot"></span>
-          <span class="sans">Full-time, specialising in HDB resale</span>
-        </div>
-
-      </div>
-      <div class="about-content">
+<div class="about-content">
         <div>
           <div class="section-label">About Ammon</div>
           <h2 class="about-h2">Candid advice for your next move</h2>
@@ -393,12 +386,6 @@
         <div class="hub-card-desc">Instant estimate from official transaction data.</div>
         <span class="hub-card-link">Get your estimate →</span>
       </a>
-      <a class="hub-card" href="/listings/">
-        <div class="hub-card-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5 12 3l9 6.5"/><path d="M5 9v11h14V9"/><path d="M9.5 20v-6h5v6"/></svg></div>
-        <div class="hub-card-title">Active Listings</div>
-        <div class="hub-card-desc">The flats I'm selling right now.</div>
-        <span class="hub-card-link">Browse flats for sale →</span>
-      </a>
             <a class="hub-card" href="/news/">
         <div class="hub-card-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 4 6 2 5-2v14l-5 2-6-2-5 2V6l5-2Z"/><path d="M9 4v14"/><path d="M15 6v14"/></svg></div>
         <div class="hub-card-title">News &amp; Market Updates</div>
@@ -436,16 +423,18 @@
       <h2 class="track-h2">A few of my past transactions</h2>
       <p class="track-sub sans">Here are a few homes I’ve helped clients buy and sell. Find more on the <a href="/track-record/">track record</a> page.</p>
     </div>
-    <div class="listings-scroll-wrap">
+    <p class="home-swipe-hint">Swipe to see more transactions →</p><div class="listings-scroll-wrap">
       <button class="listings-arrow listings-arrow-left" onclick="listingsScroll(-1)" aria-label="Previous">←</button>
       <button class="listings-arrow listings-arrow-right" onclick="listingsScroll(1)" aria-label="Next">→</button>
-      <div class="listings-grid" id="listingsGrid" data-limit="3">
+      <div class="listings-grid" id="listingsGrid" data-limit="6" tabindex="0" aria-label="Past transactions, scroll sideways to see more">
         <!-- Cards rendered from data/listings.json by app.js -->
       </div>
     </div>
   </div>
 </section>
 
+
+<!-- HOME-NEWS:START --><section class="section" id="home-news"><div class="section-narrow"><div class="track-header"><div class="section-label">News &amp; market updates</div><h2 class="track-h2">What to know before your next move</h2><p class="track-sub sans">Recent housing updates, with links to the original sources. <a href="/news/">See all updates →</a></p></div><div class="home-news-grid"><a class="home-news-card" href="/news/#q3-resale-flash-2026"><img src="/punggol-drone.jpg" alt="Punggol HDB blocks and elevated LRT tracks" loading="lazy" width="1600" height="1999"><div class="home-news-copy"><small>30 September 2026 · Resale market</small><h3>HDB resale prices down 0.2% in Q3 flash estimate</h3><span>Read the update →</span></div></a><a class="home-news-card" href="/news/#construction-automation-2027"><img src="/Newscard/BTO%20Construction.jpeg" alt="Residential towers under construction with cranes" loading="lazy" width="720" height="540"><div class="home-news-copy"><small>24 September 2026 · BTO construction</small><h3>More automation planned for BTO construction from 2027</h3><span>Read the update →</span></div></a><a class="home-news-card" href="/news/#income-ceilings-august-2026"><img src="/bishan-drone.jpg" alt="HDB blocks beside Bishan-Ang Mo Kio Park" loading="lazy" width="1600" height="1068"><div class="home-news-copy"><small>22 August 2026 · Buying eligibility</small><h3>Higher income ceilings for eligible HDB buyers</h3><span>Read the update →</span></div></a></div></div></section><!-- HOME-NEWS:END -->
 
 <!-- ─── REVIEWS ─── -->
 <section id="home-reviews" class="section section-paper">
@@ -583,13 +572,14 @@
       <div class="footer-col-title">Explore</div>
       <ul class="footer-links">
         <li><a href="/#about">About Ammon</a></li>
-        <li><a href="/listings/">Active Listings</a></li>
+
         <li><a href="/coverage/">Coverage Map</a></li>
         <li><a href="/towns/">Town Guides</a></li>
         <li><a href="/track-record/">Track Record</a></li>
         <li><a href="/reviews/">Client Reviews</a></li>
         <li><a href="/news/">HDB News</a></li>
         <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/help/">Search &amp; Help</a></li>
         <li><a href="/start-in-real-estate/">Starting in Real Estate</a></li>
         <li><a href="https://optiontopass.sg/" target="_blank" rel="noopener">RES exam practice ↗</a></li>
         <li><a href="/contact/">Contact</a></li>

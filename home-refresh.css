@@ -1,0 +1,11 @@
+/* Homepage refinements, scoped to preserve the approved buyer page. */
+#home .hero-right{width:340px;height:340px;min-height:0;border-radius:50%;justify-self:center;aspect-ratio:1;background:#edf1e9;border:8px solid #edf1e9}
+#home .hero-bg-img{object-fit:contain;object-position:center;width:100%;height:100%}
+#about .about-grid{grid-template-columns:1fr;max-width:900px;margin:auto}
+#about .traits-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.home-swipe-hint{font:14px/1.5 Arial,sans-serif;color:#586457;margin:0 0 14px}
+#cases #listingsGrid{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:#899786 transparent;padding:0 0 18px;max-width:100%}
+#cases #listingsGrid>.listing-card{flex:0 0 340px;min-width:0;width:340px;scroll-snap-align:start}
+#cases .listings-arrow{display:none}
+.home-news-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.home-news-card{display:block;border:1px solid #dedfd6;border-radius:8px;overflow:hidden;color:#26372d;text-decoration:none;background:#fff}.home-news-card img{width:100%;height:170px;object-fit:cover}.home-news-copy{padding:18px}.home-news-copy small{color:#626b63;font:12px/1.5 Arial,sans-serif}.home-news-copy h3{font:normal 23px/1.25 Georgia,serif;margin:10px 0}.home-news-copy span{font:600 14px/1.5 Arial,sans-serif;color:#af4829}
+@media(max-width:768px){#home{gap:18px;padding:26px 20px 30px}#home .hero-h1{order:0;font-size:35px}#home .hero-right{order:1;width:176px;height:176px;min-height:0;border-radius:50%;align-self:flex-start;border-width:5px}#home .hero-sub{order:2;margin:0;font-size:16px;line-height:1.55}#home .hero-intro p{margin:0 0 12px}#home .hero-cta{order:3;display:grid;grid-template-columns:1fr;width:100%;gap:10px}#home .hero-cta a{display:flex;justify-content:center;align-items:center;min-height:48px}#home .hero-stats{order:4;margin-top:4px}#about .traits-grid{grid-template-columns:1fr 1fr}#cases #listingsGrid>.listing-card{flex-basis:86%;width:86%}#cases .listing-img{height:220px}.home-news-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;padding-bottom:16px}.home-news-card{flex:0 0 86%;scroll-snap-align:start}.home-news-copy h3{font-size:22px}}

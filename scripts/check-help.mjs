@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {searchPages,enquiryMessage,whatsappUrl} from '../help/core.js';
+const pages = JSON.parse(readFileSync(new URL('../help/pages.json',import.meta.url)));
+assert.equal(searchPages(pages,'')[0],undefined);
+assert.equal(searchPages(pages,'the and')[0],undefined);
+assert.equal(searchPages(pages,'quantum xylophone')[0],undefined);
+assert.equal(searchPages(pages,'3RV')[0].title,'How I help you buy');
+assert.equal(searchPages(pages,'price estimate')[0].url,'/valuation/');
+assert.equal(searchPages(pages,'selling')[0].url,'/sell-hdb/');
+const message = enquiryMessage({goal:'Buying a home',details:'$650,000, Punggol & Sengkang',question:'Can we chat?'});
+assert.match(message,/Punggol & Sengkang/);
+assert.equal(new URL(whatsappUrl(message)).searchParams.get('text'),message);
+assert.match(enquiryMessage({}),/Still exploring/);
+assert.ok(enquiryMessage({details:'a'.repeat(10000)}).length < 1000);
+console.log('PASS: relevant search, empty and unmatched queries, enquiry defaults, length limits and WhatsApp encoding.');
