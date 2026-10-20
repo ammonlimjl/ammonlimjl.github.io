@@ -225,8 +225,9 @@
 <link rel="stylesheet" href="/analytics.css?v=20261002a">
 <script src="/analytics.js?v=20261020a" defer></script>
 <link rel="stylesheet" href="/home-refresh.css?v=20261020b">
+<link rel="stylesheet" href="/home-editorial.css?v=20261020a">
 </head>
-<body>
+<body class="editorial-homepage">
 <a class="skip-link" href="#main-content">Skip to content</a>
 
 <!-- ─── NAV ─── -->
@@ -275,58 +276,58 @@
 
 <!-- ─── HERO ─── -->
 <main id="main-content">
-<section id="home">
-  <div class="hero-left">
-    <div class="hero-badge sans">Specialising in HDB resale</div>
-    <h1 class="hero-h1">Buying or selling an HDB?<br><em class="italic-accent">I’m here to help.</em></h1>
-    <div class="hero-stats credential-cards">
-      <div><div class="stat-num"><a class="ranking-link" href="#ranking-note" aria-label="Top 1.4 percent, see ranking methodology">Top 1.4%*</a></div><div class="stat-label sans">HDB resale ranking<span class="stat-detail">Estimated · Singapore</span></div></div>
-      <div><div class="stat-num">SEA Superstar</div><div class="stat-label sans">Award 2025<span class="stat-detail">12 monthly achiever awards</span></div></div>
-      <div><div class="stat-num">S$36M+</div><div class="stat-label sans">HDB transactions<span class="stat-detail">Total transaction volume</span></div></div>
-    </div>
-    <div class="hero-sub hero-intro">
-      <p>I’m Ammon. I’ve helped families sell at record prices and buyers secure homes with no cash over valuation (COV).</p>
-      <p>I’ll give you candid advice, walk you through the numbers and help you decide what suits your needs and budget. If a flat or an offer isn’t right for you, I’ll say so.</p>
-    </div>
-    <div class="hero-cta">
-      <a href="/valuation/" class="btn-primary sans">Get a Price Estimate →</a>
-      <a href="/buy-hdb/" class="btn-secondary sans">Find My Next Home</a>
-    </div>
+<section id="home" class="editorial-home" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow entrance">HDB RESALE · SINGAPORE</p>
+        <h1 id="hero-title"><span class="headline-line entrance">Buying or selling<br>an HDB?</span><em class="headline-line entrance">I’m here to help.</em></h1>
+        <p class="hero-summary entrance">I’m Ammon. I’ll help you make sense of your options and work out your next move.</p>
+      </div>
 
-  </div>
-  <div class="hero-right">
-    <img class="hero-bg-img" src="ammon-lim-profile-hires.jpg" alt="Ammon Lim, Singapore property agent" fetchpriority="high" width="1100" height="1100">
+      <div class="portrait-panel entrance" aria-label="Ammon Lim and his track record">
+        <div class="panel-top">
+          <div class="portrait-wrap">
+            <svg class="portrait-outline" viewBox="0 0 240 240" aria-hidden="true">
+              <circle cx="120" cy="120" r="115" pathLength="1"/>
+            </svg>
+            <img class="portrait" src="/ammon-lim-profile-hires.jpg" alt="Ammon Lim, Singapore property agent" fetchpriority="high" width="1100" height="1100">
+          </div>
+          <div class="key-figures">
+            <div class="figure">
+              <a class="figure-number" href="#ranking-note" aria-label="Top 1.4 percent, see ranking methodology">Top 1.4<span>%</span><sup>*</sup></a>
+              <p>HDB resale ranking</p>
+              <small>Estimated · Singapore</small>
+            </div>
+            <div class="figure">
+              <strong class="figure-number volume">S$36M<span>+</span></strong>
+              <p>HDB transactions</p>
+              <small>Total transaction volume</small>
+            </div>
+          </div>
+        </div>
+        <div class="award-ribbon">
+          <div><strong>SEA Superstar</strong><p>Plus 12 monthly achiever awards</p></div>
+          <span class="award-year">2025</span>
+        </div>
+      </div>
 
-  </div>
-</section>
+      <div class="hero-actions hero-cta entrance">
+        <a class="route route-primary" href="/buy-hdb/"><span>Find My Next Home</span></a>
+        <a class="route route-secondary" href="/valuation/"><span>Get a Price Estimate</span></a>
+      </div>
+      <div class="hero-caption entrance"><span>5-star rated</span><span class="caption-separator"></span><span>CEA R065633I</span></div>
+    </section>
 
-<!-- ─── TRUST STRIP ─── -->
-<div class="trustbar">
-  <div class="trustbar-item">
-    <span class="trustbar-stars" aria-label="5 out of 5 stars">★★★★★</span>
-    <span class="lbl sans">5-Star Rated</span>
-  </div>
-  <div class="trustbar-divider" aria-hidden="true"></div>
-  <div class="trustbar-item">
-    <span class="trustbar-icon sans" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21v-9M9 21v-9M15 21v-9M19 21v-9"/><path d="m12 3 8 5H4l8-5Z"/></svg></span>
-    <span class="val sans">CEA</span>
-    <span class="lbl sans">R065633I</span>
-  </div>
-  <div class="trustbar-divider" aria-hidden="true"></div>
-
-</div>
-
-<!-- ─── TICKER ─── -->
 <!-- ─── ABOUT ─── -->
 <section id="about" class="section">
   <div class="section-narrow">
     <div class="about-grid">
 <div class="about-content">
         <div>
-          <div class="section-label">About Ammon</div>
-          <h2 class="about-h2">Candid advice for your next move</h2>
+          <div class="section-label">Personal advice, from the start</div>
+          <h2 class="about-h2">A home is personal.<br><em>So is my advice.</em></h2>
         </div>
-        <p class="about-p">I work with HDB buyers and sellers across Singapore. I’ll give you candid advice, explain the numbers and talk through your options with you. If the timing or the flat isn’t right, I’ll say so.</p>
+        <p class="about-p">I’ve helped families sell at record prices and buyers secure homes with no cash over valuation (COV).</p>
+        <p class="about-p">I’ll give you candid advice, walk you through the numbers and help you decide what suits your needs and budget. If a flat or an offer isn’t right for you, I’ll say so.</p>
         <div class="traits-grid">
           <div class="trait-card">
             <div class="trait-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5c0 5 3.5 8 7 9 3.5-1 7-4 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
