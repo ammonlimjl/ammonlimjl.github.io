@@ -59,7 +59,7 @@
 .journey-progress{position:absolute;inset:auto 0 0;height:2px;background:#fffdf523;pointer-events:none;display:none}
 .journey-progress span{display:block;width:100%;height:100%;background:#e7d4a7;transform:scaleX(0);transform-origin:left}
 
-@media(prefers-reduced-motion:no-preference){
+
  .journey-motion-on .journey-scroll{height:480svh}
  .journey-motion-on .journey-stage{position:sticky;top:70px;height:calc(100svh - 70px)}
  .journey-motion-on .journey-render{position:absolute;inset:0;height:auto}
@@ -102,7 +102,7 @@
  .journey-motion-on .journey-choices{position:absolute;left:6%;bottom:62px;width:min(380px,88%);padding:0;background:transparent}
  .journey-motion-on .journey-bottom{left:6%;right:6%;text-shadow:0 1px 10px #11251d8c}
  .editorial-homepage.in-journey .stickybar{visibility:hidden;opacity:0;pointer-events:none}
-}
+
 @media(max-width:768px){
  .journey-story{grid-template-columns:1fr;padding:28px 24px;gap:22px}
  .journey-intro-heading h1{font-size:48px;line-height:1.035;letter-spacing:-1.7px;max-width:350px}
@@ -139,7 +139,7 @@
  .journey-motion-on .journey-intro-card,.journey-motion-on .journey-proof-card,.journey-motion-on .journey-finale{left:20px;right:20px;bottom:158px}
  .journey-motion-on .journey-choices{left:20px;right:20px}
 }
-@media(max-height:720px) and (prefers-reduced-motion:no-preference){
+@media(max-height:720px){
  .journey-motion-on .journey-intro-heading{top:6%}
  .journey-motion-on .journey-intro-heading h1{font-size:39px}
  .journey-motion-on .journey-intro-card,.journey-motion-on .journey-proof-card,.journey-motion-on .journey-finale{bottom:143px;padding-top:18px;padding-bottom:18px}
@@ -148,31 +148,14 @@
 }
 
 /* The reduced-motion equivalent is an ordinary photograph and readable cards. */
-@media(prefers-reduced-motion:reduce){
- .journey-scroll{height:auto!important}
- .journey-stage{position:relative!important;top:auto!important;height:auto!important}
- .journey-render{position:relative!important;height:min(65svh,540px)!important}
- .journey-cinematic-image{transform:none!important}
- .journey-story{position:relative!important;inset:auto!important;display:grid!important}
- .journey-beat{position:relative!important;inset:auto!important;opacity:1!important;visibility:visible!important;transform:none!important}
- .journey-intro-heading,.journey-intro-card,.journey-proof-card,.journey-finale{position:relative!important;inset:auto!important;transform:none!important;opacity:1!important;visibility:visible!important;width:auto!important}
- .journey-intro-heading h1{color:#263c30!important;margin-bottom:24px!important;text-shadow:none!important}
- .journey-proof-card{max-width:none}
- .journey-finale{background:#263c30;padding:30px 24px}
- .journey-layer{opacity:1!important;transform:none!important;clip-path:none!important}
- .journey-intro-card::before,.journey-proof-card::before{opacity:1!important;transform:none!important}
- .journey-finale::before{content:none!important}
- .journey-choices{position:relative!important;inset:auto!important;width:auto!important;padding:0 24px 65px!important;background:#263c30}
- .journey-progress,.journey-chapter,.journey-cue,.journey-shade{display:none!important}
- .editorial-homepage.in-journey .stickybar{visibility:visible;opacity:1;pointer-events:auto}
-}
+
 .journey-beat,.journey-finale,.journey-cinematic-image{transition:none!important}
 
 /* Actual camera travel comes from the video, with no CSS enlargement or pan. */
 .journey-cinematic-video{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;transform:none!important;opacity:0;pointer-events:none;transition:none!important}
 .journey-video-ready .journey-cinematic-video{opacity:1}
 .journey-cinematic-image{transform:none!important;transition:none!important}
-@media(prefers-reduced-motion:reduce){.journey-cinematic-video{display:none!important}}
+
 
 /* Keep the small editorial links comfortable to tap and the skip target clear. */
 .cinematic-video-concept #home-services{scroll-margin-top:86px}
@@ -183,11 +166,11 @@
 
 /* Chapter titles carry the story above the glass, independently of the cards. */
 .journey-scene-heading h2{font:normal 48px/1.035 Georgia,'Times New Roman',serif;letter-spacing:-1.7px;color:#263c30;margin:0 0 24px;max-width:350px}
-@media(prefers-reduced-motion:no-preference){
+
  .journey-motion-on .journey-scene-heading{position:absolute;left:6%;right:6%;top:7%}
  .journey-motion-on .journey-scene-heading h2{font-size:56px;letter-spacing:-2.1px;color:#fffdf5;text-shadow:0 2px 22px #11251d24;max-width:520px;margin:0}
  .journey-motion-on .journey-render::after{background:linear-gradient(180deg,#10251ca6 0%,#10251c8c 26%,#10251c25 42%,transparent 58%,#10251c14 100%)}
-}
+
 @media(max-width:768px){
  .journey-motion-on .journey-scene-heading{left:24px;right:24px}
  .journey-motion-on .journey-scene-heading h2{font-size:48px;line-height:1.035;letter-spacing:-1.7px;max-width:350px}
@@ -196,7 +179,23 @@
  .journey-motion-on .journey-scene-heading{left:20px;right:20px}
  .journey-motion-on .journey-scene-heading h2{font-size:41px;letter-spacing:-1.4px}
 }
-@media(max-height:720px) and (prefers-reduced-motion:no-preference){
+@media(max-height:720px){
  .journey-motion-on .journey-scene-heading{top:6%}
  .journey-motion-on .journey-scene-heading h2{font-size:39px}
+}
+
+/* Honour the device preference by default, with a reversible choice for this page. */
+.journey-motion-controls{position:absolute;z-index:4;top:20px;right:24px;display:grid;gap:7px;justify-items:start;padding:12px 14px;border:1px solid #f8f6f052;border-radius:9px;background:#20392ee6;color:#fffdf5;box-shadow:0 4px 16px #10251c14}
+.journey-motion-controls[hidden]{display:none}
+.journey-motion-note{font:11px/1.4 Arial,sans-serif;color:#e1e7d8}
+.journey-motion-toggle{min-height:44px;border:1px solid #f8f6f078;border-radius:5px;background:#f8f6f0;color:#263c30;padding:10px 13px;font:600 12px/1.4 Arial,sans-serif;cursor:pointer}
+.journey-motion-toggle:focus-visible{outline:3px solid #d6bb7b;outline-offset:3px}
+.journey-motion-on .journey-motion-controls{top:auto;right:auto;bottom:12px;left:50%;transform:translateX(-50%);display:block;padding:0;border:0;background:transparent;box-shadow:none}
+.journey-motion-on .journey-motion-note{display:none}
+.journey-motion-on .journey-motion-toggle{font:10px/1.4 Arial,sans-serif;padding:8px 10px;color:#fffdf5;background:#20392e52;border-color:#fffdf547;min-height:44px;text-shadow:0 1px 10px #11251d8c}
+@media(max-width:374px){
+ .journey-motion-controls{right:20px;top:16px}
+ .journey-motion-on .journey-motion-controls{left:20px;transform:none}
+ .journey-motion-on .journey-bottom{justify-content:flex-end}
+ .journey-motion-on .journey-cue{display:none}
 }

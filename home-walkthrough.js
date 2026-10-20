@@ -14,6 +14,10 @@
   const bar=scene.querySelector('.journey-progress span');
   const cue=scene.querySelector('.journey-cue');
   const chapter=scene.querySelector('.journey-chapter span');
+  const motionControls=scene.querySelector('.journey-motion-controls');
+  const motionToggle=scene.querySelector('.journey-motion-toggle');
+  const motionNote=scene.querySelector('.journey-motion-note');
+  let motionChoice=null;
   let enabled=false,pending=0,last=-1;
   let openingStarted=performance.now(),openingFinished=false;
   let videoProgress=0,sourceAttached=false,videoFailed=false,seekInFlight=false,lastSeekTarget=null;
@@ -195,7 +199,13 @@
   }
   function queue(){if(enabled&&!pending)pending=requestAnimationFrame(draw)}
   function configure(){
-    enabled=!preference.matches&&roomForMotion.matches;
+    enabled=roomForMotion.matches&&(motionChoice===null?!preference.matches:motionChoice);
+    motionControls.hidden=!roomForMotion.matches;
+    motionToggle.textContent=enabled?'Use still version':'Enable walkthrough';
+    motionToggle.setAttribute('aria-pressed',String(enabled));
+    motionNote.textContent=enabled?'Walkthrough enabled for this page':preference.matches?'Reduced motion is on':'Still version selected';
+    stage.dataset.motionPreference=preference.matches?'reduce':'no-preference';
+    stage.dataset.motionReason=enabled?'enabled':!roomForMotion.matches?'short-viewport':motionChoice===false?'user-paused':'reduced-motion';
     body.classList.toggle('journey-motion-on',enabled);last=-1;
     if(!enabled){
       cancelAnimationFrame(pending);pending=0;body.classList.remove('in-journey');
@@ -206,7 +216,20 @@
   image.decode().then(()=>body.classList.add('journey-ready')).catch(()=>body.classList.add('journey-ready'));
   new ResizeObserver(()=>{last=-1;queue()}).observe(stage);
   window.addEventListener('scroll',queue,{passive:true});window.addEventListener('resize',queue,{passive:true});
-  preference.addEventListener('change',configure);roomForMotion.addEventListener('change',configure);
+  motionToggle.addEventListener('click',()=>{
+    motionChoice=!enabled;
+    configure();
+    // The visitor opts into this tour only. Do not change or store device settings.
+    const root=document.documentElement;
+    const previousScroll=root.style.scrollBehavior;
+    root.style.scrollBehavior='auto';
+    const navHeight=document.querySelector('body > nav')?.offsetHeight||70;
+    window.scrollTo(0,Math.max(0,scene.getBoundingClientRect().top+scrollY-navHeight));
+    motionToggle.focus({preventScroll:true});
+    requestAnimationFrame(()=>{root.style.scrollBehavior=previousScroll});
+  });
+  preference.addEventListener('change',()=>{motionChoice=null;configure()});
+  roomForMotion.addEventListener('change',configure);
   window.addEventListener('pagehide',()=>{cancelAnimationFrame(pending);pending=0;video.pause()});
   window.addEventListener('pageshow',()=>{last=-1;queue()});configure();
 })();
