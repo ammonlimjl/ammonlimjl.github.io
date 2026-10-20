@@ -9,3 +9,22 @@
 #cases .listings-arrow{display:none}
 .home-news-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.home-news-card{display:block;border:1px solid #dedfd6;border-radius:8px;overflow:hidden;color:#26372d;text-decoration:none;background:#fff}.home-news-card img{width:100%;height:170px;object-fit:cover}.home-news-copy{padding:18px}.home-news-copy small{color:#626b63;font:12px/1.5 Arial,sans-serif}.home-news-copy h3{font:normal 23px/1.25 Georgia,serif;margin:10px 0}.home-news-copy span{font:600 14px/1.5 Arial,sans-serif;color:#af4829}
 @media(max-width:768px){#home{gap:18px;padding:26px 20px 30px}#home .hero-h1{order:0;font-size:35px}#home .hero-right{order:1;width:176px;height:176px;min-height:0;border-radius:50%;align-self:flex-start;border-width:5px}#home .hero-sub{order:2;margin:0;font-size:16px;line-height:1.55}#home .hero-intro p{margin:0 0 12px}#home .hero-cta{order:3;display:grid;grid-template-columns:1fr;width:100%;gap:10px}#home .hero-cta a{display:flex;justify-content:center;align-items:center;min-height:48px}#home .hero-stats{order:4;margin-top:4px}#about .traits-grid{grid-template-columns:1fr 1fr}#cases #listingsGrid>.listing-card{flex-basis:86%;width:86%}#cases .listing-img{height:220px}.home-news-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;padding-bottom:16px}.home-news-card{flex:0 0 86%;scroll-snap-align:start}.home-news-copy h3{font-size:22px}}
+
+/* Mobile portrait and credentials share one compact row. */
+@media(max-width:768px){
+  #home{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);column-gap:20px;row-gap:22px;align-items:center}
+  #home .hero-left{display:contents}
+  #home .hero-h1{grid-column:1/-1;grid-row:1}
+  #home .hero-right{grid-column:1;grid-row:2;align-self:center;justify-self:center;width:min(100%,176px);height:auto;aspect-ratio:1}
+  #home .credential-cards{grid-column:2;grid-row:2;display:flex;flex-direction:column;gap:0;width:100%;min-width:0;margin:0;padding:0;border:0}
+  #home .credential-cards>div{padding:10px 0;background:transparent;border:0;border-radius:0;text-align:left}
+  #home .credential-cards>div:first-child{padding-top:0}
+  #home .credential-cards>div:last-child{padding-bottom:0}
+  #home .credential-cards>div+div{border-top:1px solid #d9dfd3}
+  #home .credential-cards .stat-num{display:block;min-height:0;font:700 20px/1.2 Arial,sans-serif;color:#26372d}
+  #home .credential-cards .stat-label{display:block;margin-top:4px;font:12px/1.4 Arial,sans-serif;letter-spacing:0;color:#586457}
+  #home .credential-cards .stat-detail{font-size:10px;line-height:1.4;margin-top:2px}
+  #home .hero-intro{grid-column:1/-1;grid-row:3}
+  #home .hero-cta{grid-column:1/-1;grid-row:4}
+}
+@media(max-width:360px){#home{column-gap:14px}#home .credential-cards .stat-num{font-size:17px}}
