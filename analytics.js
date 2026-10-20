@@ -1,18 +1,51 @@
-/* Visit measurement only. Google is loaded only after analytics consent. */
+/* Visit and buyer WhatsApp-click measurement, only after measurement consent. */
 (() => {
   'use strict';
   const ID = 'G-SFPHWKSGFB';
-  const KEY = 'ammon_analytics_consent_v1';
+  const KEY = 'ammon_analytics_consent_v2';
+  const LEGACY_KEY = 'ammon_analytics_consent_v1';
   const production = ['www.ammonlim.com', 'ammonlim.com'].includes(location.hostname);
+  const buyerPage = /^\/buy-hdb\/?$/.test(location.pathname);
+  const OPENAI_PIXEL_ID = '6ThQQzuk9ah94yFxB7bzsC';
   let started = false;
+  let openAIStarted = false;
   function savedChoice() {
-    try { const v = JSON.parse(localStorage.getItem(KEY)); return v && v.expires > Date.now() ? v.choice : null; } catch { return null; }
+    try {
+      const v = JSON.parse(localStorage.getItem(KEY));
+      if (v && v.expires > Date.now() && ['accepted', 'declined'].includes(v.choice)) return v.choice;
+      // Retain earlier refusals; earlier visit-only consent does not cover clicks.
+      const legacy = JSON.parse(localStorage.getItem(LEGACY_KEY));
+      return legacy && legacy.expires > Date.now() && legacy.choice === 'declined' ? 'declined' : null;
+    } catch { return null; }
+  }
+  let consentChoice = savedChoice();
+  let consentStored = true;
+  function startOpenAI() {
+    if (!production || !buyerPage || consentChoice !== 'accepted') return;
+    if (openAIStarted) {
+      oaiq('consent', true);
+      return;
+    }
+    openAIStarted = true;
+    if (!window.oaiq) {
+      const queue = function () { queue.q.push(arguments); };
+      queue.q = [];
+      window.oaiq = queue;
+      const tag = document.createElement('script');
+      tag.async = true;
+      tag.src = 'https://bzrcdn.openai.com/sdk/oaiq.min.js';
+      document.head.appendChild(tag);
+    }
+    oaiq('consent', true);
+    oaiq('init', { pixelId: OPENAI_PIXEL_ID });
+    oaiq('measure', 'page_viewed', { type: 'contents' }, { opt_out: true });
   }
   function start() {
     if (!production) return;
     if (started) {
       window['ga-disable-' + ID] = false;
       gtag('consent', 'update', { analytics_storage: 'granted' });
+      startOpenAI();
       return;
     }
     started = true;
@@ -35,39 +68,65 @@
     tag.async = true;
     tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + ID;
     document.head.appendChild(tag);
+    startOpenAI();
   }
   function clearCookies() {
     for (const cookie of document.cookie.split(';')) {
       const name = cookie.trim().split('=')[0];
-      if (!/^_ga(?:_|$)/.test(name)) continue;
+      if (!/^_ga(?:_|$)/.test(name) && !['__oppref', '__obref'].includes(name)) continue;
       for (const domain of ['', location.hostname, '.ammonlim.com']) {
         document.cookie = name + '=; Max-Age=0; path=/' + (domain ? '; domain=' + domain : '');
       }
     }
   }
+  function trackBuyerWhatsApp(event) {
+    if (!production || !buyerPage || consentChoice !== 'accepted' || !started || window['ga-disable-' + ID] || event.defaultPrevented) return;
+    // Honour a refusal saved on another page or tab before tracking a handoff.
+    if (consentStored && savedChoice() !== 'accepted') return;
+    if (event.type === 'click' && event.button !== 0) return;
+    if (event.type === 'auxclick' && event.button !== 1) return;
+    const link = event.target.closest?.('a');
+    if (!link || link.protocol !== 'https:' || link.hostname !== 'wa.me' || link.pathname !== '/6580989441') return;
+    let ctaLocation;
+    if (link.matches('[data-send-brief]')) ctaLocation = 'buyer_brief';
+    else if (link.matches('.wa-float')) ctaLocation = 'floating';
+    else if (link.closest('#stickybar')) ctaLocation = 'sticky';
+    else return;
+    // Fixed placement only. Never collect the href, message or form answers.
+    gtag('event', 'whatsapp_click', { cta_location: ctaLocation });
+    // A request to contact Ammon, not a confirmed message sent in WhatsApp.
+    if (openAIStarted) oaiq('measure', 'lead_created', { type: 'customer_action' }, { opt_out: true });
+  }
+  document.addEventListener('click', trackBuyerWhatsApp);
+  document.addEventListener('auxclick', trackBuyerWhatsApp);
   const panel = document.createElement('section');
   panel.className = 'analytics-choice';
-  panel.setAttribute('aria-label', 'Analytics preferences');
-  panel.innerHTML = '<p><strong>Help me understand site visits</strong><br>Allow Google Analytics cookies to measure visits and where they come from? <a href="/privacy-policy/">Privacy policy</a></p><div><button type="button" data-choice="accepted">Allow analytics</button><button type="button" data-choice="declined">No thanks</button></div>';
-  panel.hidden = !!savedChoice();
+  panel.setAttribute('aria-label', 'Measurement preferences');
+  panel.innerHTML = '<p><strong>Help me understand site visits</strong><br>Allow Google Analytics and, on the buyer page, OpenAI measurement cookies to measure visits, ad sources and WhatsApp button clicks? OpenAI may automatically hash available contact details for ad matching. Button clicks do not confirm messages sent. <a href="/privacy-policy/">Privacy policy</a></p><div><button type="button" data-choice="accepted">Allow measurement</button><button type="button" data-choice="declined">No thanks</button></div>';
+  panel.hidden = !!consentChoice;
   document.body.appendChild(panel);
   const preferences = document.createElement('button');
-  preferences.type = 'button'; preferences.className = 'analytics-preferences'; preferences.textContent = 'Analytics preferences';
+  preferences.type = 'button'; preferences.className = 'analytics-preferences'; preferences.textContent = 'Measurement preferences';
   (document.querySelector('.footer-bottom') || document.body).appendChild(preferences);
   preferences.addEventListener('click', () => { panel.hidden = false; panel.querySelector('button').focus(); });
   panel.addEventListener('click', (event) => {
     const button = event.target.closest('button[data-choice]');
     if (!button) return;
     const choice = button.dataset.choice;
-    try { localStorage.setItem(KEY, JSON.stringify({choice, expires: Date.now() + 15552000000})); } catch {}
+    consentChoice = choice;
+    try {
+      localStorage.setItem(KEY, JSON.stringify({choice, expires: Date.now() + 15552000000}));
+      consentStored = true;
+    } catch { consentStored = false; }
     panel.hidden = true;
     if (choice === 'accepted') start();
     else {
       window['ga-disable-' + ID] = true;
       if (window.gtag) gtag('consent', 'update', { analytics_storage: 'denied' });
+      if (window.oaiq) oaiq('consent', false);
       clearCookies();
     }
     preferences.focus({preventScroll:true});
   });
-  if (savedChoice() === 'accepted') start();
+  if (consentChoice === 'accepted') start();
 })();
