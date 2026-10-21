@@ -193,8 +193,6 @@
 /* A visible gesture cue sits above the enquiry buttons, separate from the controls. */
 .journey-scroll-prompt{display:none}
 .journey-motion-on .journey-scroll-prompt{position:absolute;z-index:3;left:6%;bottom:122px;display:flex;align-items:center;gap:9px;min-height:32px;color:#fffdf5;font:12px/1.4 Arial,sans-serif;letter-spacing:.15px;text-shadow:0 1px 8px #10251c;pointer-events:none}
-.journey-scroll-arrow{width:22px;height:24px;display:block}
-.journey-scroll-arrow svg{display:block;width:20px;height:24px;transform:rotate(180deg)}
 .journey-cue-touch{display:none}
 .journey-motion-on .journey-bottom{justify-content:flex-end}
 .journey-motion-controls{position:absolute;z-index:4;bottom:12px;left:6%;display:block}
@@ -206,7 +204,6 @@
  .journey-motion-on .journey-scroll-prompt,.journey-motion-controls{left:24px}
  .journey-cue-touch{display:inline}
  .journey-cue-desktop{display:none}
- .journey-scroll-arrow svg{transform:none}
 }
 @media(max-width:374px){
  .journey-motion-on .journey-scroll-prompt,.journey-motion-controls{left:20px}
@@ -215,11 +212,17 @@
 @media(max-height:720px){
  .journey-motion-on .journey-intro-card,.journey-motion-on .journey-proof-card,.journey-motion-on .journey-finale{bottom:174px}
 }
+/* Preview the swipe with the whole scene, without moving the actual scroll position. */
 @media(prefers-reduced-motion:no-preference){
- .in-journey:not(.journey-has-scrolled) .journey-scroll-arrow{animation:journey-scroll-down 1.7s ease-in-out 3}
- @keyframes journey-scroll-down{0%,20%,70%,100%{transform:translateY(0)}45%{transform:translateY(6px)}}
- @media(max-width:768px){
-  .in-journey:not(.journey-has-scrolled) .journey-scroll-arrow{animation-name:journey-swipe-up}
-  @keyframes journey-swipe-up{0%,20%,70%,100%{transform:translateY(0)}45%{transform:translateY(-6px)}}
+ .journey-motion-on.in-journey:not(.journey-has-scrolled) .journey-stage{
+  animation:journey-swipe-preview 3.6s ease-in-out 1.7s 1;
+ }
+ .journey-hint-held .journey-stage{animation-play-state:paused!important}
+ @keyframes journey-swipe-preview{
+  0%,10%,58%,100%{transform:translate3d(0,0,0);border-radius:0;box-shadow:0 0 0 #10251c00}
+  27%{transform:translate3d(0,-24px,0);border-radius:0 0 18px 18px;box-shadow:0 10px 18px #10251c30}
+  40%,88%{transform:translate3d(0,-3px,0);border-radius:0 0 3px 3px;box-shadow:0 2px 4px #10251c08}
+  48%,94%{transform:translate3d(0,-5px,0);border-radius:0 0 5px 5px;box-shadow:0 4px 8px #10251c14}
+  76%{transform:translate3d(0,-12px,0);border-radius:0 0 12px 12px;box-shadow:0 6px 12px #10251c20}
  }
 }

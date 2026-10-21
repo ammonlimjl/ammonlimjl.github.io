@@ -22,6 +22,7 @@
   const enableChoice=originalHero.querySelector('.hero-walkthrough-choice');
   const enableToggle=originalHero.querySelector('.hero-enable-walkthrough');
   let motionChoice=null;
+  let swipePreviewDone=false,pointerHeld=false;
   let enabled=false,pending=0,last=-1;
   let openingStarted=performance.now(),openingFinished=false;
   let videoProgress=0,sourceAttached=false,videoFailed=false,seekInFlight=false,lastSeekTarget=null;
@@ -199,12 +200,27 @@
     chapter.textContent=String(Math.min(5,Math.floor((p+.035)/.21)+1)).padStart(2,'0');
     touchCue.textContent=p>.94?'Swipe up to continue':'Swipe up to explore';
     desktopCue.textContent=p>.94?'Scroll to continue':'Scroll to explore';
-    if(p>.015)body.classList.add('journey-has-scrolled');
+    if(p>.015)dismissSwipePreview();
     stage.dataset.progress=p.toFixed(3);last=p;
     if(!openingFinished)queue();
   }
   function queue(){if(enabled&&!pending)pending=requestAnimationFrame(draw)}
+  function dismissSwipePreview(){
+    swipePreviewDone=true;pointerHeld=false;
+    body.classList.add('journey-has-scrolled');body.classList.remove('journey-hint-held');
+  }
+  function holdSwipePreview(){
+    if(!enabled||swipePreviewDone)return;
+    pointerHeld=true;body.classList.add('journey-hint-held');
+  }
+  function releaseSwipePreview(){
+    if(!pointerHeld)return;
+    pointerHeld=false;
+    // Let the click reach its original target before the page settles.
+    requestAnimationFrame(dismissSwipePreview);
+  }
   function configure(){
+    const wasEnabled=enabled;
     enabled=roomForMotion.matches&&(motionChoice===null?!preference.matches:motionChoice);
     originalHero.hidden=enabled;
     scene.hidden=!enabled;
@@ -218,14 +234,26 @@
     body.classList.toggle('journey-motion-on',enabled);last=-1;
     window.dispatchEvent(new Event('journey-mode-change'));
     if(!enabled){
+      if(wasEnabled)dismissSwipePreview();
       cancelAnimationFrame(pending);pending=0;body.classList.remove('in-journey');
       for(const el of [...beats,...cards,finale,bar,image,...allLayers.map(item=>item.element)]){el.removeAttribute('style');el.inert=false}
       if(sourceAttached)unloadVideo();
-    }else{body.classList.remove('journey-has-scrolled');openingStarted=performance.now();openingFinished=false;loadVideo();queue()}
+    }else{body.classList.toggle('journey-has-scrolled',swipePreviewDone);openingStarted=performance.now();openingFinished=false;loadVideo();queue()}
   }
   image.decode().then(()=>body.classList.add('journey-ready')).catch(()=>body.classList.add('journey-ready'));
   new ResizeObserver(()=>{last=-1;queue()}).observe(stage);
   window.addEventListener('scroll',queue,{passive:true});window.addEventListener('resize',queue,{passive:true});
+  // Freeze under a finger so a moving link stays in place until it is activated.
+  window.addEventListener('pointerdown',holdSwipePreview,{passive:true});
+  window.addEventListener('touchstart',holdSwipePreview,{passive:true});
+  window.addEventListener('pointerup',releaseSwipePreview,{passive:true});
+  window.addEventListener('touchend',releaseSwipePreview,{passive:true});
+  window.addEventListener('pointercancel',dismissSwipePreview,{passive:true});
+  window.addEventListener('touchcancel',dismissSwipePreview,{passive:true});
+  window.addEventListener('click',dismissSwipePreview);
+  window.addEventListener('wheel',dismissSwipePreview,{passive:true});
+  window.addEventListener('keydown',dismissSwipePreview);
+  window.addEventListener('focusin',()=>{if(!pointerHeld)dismissSwipePreview()});
   function toggleMotion(){
     motionChoice=!enabled;
     configure();
@@ -243,6 +271,6 @@
   enableToggle.addEventListener('click',toggleMotion);
   preference.addEventListener('change',()=>{motionChoice=null;configure()});
   roomForMotion.addEventListener('change',configure);
-  window.addEventListener('pagehide',()=>{cancelAnimationFrame(pending);pending=0;video.pause()});
+  window.addEventListener('pagehide',()=>{dismissSwipePreview();cancelAnimationFrame(pending);pending=0;video.pause()});
   window.addEventListener('pageshow',()=>{last=-1;queue()});configure();
 })();
