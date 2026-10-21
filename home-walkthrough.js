@@ -2,7 +2,8 @@
 (() => {
   const body=document.querySelector('.editorial-homepage');
   const scene=document.querySelector('#home-journey');
-  if(!body||!scene)return;
+  const originalHero=document.querySelector('#home.editorial-home');
+  if(!body||!scene||!originalHero)return;
   const preference=matchMedia('(prefers-reduced-motion: reduce)');
   const roomForMotion=matchMedia('(min-height: 600px)');
   body.classList.add('journey-at-top','cinematic-concept','cinematic-video-concept');
@@ -12,11 +13,14 @@
   const beats=[...scene.querySelectorAll('.journey-beat')];
   const finale=scene.querySelector('.journey-finale');
   const bar=scene.querySelector('.journey-progress span');
-  const cue=scene.querySelector('.journey-cue');
+  const touchCue=scene.querySelector('.journey-cue-touch');
+  const desktopCue=scene.querySelector('.journey-cue-desktop');
   const chapter=scene.querySelector('.journey-chapter span');
   const motionControls=scene.querySelector('.journey-motion-controls');
   const motionToggle=scene.querySelector('.journey-motion-toggle');
   const motionNote=scene.querySelector('.journey-motion-note');
+  const enableChoice=originalHero.querySelector('.hero-walkthrough-choice');
+  const enableToggle=originalHero.querySelector('.hero-enable-walkthrough');
   let motionChoice=null;
   let enabled=false,pending=0,last=-1;
   let openingStarted=performance.now(),openingFinished=false;
@@ -50,7 +54,7 @@
   ]);
   const introHeadingLayers=[
     layer(scene.querySelector('.journey-intro-heading .journey-kicker'),'label',0),
-    layer(scene.querySelector('.journey-intro-heading h1'),'title',.10),
+    layer(scene.querySelector('.journey-main-heading'),'title',.10),
   ];
   const chapterHeadingLayers=beats.map((beat,i)=>i===0?introHeadingLayers:[
     layer(beat.querySelector('.journey-scene-heading h2'),'title',0),
@@ -193,13 +197,18 @@
     finale.style.transform='none';finale.inert=finaleEntry<.65;
     bar.style.transform=`scaleX(${p})`;
     chapter.textContent=String(Math.min(5,Math.floor((p+.035)/.21)+1)).padStart(2,'0');
-    cue.textContent=p>.94?'Let’s take the next step':p>.18?'Keep exploring':'Scroll to come inside';
+    touchCue.textContent=p>.94?'Swipe up to continue':'Swipe up to explore';
+    desktopCue.textContent=p>.94?'Scroll to continue':'Scroll to explore';
+    if(p>.015)body.classList.add('journey-has-scrolled');
     stage.dataset.progress=p.toFixed(3);last=p;
     if(!openingFinished)queue();
   }
   function queue(){if(enabled&&!pending)pending=requestAnimationFrame(draw)}
   function configure(){
     enabled=roomForMotion.matches&&(motionChoice===null?!preference.matches:motionChoice);
+    originalHero.hidden=enabled;
+    scene.hidden=!enabled;
+    enableChoice.hidden=!roomForMotion.matches;
     motionControls.hidden=!roomForMotion.matches;
     motionToggle.textContent=enabled?'Use still version':'Enable walkthrough';
     motionToggle.setAttribute('aria-pressed',String(enabled));
@@ -207,16 +216,17 @@
     stage.dataset.motionPreference=preference.matches?'reduce':'no-preference';
     stage.dataset.motionReason=enabled?'enabled':!roomForMotion.matches?'short-viewport':motionChoice===false?'user-paused':'reduced-motion';
     body.classList.toggle('journey-motion-on',enabled);last=-1;
+    window.dispatchEvent(new Event('journey-mode-change'));
     if(!enabled){
       cancelAnimationFrame(pending);pending=0;body.classList.remove('in-journey');
       for(const el of [...beats,...cards,finale,bar,image,...allLayers.map(item=>item.element)]){el.removeAttribute('style');el.inert=false}
       if(sourceAttached)unloadVideo();
-    }else{openingStarted=performance.now();openingFinished=false;loadVideo();queue()}
+    }else{body.classList.remove('journey-has-scrolled');openingStarted=performance.now();openingFinished=false;loadVideo();queue()}
   }
   image.decode().then(()=>body.classList.add('journey-ready')).catch(()=>body.classList.add('journey-ready'));
   new ResizeObserver(()=>{last=-1;queue()}).observe(stage);
   window.addEventListener('scroll',queue,{passive:true});window.addEventListener('resize',queue,{passive:true});
-  motionToggle.addEventListener('click',()=>{
+  function toggleMotion(){
     motionChoice=!enabled;
     configure();
     // The visitor opts into this tour only. Do not change or store device settings.
@@ -224,10 +234,13 @@
     const previousScroll=root.style.scrollBehavior;
     root.style.scrollBehavior='auto';
     const navHeight=document.querySelector('body > nav')?.offsetHeight||70;
-    window.scrollTo(0,Math.max(0,scene.getBoundingClientRect().top+scrollY-navHeight));
-    motionToggle.focus({preventScroll:true});
+    const activeHero=enabled?scene:originalHero;
+    window.scrollTo(0,Math.max(0,activeHero.getBoundingClientRect().top+scrollY-navHeight));
+    (enabled?motionToggle:enableToggle).focus({preventScroll:true});
     requestAnimationFrame(()=>{root.style.scrollBehavior=previousScroll});
-  });
+  }
+  motionToggle.addEventListener('click',toggleMotion);
+  enableToggle.addEventListener('click',toggleMotion);
   preference.addEventListener('change',()=>{motionChoice=null;configure()});
   roomForMotion.addEventListener('change',configure);
   window.addEventListener('pagehide',()=>{cancelAnimationFrame(pending);pending=0;video.pause()});

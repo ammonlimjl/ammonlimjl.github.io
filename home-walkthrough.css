@@ -9,8 +9,8 @@
 .journey-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,#132b22d9 0%,#132b2280 26%,transparent 58%);opacity:0}
 .journey-story{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;max-width:1120px;margin:0 auto;padding:32px 24px}
 .journey-beat{min-width:0}
-.journey-intro-heading h1{font:normal 56px/1.03 Georgia,'Times New Roman',serif;letter-spacing:-2.1px;color:#263c30;margin:0 0 24px;max-width:480px}
-.journey-intro-heading h1 em{font-weight:400}
+.journey-intro-heading .journey-main-heading{font:normal 56px/1.03 Georgia,'Times New Roman',serif;letter-spacing:-2.1px;color:#263c30;margin:0 0 24px;max-width:480px}
+.journey-intro-heading .journey-main-heading em{font-weight:400}
 .journey-intro-card,.journey-proof-card{
  position:relative;isolation:isolate;background:transparent;box-shadow:none;
  color:#203628;border:1px solid transparent;border-radius:13px;min-width:0;
@@ -68,7 +68,7 @@
  .journey-motion-on .journey-intro{opacity:1;visibility:visible}
  .journey-motion-on .journey-intro-heading{position:absolute;left:6%;top:7%;right:6%}
  .journey-motion-on .journey-intro-heading .journey-kicker{color:#f4edda}
- .journey-motion-on .journey-intro-heading h1{color:#fffdf5;text-shadow:0 2px 22px #11251d24;margin:0;max-width:520px}
+ .journey-motion-on .journey-intro-heading .journey-main-heading{color:#fffdf5;text-shadow:0 2px 22px #11251d24;margin:0;max-width:520px}
  .journey-motion-on .journey-intro-card,.journey-motion-on .journey-proof-card{
    position:absolute;left:6%;bottom:174px;width:min(380px,88%);
  }
@@ -101,11 +101,11 @@
  .journey-motion-on .journey-finale .journey-description{color:#f1f0e7}
  .journey-motion-on .journey-choices{position:absolute;left:6%;bottom:62px;width:min(380px,88%);padding:0;background:transparent}
  .journey-motion-on .journey-bottom{left:6%;right:6%;text-shadow:0 1px 10px #11251d8c}
- .editorial-homepage.in-journey .stickybar{visibility:hidden;opacity:0;pointer-events:none}
+ .editorial-homepage.in-journey :is(.stickybar,.wa-float){visibility:hidden;opacity:0;pointer-events:none}
 
 @media(max-width:768px){
  .journey-story{grid-template-columns:1fr;padding:28px 24px;gap:22px}
- .journey-intro-heading h1{font-size:48px;line-height:1.035;letter-spacing:-1.7px;max-width:350px}
+ .journey-intro-heading .journey-main-heading{font-size:48px;line-height:1.035;letter-spacing:-1.7px;max-width:350px}
  .journey-intro-card{padding:21px;gap:18px}
  .journey-intro-card h2{font-size:28px}
  .journey-intro-card .journey-description{font-size:13px;line-height:1.55}
@@ -126,7 +126,7 @@
  .journey-motion-on .journey-bottom{left:24px;right:24px}
 }
 @media(max-width:374px){
- .journey-intro-heading h1{font-size:41px;letter-spacing:-1.4px}
+ .journey-intro-heading .journey-main-heading{font-size:41px;letter-spacing:-1.4px}
  .journey-intro-card{grid-template-columns:70px minmax(0,1fr);padding:18px;gap:15px}
  .journey-intro-card>img{width:70px;height:96px}
  .journey-intro-card h2{font-size:25px}
@@ -141,13 +141,13 @@
 }
 @media(max-height:720px){
  .journey-motion-on .journey-intro-heading{top:6%}
- .journey-motion-on .journey-intro-heading h1{font-size:39px}
+ .journey-motion-on .journey-intro-heading .journey-main-heading{font-size:39px}
  .journey-motion-on .journey-intro-card,.journey-motion-on .journey-proof-card,.journey-motion-on .journey-finale{bottom:143px;padding-top:18px;padding-bottom:18px}
  .journey-proof-card h2.journey-number{font-size:54px}
  .journey-proof-card h2,.journey-finale h2{font-size:37px}
 }
 
-/* The reduced-motion equivalent is an ordinary photograph and readable cards. */
+/* Still mode uses the original editorial homepage, without a walkthrough image. */
 
 .journey-beat,.journey-finale,.journey-cinematic-image{transition:none!important}
 
@@ -184,18 +184,42 @@
  .journey-motion-on .journey-scene-heading h2{font-size:39px}
 }
 
-/* Honour the device preference by default, with a reversible choice for this page. */
-.journey-motion-controls{position:absolute;z-index:4;top:20px;right:24px;display:grid;gap:7px;justify-items:start;padding:12px 14px;border:1px solid #f8f6f052;border-radius:9px;background:#20392ee6;color:#fffdf5;box-shadow:0 4px 16px #10251c14}
+/* Keep the original homepage intact whenever the walkthrough is disabled. */
+#home.editorial-home .entrance,#home.editorial-home .portrait,#home.editorial-home .portrait-outline circle{animation:none!important}
+#home.editorial-home .hero-walkthrough-choice{grid-column:1;grid-row:4;margin-top:12px}
+.hero-enable-walkthrough{border:0;background:transparent;color:#52644d;padding:10px 0;min-height:44px;font:12px/1.4 Arial,sans-serif;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+@media(max-width:768px){#home.editorial-home .hero-walkthrough-choice{text-align:center;margin-top:4px}}
+
+/* A visible gesture cue sits above the enquiry buttons, separate from the controls. */
+.journey-scroll-prompt{display:none}
+.journey-motion-on .journey-scroll-prompt{position:absolute;z-index:3;left:6%;bottom:122px;display:flex;align-items:center;gap:9px;min-height:32px;color:#fffdf5;font:12px/1.4 Arial,sans-serif;letter-spacing:.15px;text-shadow:0 1px 8px #10251c;pointer-events:none}
+.journey-scroll-arrow{width:22px;height:24px;display:block}
+.journey-scroll-arrow svg{display:block;width:20px;height:24px;transform:rotate(180deg)}
+.journey-cue-touch{display:none}
+.journey-motion-on .journey-bottom{justify-content:flex-end}
+.journey-motion-controls{position:absolute;z-index:4;bottom:12px;left:6%;display:block}
 .journey-motion-controls[hidden]{display:none}
-.journey-motion-note{font:11px/1.4 Arial,sans-serif;color:#e1e7d8}
-.journey-motion-toggle{min-height:44px;border:1px solid #f8f6f078;border-radius:5px;background:#f8f6f0;color:#263c30;padding:10px 13px;font:600 12px/1.4 Arial,sans-serif;cursor:pointer}
+.journey-motion-note{display:none}
+.journey-motion-toggle{min-height:44px;border:1px solid #fffdf547;border-radius:5px;background:#20392e52;color:#fffdf5;padding:8px 10px;font:10px/1.4 Arial,sans-serif;cursor:pointer;text-shadow:0 1px 10px #11251d8c}
 .journey-motion-toggle:focus-visible{outline:3px solid #d6bb7b;outline-offset:3px}
-.journey-motion-on .journey-motion-controls{top:auto;right:auto;bottom:12px;left:50%;transform:translateX(-50%);display:block;padding:0;border:0;background:transparent;box-shadow:none}
-.journey-motion-on .journey-motion-note{display:none}
-.journey-motion-on .journey-motion-toggle{font:10px/1.4 Arial,sans-serif;padding:8px 10px;color:#fffdf5;background:#20392e52;border-color:#fffdf547;min-height:44px;text-shadow:0 1px 10px #11251d8c}
+@media(max-width:768px){
+ .journey-motion-on .journey-scroll-prompt,.journey-motion-controls{left:24px}
+ .journey-cue-touch{display:inline}
+ .journey-cue-desktop{display:none}
+ .journey-scroll-arrow svg{transform:none}
+}
 @media(max-width:374px){
- .journey-motion-controls{right:20px;top:16px}
- .journey-motion-on .journey-motion-controls{left:20px;transform:none}
- .journey-motion-on .journey-bottom{justify-content:flex-end}
- .journey-motion-on .journey-cue{display:none}
+ .journey-motion-on .journey-scroll-prompt,.journey-motion-controls{left:20px}
+ .journey-motion-on .journey-intro-card,.journey-motion-on .journey-proof-card,.journey-motion-on .journey-finale{bottom:174px}
+}
+@media(max-height:720px){
+ .journey-motion-on .journey-intro-card,.journey-motion-on .journey-proof-card,.journey-motion-on .journey-finale{bottom:174px}
+}
+@media(prefers-reduced-motion:no-preference){
+ .in-journey:not(.journey-has-scrolled) .journey-scroll-arrow{animation:journey-scroll-down 1.7s ease-in-out 3}
+ @keyframes journey-scroll-down{0%,20%,70%,100%{transform:translateY(0)}45%{transform:translateY(6px)}}
+ @media(max-width:768px){
+  .in-journey:not(.journey-has-scrolled) .journey-scroll-arrow{animation-name:journey-swipe-up}
+  @keyframes journey-swipe-up{0%,20%,70%,100%{transform:translateY(0)}45%{transform:translateY(-6px)}}
+ }
 }

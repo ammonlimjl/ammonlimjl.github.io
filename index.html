@@ -35,7 +35,8 @@
 <!-- ─── Fonts (system stack, no external load, keeps LCP fast) ─── -->
 
 <!-- ─── Preload key assets ─── -->
-<link rel="preload" as="image" href="/assets/walkthrough-poster-v1.jpg">
+<link rel="preload" as="image" href="/assets/walkthrough-poster-v1.jpg" media="(prefers-reduced-motion: no-preference) and (min-height: 600px)">
+<link rel="preload" as="image" href="/ammon-lim-profile-hires.jpg" media="(prefers-reduced-motion: reduce), (max-height: 599px)">
 
 <!-- ─── Stylesheet ─── -->
 <link rel="stylesheet" href="/styles.css?v=20260930b">
@@ -227,8 +228,8 @@
 <link rel="stylesheet" href="/home-refresh.css?v=20261020b">
 <link rel="stylesheet" href="/home-editorial.css?v=20261020a">
 <link rel="stylesheet" href="/home-mobile-editorial.css?v=20261020a">
-<link rel="stylesheet" href="/home-walkthrough.css?v=20261021b">
-<script src="/home-walkthrough.js?v=20261021b" defer></script>
+<link rel="stylesheet" href="/home-walkthrough.css?v=20261021c">
+<script src="/home-walkthrough.js?v=20261021c" defer></script>
 </head>
 <body class="editorial-homepage">
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -279,7 +280,48 @@
 
 <!-- ─── HERO ─── -->
 <main id="main-content">
-<section id="home-journey" class="journey-scroll" aria-label="Meet Ammon Lim"><div class="journey-stage">
+<section id="home" class="editorial-home" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow entrance">HDB RESALE · SINGAPORE</p>
+        <h1 id="hero-title"><span class="headline-line entrance">Buying or selling<br>an HDB?</span><em class="headline-line entrance">I’m here to help.</em></h1>
+        <p class="hero-summary entrance">I’m Ammon. I’ll help you make sense of your options and work out your next move.</p>
+      </div>
+
+      <div class="portrait-panel entrance" aria-label="Ammon Lim and his track record">
+        <div class="panel-top">
+          <div class="portrait-wrap">
+            <svg class="portrait-outline" viewBox="0 0 240 240" aria-hidden="true">
+              <circle cx="120" cy="120" r="115" pathLength="1"/>
+            </svg>
+            <img class="portrait" src="/ammon-lim-profile-hires.jpg" alt="Ammon Lim, Singapore property agent" fetchpriority="high" width="1100" height="1100">
+          </div>
+          <div class="key-figures">
+            <div class="figure">
+              <a class="figure-number" href="#ranking-note" aria-label="Top 1.4 percent, see ranking methodology">Top 1.4<span>%</span><sup>*</sup></a>
+              <p>HDB resale ranking</p>
+              <small>Estimated · Singapore</small>
+            </div>
+            <div class="figure">
+              <strong class="figure-number volume">S$36M<span>+</span></strong>
+              <p>HDB transactions</p>
+              <small>Total transaction volume</small>
+            </div>
+          </div>
+        </div>
+        <div class="award-ribbon">
+          <div><strong>SEA Superstar</strong><p>Plus 12 monthly achiever awards</p></div>
+          <span class="award-year">2025</span>
+        </div>
+      </div>
+
+      <div class="hero-actions hero-cta entrance">
+        <a class="route route-primary" href="/buy-hdb/"><span>Find My Next Home</span></a>
+        <a class="route route-secondary" href="/valuation/"><span>Get a Price Estimate</span></a>
+      </div>
+      <div class="hero-caption entrance"><span>5-star rated</span><span class="caption-separator"></span><span>CEA R065633I</span></div>
+      <div class="hero-walkthrough-choice" hidden><button class="hero-enable-walkthrough" type="button">Enable walkthrough</button></div>
+    </section>
+<section id="home-journey" class="journey-scroll" aria-label="Meet Ammon Lim" hidden><div class="journey-stage">
     <div class="journey-render" aria-hidden="true"><img class="journey-cinematic-image" src="/assets/walkthrough-poster-v1.jpg" alt="" width="1080" height="1920" fetchpriority="high"><video class="journey-cinematic-video" muted playsinline preload="metadata" poster="/assets/walkthrough-poster-v1.jpg" tabindex="-1" disablepictureinpicture disableremoteplayback></video></div>
     <div class="journey-motion-controls" hidden>
       <span class="journey-motion-note" id="journey-motion-note">Reduced motion is on</span>
@@ -288,7 +330,7 @@
     <div class="journey-shade" aria-hidden="true"></div>
     <div class="journey-story">
       <section class="journey-beat journey-intro">
-        <div class="journey-intro-heading"><p class="journey-kicker">HDB resale · Singapore</p><h1>Buying or selling<br>an HDB?</h1></div>
+        <div class="journey-intro-heading"><p class="journey-kicker">HDB resale · Singapore</p><div class="journey-main-heading" role="heading" aria-level="1">Buying or selling<br>an HDB?</div></div>
         <div class="journey-intro-card"><img src="/ammon-lim-profile-hires.jpg" width="1100" height="1100" alt="Ammon Lim"><div><h2>I’m Ammon.</h2><p class="journey-description">I’ll give you candid advice and help you work out your next move.</p><p class="journey-detail">CEA R065633I</p></div></div>
       </section>
       <section class="journey-beat"><div class="journey-scene-heading"><h2>Experience<br>that counts.</h2></div><div class="journey-proof-card"><h2 class="journey-number">S$36M+</h2><p class="journey-description">in HDB transactions</p><p class="journey-detail">Helping buyers and sellers make their next move.</p></div></section>
@@ -298,7 +340,8 @@
     <div class="journey-chapter" aria-hidden="true"><span>01</span><i></i><span>05</span></div>
     <div class="journey-finale"><p class="journey-kicker">Now, let’s talk about you</p><h2>What’s your<br>next move?</h2><p class="journey-description">We’ll look at your options together and work out what makes sense for you.</p></div>
     <div class="journey-choices"><a href="/buy-hdb/">I’m buying</a><a href="/sell-hdb/">I’m selling</a></div>
-    <div class="journey-bottom"><span class="journey-cue">Scroll to come inside</span><a href="#home-services">Skip the tour</a></div>
+    <div class="journey-scroll-prompt" aria-hidden="true"><span class="journey-scroll-arrow"><svg viewBox="0 0 20 24" fill="none"><path d="M10 21V4M4 10l6-6 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="journey-cue-touch">Swipe up to explore</span><span class="journey-cue-desktop">Scroll to explore</span></div>
+    <div class="journey-bottom"><a href="#home-services">Skip the tour</a></div>
     <div class="journey-progress" aria-hidden="true"><span></span></div>
   </div></section>
 
@@ -604,6 +647,6 @@
 <!-- ─── STICKY MOBILE CTA BAR ─── -->
 <div class="stickybar" id="stickybar" hidden><a href="https://wa.me/6580989441" class="stickybar-btn" target="_blank" rel="noopener">WhatsApp Me</a><a href="/valuation/" class="stickybar-btn stickybar-btn-primary">Get a Price Estimate</a></div>
 
-<script src="/app.js?v=20261021a" defer></script>
+<script src="/app.js?v=20261021b" defer></script>
 </body>
 </html>

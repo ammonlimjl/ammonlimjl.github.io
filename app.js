@@ -1134,11 +1134,12 @@ if (briefForm) {
 
 // Reveal the mobile enquiry bar only after the opening actions have passed.
 const stickyBar = document.querySelector('#stickybar');
-const openingActions = document.querySelector('.journey-choices, #home .hero-cta, .buyer-page .hero .actions, .page-hero');
-if (stickyBar && openingActions) {
+const openingActions = [...document.querySelectorAll('.journey-choices, #home .hero-cta, .buyer-page .hero .actions, .page-hero')];
+if (stickyBar && openingActions.length) {
   let stickyFramePending = false;
   function updateStickyBar() {
-    stickyBar.hidden = openingActions.getBoundingClientRect().bottom > 64;
+    const visibleActions = openingActions.find(el => el.getClientRects().length);
+    stickyBar.hidden = !visibleActions || visibleActions.getBoundingClientRect().bottom > 64;
     stickyFramePending = false;
   }
   window.addEventListener('scroll', () => {
@@ -1148,5 +1149,6 @@ if (stickyBar && openingActions) {
     }
   }, {passive:true});
   window.addEventListener('resize', updateStickyBar);
+  window.addEventListener('journey-mode-change', updateStickyBar);
   updateStickyBar();
 }
