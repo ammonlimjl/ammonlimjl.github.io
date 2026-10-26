@@ -1134,12 +1134,14 @@ if (briefForm) {
 
 // Reveal the mobile enquiry bar only after the opening actions have passed.
 const stickyBar = document.querySelector('#stickybar');
-const openingActions = [...document.querySelectorAll('.journey-choices, #home .hero-cta, .buyer-page .hero .actions, .page-hero')];
-if (stickyBar && openingActions.length) {
+const openingActions = [...document.querySelectorAll('.journey-choices, #home .hero-cta, .rv-page > .hero > .button, .buyer-page .hero .actions, .page-hero')];
+if (stickyBar) {
   let stickyFramePending = false;
   function updateStickyBar() {
     const visibleActions = openingActions.find(el => el.getClientRects().length);
-    stickyBar.hidden = !visibleActions || visibleActions.getBoundingClientRect().bottom > 64;
+    const navBottom = document.querySelector('nav')?.getBoundingClientRect().bottom || 64;
+    // Pages without an opening action still need a usable contact shortcut.
+    stickyBar.hidden = !!visibleActions && visibleActions.getBoundingClientRect().bottom > navBottom;
     stickyFramePending = false;
   }
   window.addEventListener('scroll', () => {
@@ -1149,6 +1151,11 @@ if (stickyBar && openingActions.length) {
     }
   }, {passive:true});
   window.addEventListener('resize', updateStickyBar);
+  window.addEventListener('pageshow', updateStickyBar);
   window.addEventListener('journey-mode-change', updateStickyBar);
+  if ('ResizeObserver' in window) {
+    const openingObserver = new ResizeObserver(updateStickyBar);
+    openingActions.forEach(el => openingObserver.observe(el));
+  }
   updateStickyBar();
 }
