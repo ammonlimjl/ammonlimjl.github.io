@@ -1134,7 +1134,7 @@ if (briefForm) {
 
 // Reveal the mobile enquiry bar only after the opening actions have passed.
 const stickyBar = document.querySelector('#stickybar');
-const openingActions = [...document.querySelectorAll('.journey-choices, #home .hero-cta, .rv-page > .hero > .button, .buyer-page .hero .actions, .page-hero')];
+const openingActions = [...document.querySelectorAll('.reveal-actions, .journey-choices, #home .hero-cta, .rv-page > .hero > .button, .buyer-page .hero .actions, .page-hero')];
 if (stickyBar) {
   let stickyFramePending = false;
   function updateStickyBar() {
