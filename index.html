@@ -35,8 +35,7 @@
 <!-- ─── Fonts (system stack, no external load, keeps LCP fast) ─── -->
 
 <!-- ─── Preload key assets ─── -->
-<link rel="preload" as="image" href="/assets/hero-sofa-start-v1.jpg" media="(prefers-reduced-motion: no-preference)">
-<link rel="preload" as="image" href="/assets/hero-sofa-final-v1.jpg" media="(prefers-reduced-motion: reduce)">
+<link rel="preload" as="image" href="/assets/hero-sofa-start-v1.jpg">
 
 <!-- ─── Stylesheet ─── -->
 <link rel="stylesheet" href="/styles.css?v=20260930b">
@@ -311,7 +310,8 @@
 <script>
 (()=>{const h=document.getElementById('hero'),n=document.querySelector('body > nav'),c=navigator.connection;
 if(n)h.style.setProperty('--nav-h',n.offsetHeight+'px');
-h.classList.add(matchMedia('(prefers-reduced-motion: reduce)').matches||(c&&c.saveData)?'reveal-still-mode':'reveal-motion-mode')})();
+// Plays for everyone, including iPhones with Reduce Motion on (Ammon's choice: the clip is a gentle, static-camera shot).
+h.classList.add(c&&c.saveData?'reveal-still-mode':'reveal-motion-mode')})();
 </script>
 
 <!-- ─── ABOUT ─── -->
