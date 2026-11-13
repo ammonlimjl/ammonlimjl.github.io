@@ -5,14 +5,27 @@
  font:16px/1.55 Arial,Helvetica,sans-serif;color:var(--ink)}
 .reveal-hero a{text-decoration:none}
 
-/* Media: start still, then the video, then a crisp end still so the resting frame is never a soft video frame. */
-.reveal-media{grid-column:2;grid-row:1;position:relative;height:100%;overflow:hidden;border-radius:120px 20px 20px 20px;background:#6f7a68;box-shadow:0 30px 60px -30px #10251c59}
-.reveal-media>*{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 60%}
-.reveal-video{opacity:0}
-.reveal-still-end{opacity:0;transition:opacity .45s ease}
-.reveal-hero.is-playing .reveal-video{opacity:1}
-.reveal-hero.is-ended .reveal-still-end,.reveal-hero.reveal-still-mode .reveal-still-end,.reveal-hero:not(.reveal-motion-mode) .reveal-still-end{opacity:1}
-.reveal-hero.reveal-still-mode .reveal-still-end{transition:none}
+/* Media, in playing order: the walk-in, a dissolve to Ammon walking up to the sofa, then a crisp still of the last frame.
+   Each layer fades in over the one before, so a slow connection only ever shows a still, never a blank. */
+.reveal-media{grid-column:2;grid-row:1;position:relative;height:100%;overflow:hidden;background:#6f7a68;box-shadow:0 30px 60px -30px #10251c59;
+ border-radius:50% 50% 22px 22px / 32% 32% 22px 22px}
+.reveal-media>:is(img,video){position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 60%}
+.reveal-media>:is(.reveal-sofa,.reveal-still-final){object-position:50% 30%}
+.reveal-video,.reveal-still-room,.reveal-sofa,.reveal-still-final{opacity:0}
+.reveal-sofa{transition:opacity .8s ease}
+.reveal-still-final{transition:opacity .35s ease}
+.reveal-hero.is-playing .reveal-video,.reveal-hero.is-room .reveal-still-room,.reveal-hero.is-sofa .reveal-sofa,
+.reveal-hero.is-done .reveal-still-final,.reveal-hero:not(.reveal-motion-mode) .reveal-still-final{opacity:1}
+
+/* Pause control for the ten-second sequence; it disappears once the video has finished. */
+.reveal-pause{grid-column:2;grid-row:1;align-self:end;justify-self:end;z-index:3;margin:0 16px 16px 0;width:40px;height:40px;border-radius:50%;
+ border:1px solid #fffdf766;background:#10251c73;color:#fffdf5;cursor:pointer;display:grid;place-items:center;
+ -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.reveal-pause[hidden]{display:none}
+.reveal-pause::before{content:"";width:12px;height:14px;background:linear-gradient(90deg,currentColor 0 4px,transparent 4px 8px,currentColor 8px)}
+.reveal-pause[aria-pressed="true"]::before{width:0;height:0;background:none;border-style:solid;border-width:7px 0 7px 12px;border-color:transparent transparent transparent currentColor;margin-left:3px}
+.reveal-pause-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.reveal-pause:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 
 .reveal-content{grid-column:1;grid-row:1;display:flex;flex-direction:column;gap:28px;min-width:0}
 .reveal-kicker{font:600 10px/1.4 Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:#53624f;margin:0 0 18px;display:flex;align-items:center;gap:9px}
@@ -49,7 +62,10 @@
 @media(max-width:899px){
  .reveal-hero{--nav-h:70px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;max-width:none;max-height:none;min-height:560px;padding:26px 20px 20px;color:#fffdf5}
  .reveal-media{position:absolute;inset:0;z-index:-1;height:auto;border-radius:0;box-shadow:none}
- .reveal-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#10251cb8 0%,#10251c66 24%,#10251c00 46%,#10251c00 58%,#10251c59 100%)}
+ .reveal-pause{position:absolute;top:16px;right:16px;margin:0;width:36px;height:36px}
+ /* Ease the sofa shot down a little so his head clears the headline. */
+ .reveal-media>:is(.reveal-sofa,.reveal-still-final){transform:scale(1.15);transform-origin:50% 0}
+ .reveal-media::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,#10251cb8 0%,#10251c66 24%,#10251c00 46%,#10251c00 58%,#10251c59 100%)}
  .reveal-content{display:contents}
  .reveal-kicker{color:#efe8d6;margin-bottom:14px}
  .reveal-kicker::before{background:var(--gold)}
