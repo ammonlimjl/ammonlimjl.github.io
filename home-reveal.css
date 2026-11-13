@@ -5,19 +5,16 @@
  font:16px/1.55 Arial,Helvetica,sans-serif;color:var(--ink)}
 .reveal-hero a{text-decoration:none}
 
-/* Media, in playing order: the walk-in, a dissolve to Ammon walking up to the sofa, then a crisp still of the last frame.
+/* Media: a still of the empty sofa, then Ammon walking in and sitting down, then a crisp still of the last frame.
    Each layer fades in over the one before, so a slow connection only ever shows a still, never a blank. */
 .reveal-media{grid-column:2;grid-row:1;position:relative;height:100%;overflow:hidden;background:#6f7a68;box-shadow:0 30px 60px -30px #10251c59;
  border-radius:50% 50% 22px 22px / 32% 32% 22px 22px}
-.reveal-media>:is(img,video){position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 60%}
-.reveal-media>:is(.reveal-sofa,.reveal-still-final){object-position:50% 30%}
-.reveal-video,.reveal-still-room,.reveal-sofa,.reveal-still-final{opacity:0}
-.reveal-sofa{transition:opacity .8s ease}
+.reveal-media>:is(img,video){position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.reveal-video,.reveal-still-final{opacity:0}
 .reveal-still-final{transition:opacity .35s ease}
-.reveal-hero.is-playing .reveal-video,.reveal-hero.is-room .reveal-still-room,.reveal-hero.is-sofa .reveal-sofa,
-.reveal-hero.is-done .reveal-still-final,.reveal-hero:not(.reveal-motion-mode) .reveal-still-final{opacity:1}
+.reveal-hero.is-playing .reveal-video,.reveal-hero.is-done .reveal-still-final,.reveal-hero:not(.reveal-motion-mode) .reveal-still-final{opacity:1}
 
-/* Pause control for the ten-second sequence; it disappears once the video has finished. */
+/* Pause control while the clip plays; it disappears once the video has finished. */
 .reveal-pause{grid-column:2;grid-row:1;align-self:end;justify-self:end;z-index:3;margin:0 16px 16px 0;width:40px;height:40px;border-radius:50%;
  border:1px solid #fffdf766;background:#10251c73;color:#fffdf5;cursor:pointer;display:grid;place-items:center;
  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
@@ -64,7 +61,7 @@
  .reveal-media{position:absolute;inset:0;z-index:-1;height:auto;border-radius:0;box-shadow:none}
  .reveal-pause{position:absolute;top:16px;right:16px;margin:0;width:36px;height:36px}
  /* Ease the sofa shot down a little so his head clears the headline. */
- .reveal-media>:is(.reveal-sofa,.reveal-still-final){transform:scale(1.15);transform-origin:50% 0}
+ .reveal-media>:is(img,video){transform:scale(1.15);transform-origin:50% 0}
  .reveal-media::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,#10251cb8 0%,#10251c66 24%,#10251c00 46%,#10251c00 58%,#10251c59 100%)}
  .reveal-content{display:contents}
  .reveal-kicker{color:#efe8d6;margin-bottom:14px}
