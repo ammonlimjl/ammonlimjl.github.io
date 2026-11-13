@@ -103,8 +103,21 @@
   panel.className = 'analytics-choice';
   panel.setAttribute('aria-label', 'Measurement preferences');
   panel.innerHTML = '<div class="analytics-summary"><p>Allow cookies to help me improve the site? <a href="/privacy-policy/">Privacy policy</a></p><button type="button" class="analytics-details-toggle" aria-expanded="false" aria-controls="analytics-details">Details</button></div><div id="analytics-details" hidden><p>Google Analytics and, on the buyer page, OpenAI measure visits, ad sources and WhatsApp button clicks. OpenAI may automatically hash available contact details for ad matching. Button clicks do not confirm messages sent. You can change your choice in the footer at any time.</p></div><div class="analytics-actions"><button type="button" data-choice="accepted">Allow measurement</button><button type="button" data-choice="declined">No thanks</button></div>';
-  panel.hidden = !!consentChoice;
+  panel.hidden = true;
   document.body.appendChild(panel);
+  if (!consentChoice) {
+    // On the homepage, wait until the opening buttons have scrolled away so the notice never covers them.
+    // Nothing is measured before a choice, so asking a little later changes nothing about consent.
+    const opening = document.querySelector('.reveal-actions');
+    if (opening && 'IntersectionObserver' in window) {
+      const watcher = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) return;
+        watcher.disconnect();
+        if (!consentChoice) panel.hidden = false;
+      });
+      watcher.observe(opening);
+    } else panel.hidden = false;
+  }
   const detailsToggle = panel.querySelector('.analytics-details-toggle');
   const details = panel.querySelector('#analytics-details');
   detailsToggle.addEventListener('click', () => {
